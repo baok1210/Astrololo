@@ -22,6 +22,7 @@ class BodyPosition(BaseModel):
     quality: str = ""
     dignity_score: int = 0
     dignity_label: str = "neutral"
+    minor_dignities: List[str] = Field(default_factory=list)
     declination: float = 0.0
     cusp_proximity: Optional[Dict[str, Any]] = None
 

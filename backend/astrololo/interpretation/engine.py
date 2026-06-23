@@ -38,7 +38,7 @@ class InterpretationEngine:
             cat = r.category
             if cat not in categorized:
                 categorized[cat] = []
-            limit = 50 if cat == "aspect" else 20 if cat in ("planet_in_sign", "planet_in_house", "house_cusp") else 12 if cat == "house_placement" else 10 if cat in ("synthesis", "part_of_fortune") else 5
+            limit = 50 if cat == "aspect" else 20 if cat in ("planet_in_sign", "planet_in_house", "house_cusp") else 12 if cat == "house_placement" else 10 if cat in ("synthesis", "part_of_fortune", "aspect_synthesis") else 5
             if len(categorized[cat]) < limit:
                 categorized[cat].append(r)
 
@@ -59,6 +59,7 @@ class InterpretationEngine:
             "planet_in_house",
             "house_cusp",
             "aspect",
+            "aspect_synthesis",
             "midpoints",
         ]
 
@@ -115,6 +116,7 @@ class InterpretationEngine:
             "planet_in_house": ("Hành Tinh Trong Nhà", "Planets in Houses"),
             "house_cusp": ("Ý Nghĩa Đỉnh Nhà", "House Cusp Meanings"),
             "aspect": ("Các Góc Chiếu", "Aspects"),
+            "aspect_synthesis": ("Tổng Hợp Góc Chiếu Theo Hành Tinh", "Per-Planet Aspect Synthesis"),
             "midpoints": ("Trung Điểm", "Midpoints"),
         }
         idx = 0 if self.lang == "vi" else 1

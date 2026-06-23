@@ -91,9 +91,14 @@ def create_natal_chart(
     mc_sign = SIGN_ORDER[int(mc // 30) % 12]
 
     # ------------------------------------------------------------------ #
+    # Check daytime/nighttime for triplicity rulers
+    # ------------------------------------------------------------------ #
+    day_time = is_daytime(jd_ut, subject.latitude, subject.longitude)
+
+    # ------------------------------------------------------------------ #
     # Build ALL celestial bodies using points.py (planets + nodes + angles)
     # ------------------------------------------------------------------ #
-    all_bodies = build_all_bodies(jd_ut, ascendant, mc, node_type)
+    all_bodies = build_all_bodies(jd_ut, ascendant, mc, node_type, is_daytime=day_time)
 
     # Assign houses + cusp proximity to every body
     planets_dict = [p.model_dump() for p in all_bodies]
@@ -113,7 +118,6 @@ def create_natal_chart(
     aspect_calc = AspectCalculator()
     aspects = aspect_calc.calculate(all_bodies)
 
-    day_time = is_daytime(jd_ut, subject.latitude, subject.longitude)
     moon_phase = calc_moon_phase(jd_ut)
 
     # Weighted element distribution (Big 3 weighted highest, outer planets lowest)
@@ -130,16 +134,24 @@ def create_natal_chart(
     mc_sign_obj = SIGNS.get(mc_sign)
     if asc_sign_obj:
         asc_elem = asc_sign_obj.element
-        if asc_elem == "fire": fire += 4
-        elif asc_elem == "earth": earth += 4
-        elif asc_elem == "air": air += 4
-        elif asc_elem == "water": water += 4
+        if asc_elem == "fire":
+            fire += 4
+        elif asc_elem == "earth":
+            earth += 4
+        elif asc_elem == "air":
+            air += 4
+        elif asc_elem == "water":
+            water += 4
     if mc_sign_obj:
         mc_elem = mc_sign_obj.element
-        if mc_elem == "fire": fire += 4
-        elif mc_elem == "earth": earth += 4
-        elif mc_elem == "air": air += 4
-        elif mc_elem == "water": water += 4
+        if mc_elem == "fire":
+            fire += 4
+        elif mc_elem == "earth":
+            earth += 4
+        elif mc_elem == "air":
+            air += 4
+        elif mc_elem == "water":
+            water += 4
     elem_counts = {"fire": fire, "earth": earth, "air": air, "water": water}
     max_count = max(elem_counts.values())
     dom_elem = max(elem_counts, key=elem_counts.get) if max_count > 0 else None
@@ -152,14 +164,20 @@ def create_natal_chart(
     # Include Ascendant and MC signs (weighted at 4 each)
     if asc_sign_obj:
         asc_qual = asc_sign_obj.quality
-        if asc_qual == "cardinal": cardinal += 4
-        elif asc_qual == "fixed": fixed += 4
-        elif asc_qual == "mutable": mutable += 4
+        if asc_qual == "cardinal":
+            cardinal += 4
+        elif asc_qual == "fixed":
+            fixed += 4
+        elif asc_qual == "mutable":
+            mutable += 4
     if mc_sign_obj:
         mc_qual = mc_sign_obj.quality
-        if mc_qual == "cardinal": cardinal += 4
-        elif mc_qual == "fixed": fixed += 4
-        elif mc_qual == "mutable": mutable += 4
+        if mc_qual == "cardinal":
+            cardinal += 4
+        elif mc_qual == "fixed":
+            fixed += 4
+        elif mc_qual == "mutable":
+            mutable += 4
 
     # Dispositor chain (physical planets only)
     from astrololo.core.constants import SIGN_RULERS, SIGN_MODERN_RULERS

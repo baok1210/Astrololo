@@ -47,7 +47,9 @@ def create_transits(natal_subject: AstrologicalSubject,
         ))
 
     # Transit bodies
-    transit_planets = build_all_bodies(transit_jd, ascendant, mc, node_type)
+    from astrololo.core.ephemeris import is_daytime as calc_daytime
+    t_is_daytime = calc_daytime(transit_jd, natal_subject.latitude, natal_subject.longitude)
+    transit_planets = build_all_bodies(transit_jd, ascendant, mc, node_type, is_daytime=t_is_daytime)
 
     # Assign houses to transit planets
     for bp in transit_planets:
@@ -85,7 +87,7 @@ def create_transits(natal_subject: AstrologicalSubject,
         ascendant_sign=SIGN_ORDER[int(ascendant // 30) % 12],
         mc=round(mc, 4),
         mc_sign=SIGN_ORDER[int(mc // 30) % 12],
-        is_daytime=False,
+        is_daytime=t_is_daytime,
     )
 
     # Run interpretation on transit chart

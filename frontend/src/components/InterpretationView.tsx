@@ -15,6 +15,7 @@ const SECTION_TITLES: Record<string, [string, string]> = {
   planet_in_house: ['Hành Tinh Trong Nhà', 'Planets in Houses'],
   house_cusp: ['Ý Nghĩa Đỉnh Nhà', 'House Cusp Meanings'],
   aspect: ['Các Góc Chiếu', 'Aspects'],
+  aspect_synthesis: ['Tổng Hợp Góc Chiếu Theo Hành Tinh', 'Per-Planet Aspect Synthesis'],
   midpoints: ['Trung Điểm', 'Midpoints'],
   transit: ['Quá Cảnh Hành Tinh', 'Planetary Transits'],
   sun_moon: ['Kết Hợp Mặt Trời - Mặt Trăng', 'Sun-Moon Combination'],
@@ -24,7 +25,7 @@ const SECTION_TITLES: Record<string, [string, string]> = {
 const SECTION_COLORS: Record<string, string> = {
   synthesis: '#e0d0c0', dignity: '#e8d5c4', element: '#c4d8e8',
   planet_in_sign: '#d4e8c4', planet_in_house: '#e8e4c4',
-  aspect: '#e8c4d4', pattern: '#d5c4e8', dispositor: '#c4e8d8',
+  aspect: '#e8c4d4', aspect_synthesis: '#e0c4d4', pattern: '#d5c4e8', dispositor: '#c4e8d8',
   part_of_fortune: '#f5e6c8', combination: '#f0d8c4', house_placement: '#c8d4e8',
   house_distribution: '#d0e0e0', quality: '#e0d8d0', house_cusp: '#d8d0e0',
   midpoints: '#f0e0c0', transit: '#d0e8f0', sun_moon: '#f0e8d0', dominant_planet: '#f0d8d0',

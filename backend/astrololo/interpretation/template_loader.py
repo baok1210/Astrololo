@@ -49,36 +49,46 @@ def _enrich_dignity_text(
 ) -> str:
     if dignity == "neutral":
         return text
-    
+
     sign_keywords = get_sign_keywords(sign)
-    
+
     extra_parts = []
-    
+
     if dignity == "rulership":
         element = SIGN_KEYWORDS_VI.get(sign, {}).get("element", "")
         quality = SIGN_KEYWORDS_VI.get(sign, {}).get("mode", "")
         extra_parts.append(f"Đây là cung {element} {quality} - {SIGN_NAME_VI.get(sign, '')}, nơi {PLANET_REPRESENTS_VI.get(planet, '')} thể hiện trọn vẹn nhất.")
-        
+
     elif dignity == "exaltation":
         pos_keywords = sign_keywords.get("positive", [])[:3]
         if pos_keywords:
             extra_parts.append(f"Bạn sở hữu các đặc điểm: {'; '.join(pos_keywords)}.")
-            
+
+    elif dignity == "triplicity":
+        element = SIGN_KEYWORDS_VI.get(sign, {}).get("element", "")
+        extra_parts.append(f"{planet} thuộc cùng nhóm nguyên tố {element} với cung {sign}, tạo sự đồng điệu tự nhiên.")
+
+    elif dignity == "term":
+        extra_parts.append(f"{planet} nằm trong khoảng giới hạn (bounds) của mình tại cung {sign}, giúp tập trung năng lượng.")
+
+    elif dignity == "face":
+        extra_parts.append(f"{planet} ở một thập phân (decan) của cung {sign} mà nó quản lý, hỗ trợ nhẹ cho vị trí chính.")
+
     elif dignity == "detriment":
         neg_keywords = sign_keywords.get("negative", [])[:2]
         if neg_keywords:
             extra_parts.append(f"Bạn cần lưu ý các hạn chế: {'; '.join(neg_keywords)}.")
-            
+
     elif dignity == "fall":
         neg_keywords = sign_keywords.get("negative", [])[:2]
         if neg_keywords:
             extra_parts.append(f"Bạn cần lưu ý các thách thức: {'; '.join(neg_keywords)}.")
-    
+
     func_text = get_planet_function(planet)
     if func_text:
         func_short = func_text.split(".")[0] + "."
         extra_parts.append(func_short)
-    
+
     if extra_parts:
         return text + "\n\n" + "\n".join(f"  • {p}" for p in extra_parts)
     return text
@@ -498,7 +508,7 @@ def get_aspect(planet1: str, planet2: str, aspect_type: str, lang: str = "vi") -
             return {"title": f"{a_name}: {p1_name} - {p2_name}", "short": entry[:100], "detailed": entry}
         return entry
     if lang == "en":
-        return None
+        return _make_fallback_aspect_en(planet1, planet2, aspect_type)
     return _make_fallback_aspect(planet1, planet2, aspect_type)
 
 
@@ -595,6 +605,105 @@ def _make_fallback_aspect(planet1: str, planet2: str, aspect_type: str) -> Dict[
     detailed_parts.append(
         f"Sự kết hợp này {flow_desc}. Tác động cụ thể phụ thuộc vào bối cảnh tổng thể của lá số, "
         f"các góc chiếu khác và sự trưởng thành của bạn."
+    )
+
+    return {
+        "title": f"{a_name}: {p1_name} - {p2_name}",
+        "short": f"{p1_name} {a_name} {p2_name}: {nature_desc}",
+        "detailed": "\n\n".join(detailed_parts),
+    }
+
+
+def _make_fallback_aspect_en(planet1: str, planet2: str, aspect_type: str) -> Dict[str, Any]:
+    p1 = PLANETS.get(planet1)
+    p2 = PLANETS.get(planet2)
+    a = ASPECTS.get(aspect_type)
+    p1_name = p1.name_en if p1 else planet1
+    p2_name = p2.name_en if p2 else planet2
+    a_name = a.name_en if a else aspect_type
+
+    p1_func = get_planet_function(planet1)
+    p2_func = get_planet_function(planet2)
+
+    is_harmonious = a.nature in ("harmonious", "neutral") if a else True
+
+    nature_map = {
+        "conjunction": ("blends and merges", "blending the two energies"),
+        "sextile": ("supports gently and opens opportunities", "creates favorable conditions"),
+        "square": ("creates tension and drives action", "creates motivation to overcome challenges"),
+        "trine": ("harmonizes and flows easily", "allows energy to flow naturally"),
+        "opposition": ("creates polarity and complement", "calls for balance and awareness"),
+        "quincunx": ("demands adjustment and adaptation", "needs fine-tuning and flexibility"),
+        "semisextile": ("is subtle and not yet clear", "needs time to unfold"),
+        "semisquare": ("causes mild friction and irritation", "creates gentle pressure to adjust"),
+        "sesquiquadrate": ("builds simmering tension", "demands creative solutions"),
+        "quintile": ("brings talent and creativity", "carries special innate ability"),
+    }
+    default_harmonious = ("supports and resonates positively", "brings favorable growth opportunities")
+    default_challenging = ("creates tension and challenge", "demands adjustment and maturity")
+    nature_desc, flow_desc = nature_map.get(aspect_type, default_harmonious if is_harmonious else default_challenging)
+
+    pair_key = "_".join(sorted([planet1, planet2]))
+    pair_intro = {
+        "sun_moon": f"{p1_name} represents ego, identity and life purpose, while {p2_name} represents emotions, subconscious and need for security",
+        "sun_mercury": f"{p1_name} represents the self and vitality, while {p2_name} represents mind, communication and learning",
+        "sun_venus": f"{p1_name} represents identity and purpose, while {p2_name} represents love, beauty and personal values",
+        "sun_mars": f"{p1_name} represents willpower and life purpose, while {p2_name} represents action, drive and the urge to conquer",
+        "sun_jupiter": f"{p1_name} represents the self and assertion, while {p2_name} represents expansion, luck and philosophy",
+        "sun_saturn": f"{p1_name} represents the self and radiance, while {p2_name} represents discipline, responsibility and limits",
+        "sun_uranus": f"{p1_name} represents the self and stability, while {p2_name} represents breakthrough, freedom and innovation",
+        "sun_neptune": f"{p1_name} represents the self and boundaries, while {p2_name} represents dissolution, dreams and spirituality",
+        "sun_pluto": f"{p1_name} represents the self and life, while {p2_name} represents transformation, power and rebirth",
+        "moon_mercury": f"{p1_name} represents emotions and intuition, while {p2_name} represents reason and logical thought",
+        "moon_venus": f"{p1_name} represents emotional needs, while {p2_name} represents love, harmony and aesthetics",
+        "moon_mars": f"{p1_name} represents emotions and need for safety, while {p2_name} represents action, drive and assertiveness",
+        "moon_jupiter": f"{p1_name} represents the inner world and feelings, while {p2_name} represents optimism, expansion and faith",
+        "moon_saturn": f"{p1_name} represents emotions and need for protection, while {p2_name} represents responsibility, discipline and restriction",
+        "venus_mars": f"{p1_name} represents love, harmony and values, while {p2_name} represents passion, action and conquest",
+        "venus_jupiter": f"{p1_name} represents love and beauty, while {p2_name} represents luck, expansion and optimism",
+        "venus_saturn": f"{p1_name} represents love and bonding, while {p2_name} represents responsibility, discipline and challenge",
+        "mars_jupiter": f"{p1_name} represents action and drive, while {p2_name} represents expansion, luck and optimism",
+        "mars_saturn": f"{p1_name} represents action and impulse, while {p2_name} represents discipline, limits and patience",
+        "jupiter_saturn": f"{p1_name} represents expansion and optimism, while {p2_name} represents discipline, responsibility and structure",
+        "uranus_neptune": f"{p1_name} represents breakthrough and innovation, while {p2_name} represents ideals, dreams and spirituality",
+        "uranus_pluto": f"{p1_name} represents revolutionary change, while {p2_name} represents deep transformation and rebirth",
+        "neptune_pluto": f"{p1_name} represents dissolution and spirituality, while {p2_name} represents power and radical transformation",
+    }
+
+    if pair_key in pair_intro:
+        pair_text = pair_intro[pair_key]
+    else:
+        pair_text = f"{p1_name} and {p2_name}: two celestial energies interacting"
+
+    aspect_behavior = {
+        "conjunction": "The energies of the two planets blend and amplify each other, forming a powerful unified force in your personality.",
+        "sextile": "This is an opportunistic aspect, encouraging you to leverage the potential of this combination for personal growth.",
+        "square": "This aspect creates inner conflict and external challenges, pushing you to act, overcome obstacles and mature.",
+        "trine": "Energy flows naturally and harmoniously between these two planets, bringing innate talents and effortless advantages.",
+        "opposition": "This aspect creates tension between opposite poles, inviting you to find balance and see from multiple perspectives.",
+        "quincunx": "This aspect demands constant adjustment, helping you develop flexibility and adaptability to unexpected situations.",
+        "semisextile": "This aspect carries hidden potential, waiting for the right time to unfold and develop.",
+    }
+    behavior_text = aspect_behavior.get(aspect_type, "")
+
+    detailed_parts = [
+        f"{p1_name} {a_name} {p2_name}: this {a_name} {nature_desc} between {p1_name} and {p2_name}.",
+        pair_text + ".",
+    ]
+
+    if behavior_text:
+        detailed_parts.append(behavior_text)
+
+    if p1_func:
+        p1_short = p1_func.split(".")[0] + "."
+        detailed_parts.append(f"{p1_name}: {p1_short}")
+    if p2_func:
+        p2_short = p2_func.split(".")[0] + "."
+        detailed_parts.append(f"{p2_name}: {p2_short}")
+
+    detailed_parts.append(
+        f"This combination {flow_desc}. The specific impact depends on the overall chart context, "
+        f"other aspects and your personal maturity level."
     )
 
     return {

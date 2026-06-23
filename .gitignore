@@ -63,7 +63,7 @@ Thumbs.db
 *.rej
 
 # Debug scripts
--w/
+-w
 debug_houses.py
 fetch2.py
 show2.py

@@ -11,6 +11,7 @@ _RULE_MODULES = [
     "astrololo.interpretation.rules.planet_in_sign_rule",
     "astrololo.interpretation.rules.planet_in_house_rule",
     "astrololo.interpretation.rules.aspect_rules",
+    "astrololo.interpretation.rules.aspect_synthesis_rule",
     "astrololo.interpretation.rules.dignity_rules",
     "astrololo.interpretation.rules.retrograde_rule",
     "astrololo.interpretation.rules.moon_phase_rule",

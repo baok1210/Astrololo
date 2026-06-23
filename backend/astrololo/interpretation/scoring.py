@@ -3,6 +3,7 @@ from astrololo.models.chart import ChartData, PlanetPosition
 from astrololo.core.constants import (
     get_dignity_score,
     HOUSES,
+    MINOR_DIGNITY_SCORES,
 )
 
 
@@ -21,8 +22,9 @@ class ChartScorer:
             if a.planet1 == planet.name or a.planet2 == planet.name:
                 aspect_score += a.weight
 
-        # Essential dignity: purely planet-in-sign quality
-        essential = dignity
+        # Essential dignity: planet-in-sign quality + minor dignities (triplicity, term, face)
+        minor_bonus = sum(MINOR_DIGNITY_SCORES.get(d, 0) for d in planet.minor_dignities)
+        essential = dignity + minor_bonus
         # Accidental dignity: house + aspects + rulership bonuses
         accidental = house_weight + aspect_score
 

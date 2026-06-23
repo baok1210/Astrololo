@@ -12,7 +12,7 @@ from typing import List, Optional
 from astrololo.models.chart import BodyPosition
 from astrololo.core.constants import (
     PLANETS, SIGNS, SIGN_ORDER, PLANET_ORDER,
-    get_dignity_score, get_dignity_label,
+    get_dignity_score, get_dignity_score_full,
     get_element, get_quality,
 )
 from astrololo.core.ephemeris import (
@@ -36,7 +36,7 @@ def _to_sign_en(longitude: float) -> str:
     return SIGNS[_to_sign(longitude)].name_en
 
 
-def _build_one(jd_ut: float, pk: str) -> Optional[BodyPosition]:
+def _build_one(jd_ut: float, pk: str, is_daytime: bool = True) -> Optional[BodyPosition]:
     """Build a single BodyPosition for planet/asteroid key pk."""
     if pk not in PLANETS:
         return None
@@ -47,6 +47,7 @@ def _build_one(jd_ut: float, pk: str) -> Optional[BodyPosition]:
     sign = _to_sign(lon)
     pos_in_sign = lon % 30
     is_retro = speed < 0
+    dignity_info = get_dignity_score_full(pk, sign, pos_in_sign, is_daytime)
     return BodyPosition(
         body_type="planet",
         name=pk,
@@ -65,18 +66,19 @@ def _build_one(jd_ut: float, pk: str) -> Optional[BodyPosition]:
         element=get_element(sign),
         quality=get_quality(sign),
         dignity_score=get_dignity_score(pk, sign),
-        dignity_label=get_dignity_label(pk, sign),
+        dignity_label=dignity_info["label"],
+        minor_dignities=[d for d in dignity_info["dignities"] if d not in ("rulership", "exaltation", "detriment", "fall", "neutral")],
         declination=round(calc_declination(jd_ut, pk), 4) if HAS_SWISSEPH else 0.0,
     )
 
 
-def build_planets(jd_ut: float) -> List[BodyPosition]:
+def build_planets(jd_ut: float, is_daytime: bool = True) -> List[BodyPosition]:
     """Build body_type='planet' entries for Sun through Pluto plus asteroids."""
     bodies = []
     for pk in PLANET_ORDER:
         if pk in _ADDITIONAL_KEYS:
             continue  # handled by build_additional
-        bp = _build_one(jd_ut, pk)
+        bp = _build_one(jd_ut, pk, is_daytime)
         if bp:
             bodies.append(bp)
     return bodies
@@ -115,14 +117,14 @@ def _calc_lilith_from_node(jd_ut: float, node_type: str = "mean") -> Optional[Bo
     )
 
 
-def build_additional(jd_ut: float, node_type: str = "mean") -> List[BodyPosition]:
+def build_additional(jd_ut: float, node_type: str = "mean", is_daytime: bool = True) -> List[BodyPosition]:
     """Build Chiron, asteroids, Lilith (body_type='planet')."""
     bodies = []
     for pk in _ADDITIONAL_KEYS:
         if pk == "lilith":
             bp = _calc_lilith_from_node(jd_ut, node_type)
         else:
-            bp = _build_one(jd_ut, pk)
+            bp = _build_one(jd_ut, pk, is_daytime)
         if bp:
             bodies.append(bp)
     return bodies
@@ -202,11 +204,11 @@ def build_angles(asc: float, mc: float) -> List[BodyPosition]:
     return bodies
 
 
-def build_all_bodies(jd_ut: float, asc: float, mc: float, node_type: str = "mean") -> List[BodyPosition]:
+def build_all_bodies(jd_ut: float, asc: float, mc: float, node_type: str = "mean", is_daytime: bool = True) -> List[BodyPosition]:
     """Build ALL celestial bodies for a chart: planets + asteroids + nodes + angles.
 
     Returns a flat list of BodyPosition with body_type correctly set.
     The chart's .planets field stores ALL bodies; consumers filter by body_type.
     node_type: 'mean' (default) or 'true'.
     """
-    return build_planets(jd_ut) + build_additional(jd_ut, node_type) + build_nodes(jd_ut, node_type) + build_angles(asc, mc)
+    return build_planets(jd_ut, is_daytime) + build_additional(jd_ut, node_type, is_daytime) + build_nodes(jd_ut, node_type) + build_angles(asc, mc)

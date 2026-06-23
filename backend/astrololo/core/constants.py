@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any
 
 
 @dataclass(frozen=True)
@@ -864,6 +864,57 @@ DIGNITY_SCORES = {
 }
 
 
+# Triplicity rulers (day/night) — Ptolemaic system
+TRIPLICITY_RULERS: Dict[str, Dict[str, str]] = {
+    "fire": {"day": "sun", "night": "jupiter"},
+    "earth": {"day": "venus", "night": "moon"},
+    "air": {"day": "saturn", "night": "mercury"},
+    "water": {"day": "venus", "night": "mars"},
+}
+
+
+# Egyptian Terms (Ptolemaic bounds) — each sign has 5 segments with a ruler
+# Format: sign -> [(end_degree, ruler), ...]
+TERM_RULERS: Dict[str, List[tuple]] = {
+    "aries": [(6, "saturn"), (12, "jupiter"), (20, "venus"), (25, "mercury"), (30, "mars")],
+    "taurus": [(8, "venus"), (14, "mercury"), (22, "jupiter"), (27, "saturn"), (30, "mars")],
+    "gemini": [(6, "mercury"), (12, "jupiter"), (17, "venus"), (24, "saturn"), (30, "mars")],
+    "cancer": [(6, "mars"), (13, "jupiter"), (20, "mercury"), (27, "venus"), (30, "saturn")],
+    "leo": [(6, "saturn"), (13, "jupiter"), (19, "mars"), (25, "venus"), (30, "mercury")],
+    "virgo": [(7, "mercury"), (13, "venus"), (18, "jupiter"), (24, "saturn"), (30, "mars")],
+    "libra": [(6, "saturn"), (12, "jupiter"), (19, "venus"), (25, "mercury"), (30, "mars")],
+    "scorpio": [(6, "mars"), (11, "jupiter"), (19, "venus"), (24, "mercury"), (30, "saturn")],
+    "sagittarius": [(8, "jupiter"), (14, "venus"), (19, "mercury"), (25, "saturn"), (30, "mars")],
+    "capricorn": [(6, "saturn"), (12, "jupiter"), (19, "mars"), (25, "venus"), (30, "mercury")],
+    "aquarius": [(6, "mercury"), (12, "jupiter"), (20, "venus"), (25, "saturn"), (30, "mars")],
+    "pisces": [(8, "mars"), (14, "jupiter"), (20, "venus"), (26, "mercury"), (30, "saturn")],
+}
+
+
+# Face rulers (Chaldean decans) — each sign has 3 decans of 10°
+FACE_RULERS: Dict[str, List[tuple]] = {
+    "aries": [(10, "mars"), (20, "sun"), (30, "venus")],
+    "taurus": [(10, "mercury"), (20, "moon"), (30, "saturn")],
+    "gemini": [(10, "jupiter"), (20, "mars"), (30, "sun")],
+    "cancer": [(10, "venus"), (20, "mercury"), (30, "moon")],
+    "leo": [(10, "saturn"), (20, "jupiter"), (30, "mars")],
+    "virgo": [(10, "sun"), (20, "venus"), (30, "mercury")],
+    "libra": [(10, "moon"), (20, "saturn"), (30, "jupiter")],
+    "scorpio": [(10, "mars"), (20, "sun"), (30, "venus")],
+    "sagittarius": [(10, "mercury"), (20, "moon"), (30, "saturn")],
+    "capricorn": [(10, "jupiter"), (20, "mars"), (30, "sun")],
+    "aquarius": [(10, "venus"), (20, "mercury"), (30, "moon")],
+    "pisces": [(10, "saturn"), (20, "jupiter"), (30, "mars")],
+}
+
+
+MINOR_DIGNITY_SCORES = {
+    "triplicity": 3,
+    "term": 2,
+    "face": 1,
+}
+
+
 PLANET_IN_SIGN_DIGNITY: Dict[str, Dict[str, Dict[str, Optional[int]]]] = {
     "sun": {
         "aries": {"rulership": None, "exaltation": 4, "detriment": None, "fall": None},
@@ -1381,6 +1432,65 @@ def get_dignity_score(planet_key: str, sign_key: str) -> int:
         if score is not None:
             return score
     return 0
+
+
+def get_dignity_score_full(planet_key: str, sign_key: str, degree: float, is_daytime: bool = True) -> Dict[str, Any]:
+    """Get comprehensive dignity info including minor dignities (triplicity, term, face)."""
+    s = SIGNS.get(sign_key)
+    element = s.element if s else ""
+    result: Dict[str, Any] = {
+        "score": 0,
+        "label": "neutral",
+        "dignities": [],
+    }
+
+    # 1. Primary dignities (rulership, exaltation, detriment, fall)
+    primary = PLANET_IN_SIGN_DIGNITY.get(planet_key, {}).get(sign_key, {})
+    primary_label = "neutral"
+    for dtype, score in primary.items():
+        if score is not None:
+            primary_label = dtype
+            result["score"] += score
+            result["dignities"].append(dtype)
+            break
+
+    if primary_label == "detriment" or primary_label == "fall":
+        result["label"] = primary_label
+        return result  # negative dignity overrides everything
+
+    # 2. Triplicity ruler
+    if element and planet_key in TRIPLICITY_RULERS.get(element, {}).values():
+        tri_key = "day" if is_daytime else "night"
+        if TRIPLICITY_RULERS.get(element, {}).get(tri_key) == planet_key:
+            result["score"] += MINOR_DIGNITY_SCORES["triplicity"]
+            result["dignities"].append("triplicity")
+
+    # 3. Term ruler
+    terms = TERM_RULERS.get(sign_key, [])
+    for end_deg, ruler in terms:
+        if degree < end_deg:
+            if ruler == planet_key:
+                result["score"] += MINOR_DIGNITY_SCORES["term"]
+                result["dignities"].append("term")
+            break
+
+    # 4. Face ruler (decan)
+    faces = FACE_RULERS.get(sign_key, [])
+    for end_deg, ruler in faces:
+        if degree < end_deg:
+            if ruler == planet_key:
+                result["score"] += MINOR_DIGNITY_SCORES["face"]
+                result["dignities"].append("face")
+            break
+
+    # Determine best label
+    label_priority = ["rulership", "exaltation", "triplicity", "term", "face", "neutral", "detriment", "fall"]
+    for lp in label_priority:
+        if lp in result["dignities"] or lp == primary_label:
+            result["label"] = lp if lp in result["dignities"] else primary_label
+            break
+
+    return result
 
 
 def get_dignity_label(planet_key: str, sign_key: str) -> str:
