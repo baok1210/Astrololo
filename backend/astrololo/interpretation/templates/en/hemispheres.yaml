@@ -1,0 +1,5 @@
+Northern: "Northern hemisphere (houses 1-6) emphasis: {count}/{total} planets. Personal, subjective, self-focused. You tend to act based on personal needs and subjective experience."
+Southern: "Southern hemisphere (houses 7-12) emphasis: {count}/{total} planets. Social, objective, other-focused. You tend to be outgoing and concerned with relationships."
+Eastern: "Eastern hemisphere (houses 1-3, 10-12) emphasis: {count}/{total} planets. Self-assertive and initiating. You take charge of your own destiny."
+Western: "Western hemisphere (houses 4-9) emphasis: {count}/{total} planets. Responsive and interactive. You respond to the outside world and are influenced by others."
+Balanced: "Hemispheres are balanced — {count_north}/{total} North vs {count_south}/{total} South, {count_east}/{total} East vs {count_west}/{total} West. You balance self-focus with other-focus, initiative with responsiveness."

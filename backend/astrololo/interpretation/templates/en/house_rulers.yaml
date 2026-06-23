@@ -1,0 +1,2 @@
+intro: "Every house in the chart has a ruling planet (dispositor). The placement of the ruling planet reveals the energy source and life area influencing that house."
+placement: "House {house} (ruled by {ruler}) has {ruler_en} in House {ruler_house}: Matters of House {house} are expressed through the lens and energy of House {ruler_house}. {ruler}'s placement in House {ruler_house} directly influences how you experience the domain of House {house}."

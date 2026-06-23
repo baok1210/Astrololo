@@ -1,0 +1,118 @@
+name: Astrololo CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  PYTHON_VERSION: "3.11"
+  NODE_VERSION: "20"
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+        node-version: ["20"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install Python dependencies
+        run: |
+          cd backend
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Install Node.js dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Run backend tests
+        run: |
+          cd backend
+          python -m backend.tests.backtest
+
+      - name: Run frontend type check
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Lint Python code
+        run: |
+          cd backend
+          python -m pip install ruff
+          ruff check .
+
+      - name: Lint TypeScript
+        run: |
+          cd frontend
+          npm install -g typescript
+          npx tsc --noEmit
+
+  build-and-deploy:
+    name: Build and Deploy
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Set up Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Build backend
+        run: |
+          cd backend
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install build
+          python -m build
+
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Create distribution package
+        run: |
+          mkdir -p dist
+          cp -r backend/dist/* dist/ 2>/dev/null || true
+          cp -r frontend/dist dist/
+
+      - name: Deploy to production (example - replace with your deployment method)
+        run: |
+          echo "Deploying version ${{ github.ref_name }} to production"
+          # Add your deployment commands here
+          # For example: docker build and push, or upload to cloud storage

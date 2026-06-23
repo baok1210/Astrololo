@@ -1,0 +1,71 @@
+grand_trine:
+  title: Grand Trine
+  condition: 3 planets mutual trines in same element
+  fire: |
+    Grand Trine in Fire element: Natural talent for leadership, creativity, and inspiration.
+    You have an innate ability to initiate and guide others. Things come easily to you,
+    but beware of laziness — when everything flows too smoothly, you may lose motivation.
+  earth: |
+    Grand Trine in Earth element: Solid material-building ability. You have talent in
+    financial management, patience, and practicality. Success comes through persistence
+    rather than breakthroughs. Watch out for stagnation and stubbornness.
+  air: |
+    Grand Trine in Air element: Excellent thinking, skillful communication. You naturally
+    connect ideas and people. Intelligent and objective, but may become detached from
+    emotional realities. Need to stay grounded.
+  water: |
+    Grand Trine in Water element: Powerful intuition, deep empathy. You naturally understand
+    others' emotions. Rich imagination, artistic talent. However, tendency to be
+    overwhelmed by emotions and lose touch with reality.
+tsquare:
+  title: T-Square
+  condition: 2 planets opposition, both square a 3rd planet
+  cardinal: |
+    Cardinal T-Square: Intense pressure to act. You have strong ambition and always want
+    to move forward, but impatience often leads to mistakes. The lesson is learning to slow
+    down and think before acting.
+  fixed: |
+    Fixed T-Square: Stubborn determination. You hold your ground whether right or wrong,
+    finding it hard to adapt to change. The lesson is learning flexibility and when to let go.
+  mutable: |
+    Mutable T-Square: Highly adaptable but easily scattered. You have many talents but
+    lack focus on a single goal. The lesson is prioritization and consistency.
+grand_cross:
+  title: Grand Cross
+  cardinal: |
+    Cardinal Grand Cross: Crisis of action. You constantly face pressure to act from all
+    directions, easily leading to burnout. The lesson is finding balance between action and rest,
+    between initiating and listening.
+  fixed: |
+    Fixed Grand Cross: Crisis of endurance. Persistent challenges demand extreme patience.
+    You have extraordinary strength if you overcome them, but easily get stuck in stubbornness.
+  mutable: |
+    Mutable Grand Cross: Crisis of adaptation. Life constantly shifts around you,
+    creating chaos and instability. The lesson is staying centered amid all change.
+yod:
+  title: Yod (Finger of God)
+  text: |
+    The Yod is one of the most fateful configurations in astrology. Two planets in sextile (60°)
+    both form a quincunx (150°) to a third apex planet. This creates special pressure on the
+    apex planet, compelling it to fulfill an important mission. You experience fated events,
+    meetings, and opportunities that arrive at precisely the right moment.
+stellium:
+  title: Stellium
+  text: |
+    A Stellium is a concentration of 3 or more planets in the same sign or house.
+    This creates extreme specialization in the corresponding life area. The energy of these
+    planets combines to create a very powerful life theme.
+    Strength: outstanding talent in this area.
+    Weakness: imbalance — other life areas may be neglected.
+kite:
+  title: Kite
+  text: |
+    The Kite is a Grand Trine activated by an opposition point. The energy of the Grand Trine
+    is channeled and released through the apex of the kite. You have innate talents (Grand Trine)
+    focused on a specific goal (apex point), creating exceptional potential for success.
+mystic_rectangle:
+  title: Mystic Rectangle
+  text: |
+    Two opposition pairs combine with two sextiles and two trines, forming a rectangle.
+    This is a balanced and harmonious configuration allowing energy to flow smoothly between
+    opposing points. You have the ability to creatively integrate opposites.

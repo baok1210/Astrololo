@@ -1,0 +1,5 @@
+Northern: "Bán cầu Bắc (nhà 1-6) nổi bật: {count}/{total} hành tinh. Thiên về cá nhân, chủ quan và tập trung vào bản thân. Bạn có xu hướng hành động dựa trên nhu cầu cá nhân và trải nghiệm chủ quan."
+Southern: "Bán cầu Nam (nhà 7-12) nổi bật: {count}/{total} hành tinh. Thiên về xã hội, khách quan và tập trung vào người khác. Bạn có xu hướng hướng ngoại và quan tâm đến các mối quan hệ."
+Eastern: "Bán cầu Đông (nhà 1-3, 10-12) nổi bật: {count}/{total} hành tinh. Thiên về chủ động và tự khởi xướng. Bạn là người chủ động tạo ra số phận của mình."
+Western: "Bán cầu Tây (nhà 4-9) nổi bật: {count}/{total} hành tinh. Thiên về phản ứng và tương tác. Bạn là người phản ứng với thế giới bên ngoài và chịu ảnh hưởng từ người khác."
+Balanced: "Các bán cầu cân bằng — {count_north}/{total} Bắc vs {count_south}/{total} Nam, {count_east}/{total} Đông vs {count_west}/{total} Tây. Bạn có sự cân bằng giữa tập trung vào bản thân và người khác, giữa chủ động và phản ứng."

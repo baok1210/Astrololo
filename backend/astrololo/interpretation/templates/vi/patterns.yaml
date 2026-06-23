@@ -1,0 +1,81 @@
+grand_trine:
+  title: "Grand Trine (Tam Hợp Lớn)"
+  condition: "3 planets mutual trines in same element"
+  fire: |
+    Grand Trine nguyên tố Lửa: Tài năng thiên bẩm về lãnh đạo, sáng tạo và truyền cảm hứng.
+    Bạn có khả năng tự nhiên trong việc khởi xướng và dẫn dắt người khác. Mọi thứ đến dễ dàng,
+    nhưng cẩn thận với sự lười biếng - khi mọi thứ quá thuận lợi, bạn dễ mất động lực.
+  earth: |
+    Grand Trine nguyên tố Đất: Khả năng xây dựng vật chất vững chắc. Bạn có tài năng trong
+    quản lý tài chính, kiên nhẫn và thực tế. Thành công đến từ sự bền bỉ hơn là đột phá.
+    Cẩn thận với sự trì trệ và bảo thủ - hãy chấp nhận thay đổi.
+  air: |
+    Grand Trine nguyên tố Khí: Tư duy xuất sắc, giao tiếp tài tình. Bạn có khả năng kết nối
+    ý tưởng và con người một cách tự nhiên. Thông minh, khách quan, nhưng dễ xa rời cảm xúc
+    thực tế. Cần kết nối với thế giới vật chất và cảm xúc.
+  water: |
+    Grand Trine nguyên tố Nước: Trực giác mạnh mẽ, đồng cảm sâu sắc. Bạn có khả năng thấu hiểu
+    cảm xúc người khác một cách tự nhiên. Giàu trí tưởng tượng, tài năng nghệ thuật.
+    Tuy nhiên, dễ chìm đắm trong cảm xúc và mất kết nối với thực tế.
+
+tsquare:
+  title: "T-Square (Hình Chữ T)"
+  condition: "2 planets opposition, both square a 3rd planet"
+  cardinal: |
+    T-Square Cardinal: Áp lực hành động mạnh mẽ. Bạn có tham vọng lớn và luôn muốn tiến lên
+    phía trước, nhưng thiếu kiên nhẫn thường dẫn đến sai lầm. Bài học là học cách chậm lại
+    và suy nghĩ trước khi hành động.
+  fixed: |
+    T-Square Fixed: Kiên định đến mức bướng bỉnh. Bạn giữ vững lập trường dù đúng hay sai,
+    khó thích nghi với thay đổi. Bài học là học cách linh hoạt và buông bỏ khi cần thiết.
+  mutable: |
+    T-Square Mutable: Thích nghi tốt nhưng dễ phân tán năng lượng. Bạn có nhiều tài năng
+    nhưng thiếu tập trung vào một mục tiêu duy nhất. Bài học là ưu tiên và kiên định.
+
+grand_cross:
+  title: "Grand Cross (Hình Chữ Thập)"
+  cardinal: |
+    Grand Cross Cardinal: Khủng hoảng hành động. Bạn liên tục đối mặt với áp lực phải hành
+    động từ mọi phía, dễ dẫn đến kiệt sức. Bài học là tìm sự cân bằng giữa hành động và nghỉ ngơi,
+    giữa khởi xướng và lắng nghe.
+  fixed: |
+    Grand Cross Fixed: Khủng hoảng bền bỉ. Những thử thách dai dẳng đòi hỏi sự kiên nhẫn tột
+    cùng. Bạn có sức mạnh phi thường nếu vượt qua được, nhưng dễ mắc kẹt trong sự bảo thủ.
+  mutable: |
+    Grand Cross Mutable: Khủng hoảng thích nghi. Cuộc sống liên tục thay đổi xung quanh bạn,
+    tạo ra hỗn loạn và bất ổn. Bài học là giữ vững trung tâm giữa mọi biến động.
+
+yod:
+  title: "Yod (Ngón Tay Thượng Đế)"
+  text: |
+    Yod là một trong những cấu hình định mệnh nhất trong chiêm tinh. Hai hành tinh ở thế lục hợp
+    (60°) cùng chiếu vào một hành tinh đỉnh qua góc bát xung (150°). Điều này tạo ra một áp lực
+    đặc biệt lên hành tinh đỉnh, buộc nó phải thực hiện một sứ mệnh quan trọng. Bạn có những
+    sự kiện định mệnh trong cuộc đời, những cuộc gặp gỡ và cơ hội đến vào đúng thời điểm.
+  score: 26
+
+stellium:
+  title: "Stellium"
+  text: |
+    Stellium là sự tập trung của 3 hành tinh trở lên trong cùng một cung hoặc một nhà.
+    Điều này tạo ra sự chuyên biệt hóa cực độ trong lĩnh vực tương ứng. Năng lượng của
+    các hành tinh này kết hợp với nhau, tạo ra một chủ đề cuộc sống rất mạnh mẽ.
+    Điểm mạnh: bạn có tài năng vượt trội trong lĩnh vực này.
+    Điểm yếu: sự mất cân bằng - các lĩnh vực khác trong cuộc sống có thể bị bỏ quên.
+
+kite:
+  title: "Kite (Cánh Diều)"
+  text: |
+    Cánh Diều là Grand Trine được kích hoạt bởi một điểm đối xung. Năng lượng của Grand Trine
+    được định hướng và giải phóng qua điểm đỉnh của cánh diều. Bạn có tài năng thiên bẩm
+    (Grand Trine) được tập trung vào một mục tiêu cụ thể (điểm đỉnh), tạo ra khả năng
+    thành công vượt trội trong lĩnh vực đó.
+  score: 25
+
+mystic_rectangle:
+  title: "Mystic Rectangle (Hình Chữ Nhật Bí Ẩn)"
+  text: |
+    Hai cặp đối xung kết hợp với hai lục hợp và hai tam hợp, tạo thành một hình chữ nhật.
+    Đây là cấu hình cân bằng và hài hòa, cho phép năng lượng chảy thông suốt giữa các điểm
+    đối lập. Bạn có khả năng kết hợp những mặt đối lập một cách sáng tạo.
+  score: 18

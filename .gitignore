@@ -1,0 +1,86 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Build artifacts
+frontend/dist/
+backend/astrololo.egg-info/
+*.tsbuildinfo
+
+# Temporary
+*.tmp
+*.log
+
+# IDE cache
+.cache
+
+# Data files
+*.sqlite3
+*.db
+
+# Package manager
+*.lock
+
+# Python virtual environments
+env/
+venv/
+node_modules/
+
+# Cache
+.pytest_cache/
+.ruff_cache/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# OS generated files
+.*.swp
+*.bak
+*.orig
+*.rej
+
+# Debug scripts
+-w/
+debug_houses.py
+fetch2.py
+show2.py
+verify_fetch.py
+verify_show.py
+verify.json
+verify_out.txt
+out2.json
+out2.txt
+features_en.txt
+features_vi.txt
+
+# Server logs
+backend/backend.err
+backend/server_stderr.txt
+backend/server_stdout.txt
+backend/test_output.txt
+backend/long_entries_remaining.txt
+backend/overview_vi.txt
+frontend/frontend.err
