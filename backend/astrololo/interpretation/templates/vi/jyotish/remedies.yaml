@@ -1,0 +1,128 @@
+# Navagraha Remedies / Parihara — Vietnamese
+# Sourced from "Navagraha 2 – Remedy Parihara, Chữa lành với Graha"
+
+surya:
+  title: "Biện pháp cho Surya (Mặt Trời)"
+  mantra: "Om Hraam Hreem Hroum Sah Suryaya Namah"
+  gemstone: "Hồng ngọc (Ruby)"
+  color: "Đỏ, cam"
+  day: "Chủ Nhật"
+  deity: "Surya Narayana"
+  remedies:
+    - "Tụng Aditya Hridayam mỗi sáng"
+    - "Dâng nước cho Mặt Trời lúc bình minh (Surya Arghya)"
+    - "Ăn lúa mì, đường thốt nốt vào Chủ Nhật"
+    - "Tôn kính cha và các nhân vật có quyền lực"
+    - "Thiền định hướng về Đông vào buổi sáng"
+
+chandra:
+  title: "Biện pháp cho Chandra (Mặt Trăng)"
+  mantra: "Om Shraam Shreem Shroum Sah Chandraya Namah"
+  gemstone: "Ngọc trai (Pearl)"
+  color: "Trắng, bạc"
+  day: "Thứ Hai"
+  deity: "Shiva, Durga"
+  remedies:
+    - "Uống sữa hoặc nước dừa vào Thứ Hai"
+    - "Dâng gạo trắng và hoa trắng cho Shiva"
+    - "Thiền định dưới ánh trăng tròn"
+    - "Chăm sóc mẹ và phụ nữ lớn tuổi"
+    - "Tụng Chandra mantra 108 lần vào Thứ Hai"
+
+mangala:
+  title: "Biện pháp cho Mangala (Hỏa Tinh)"
+  mantra: "Om Kraam Kreem Kroum Sah Bhaumaya Namah"
+  gemstone: "San hô đỏ (Red Coral)"
+  color: "Đỏ"
+  day: "Thứ Ba"
+  deity: "Hanuman, Kartikeya"
+  remedies:
+    - "Tụng Hanuman Chalisa vào Thứ Ba"
+    - "Ăn đậu lăng đỏ (masoor dal) vào Thứ Ba"
+    - "Tập thể dục và duy trì kỷ luật thể chất"
+    - "Dâng hoa đỏ cho Hanuman"
+    - "Tránh tranh cãi và bạo lực vào Thứ Ba"
+
+budha:
+  title: "Biện pháp cho Budha (Thủy Tinh)"
+  mantra: "Om Braam Breem Broum Sah Budhaya Namah"
+  gemstone: "Ngọc lục bảo (Emerald)"
+  color: "Xanh lá"
+  day: "Thứ Tư"
+  deity: "Vishnu, Ganesha"
+  remedies:
+    - "Tụng Vishnu Sahasranama vào Thứ Tư"
+    - "Ăn rau xanh và đậu xanh (moong dal) vào Thứ Tư"
+    - "Học hỏi, đọc sách và phát triển trí tuệ"
+    - "Dâng hoa xanh và lá tulsi cho Vishnu"
+    - "Giữ lời hứa và giao tiếp trung thực"
+
+guru:
+  title: "Biện pháp cho Guru (Mộc Tinh)"
+  mantra: "Om Graam Greem Groum Sah Gurave Namah"
+  gemstone: "Hoàng ngọc (Yellow Sapphire)"
+  color: "Vàng, cam"
+  day: "Thứ Năm"
+  deity: "Brihaspati, Dakshinamurthy"
+  remedies:
+    - "Tụng Guru Stotram vào Thứ Năm"
+    - "Ăn đậu chick pea (chana dal) và nghệ vào Thứ Năm"
+    - "Tôn kính thầy giáo và người hướng dẫn tâm linh"
+    - "Dâng hoa vàng và quả chuối cho thần"
+    - "Dạy học hoặc chia sẻ kiến thức miễn phí"
+
+shukra:
+  title: "Biện pháp cho Shukra (Kim Tinh)"
+  mantra: "Om Draam Dreem Droum Sah Shukraya Namah"
+  gemstone: "Kim cương (Diamond) hoặc Zircon trắng"
+  color: "Trắng, pastel"
+  day: "Thứ Sáu"
+  deity: "Lakshmi, Saraswati"
+  remedies:
+    - "Tụng Shri Suktam hoặc Lakshmi Stotram vào Thứ Sáu"
+    - "Dâng hoa trắng và nước hoa cho Lakshmi"
+    - "Ăn sữa chua và gạo trắng vào Thứ Sáu"
+    - "Phát triển nghệ thuật, âm nhạc, thẩm mỹ"
+    - "Tôn trọng phụ nữ và vợ/chồng"
+
+shani:
+  title: "Biện pháp cho Shani (Thổ Tinh)"
+  mantra: "Om Praam Preem Proum Sah Shanaischaraya Namah"
+  gemstone: "Lam ngọc (Blue Sapphire) — cần thử trước khi đeo"
+  color: "Đen, tím đậm, xanh navy"
+  day: "Thứ Bảy"
+  deity: "Shani Dev, Hanuman"
+  remedies:
+    - "Tụng Shani Chalisa hoặc Shani Stotram vào Thứ Bảy"
+    - "Dâng dầu mè đen và hoa đen cho Shani"
+    - "Phục vụ người già, người tàn tật và người lao động"
+    - "Ăn urad dal (đậu đen) vào Thứ Bảy"
+    - "Duy trì kỷ luật, trung thực và chăm chỉ"
+
+rahu:
+  title: "Biện pháp cho Rahu (La Hầu)"
+  mantra: "Om Bhraam Bhreem Bhroum Sah Rahave Namah"
+  gemstone: "Hessonite (Gomed)"
+  color: "Xám khói, xanh dương đậm"
+  day: "Thứ Bảy hoặc Thứ Tư"
+  deity: "Durga, Saraswati"
+  remedies:
+    - "Tụng Durga Chalisa hoặc Rahu mantra"
+    - "Dâng dừa nguyên trái tại ngã tư đường"
+    - "Ăn tỏi đen và urad dal"
+    - "Thiền định để kiểm soát ham muốn"
+    - "Tránh rượu, thuốc lá và các chất gây nghiện"
+
+ketu:
+  title: "Biện pháp cho Ketu (Kế Đô)"
+  mantra: "Om Sraam Sreem Sroum Sah Ketave Namah"
+  gemstone: "Cat's Eye (Mắt mèo)"
+  color: "Xám, đa sắc"
+  day: "Thứ Ba hoặc Thứ Bảy"
+  deity: "Ganesha, Chitragupta"
+  remedies:
+    - "Tụng Ganesha Atharvashirsha"
+    - "Dâng cờ màu sặc sỡ tại đền"
+    - "Thực hành thiền định và yoga"
+    - "Nuôi chó hoặc chăm sóc động vật hoang dã"
+    - "Phát triển trực giác và khả năng tâm linh"

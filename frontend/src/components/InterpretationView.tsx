@@ -20,6 +20,7 @@ const SECTION_TITLES: Record<string, [string, string]> = {
   transit: ['Quá Cảnh Hành Tinh', 'Planetary Transits'],
   sun_moon: ['Kết Hợp Mặt Trời - Mặt Trăng', 'Sun-Moon Combination'],
   dominant_planet: ['Hành Tinh Nổi Bật', 'Dominant Planet'],
+  fixed_stars: ['Sao Cố Định', 'Fixed Stars'],
 }
 
 const SECTION_COLORS: Record<string, string> = {
@@ -29,6 +30,7 @@ const SECTION_COLORS: Record<string, string> = {
   part_of_fortune: '#f5e6c8', combination: '#f0d8c4', house_placement: '#c8d4e8',
   house_distribution: '#d0e0e0', quality: '#e0d8d0', house_cusp: '#d8d0e0',
   midpoints: '#f0e0c0', transit: '#d0e8f0', sun_moon: '#f0e8d0', dominant_planet: '#f0d8d0',
+  fixed_stars: '#d0c0e0',
 }
 
 export default function InterpretationView({

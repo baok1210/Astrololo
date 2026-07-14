@@ -1,0 +1,82 @@
+# Vimshottari Mahadasha interpretations — Vietnamese
+
+surya:
+  title: "Mahadasha Surya (Mặt Trời) — 6 năm"
+  short: "Giai đoạn tập trung vào bản ngã, sự nghiệp, quyền lực và sức khỏe."
+  detailed: |
+    Mahadasha Surya kéo dài 6 năm, mang năng lượng của ánh sáng và uy quyền.
+    Đây là thời kỳ bạn khẳng định bản thân, xây dựng vị thế và được nhận diện.
+    Sức khỏe — đặc biệt tim mạch và xương sống — cần được chú ý.
+    Mối quan hệ với cha và các nhân vật có quyền lực nổi bật trong giai đoạn này.
+
+chandra:
+  title: "Mahadasha Chandra (Mặt Trăng) — 10 năm"
+  short: "Giai đoạn cảm xúc, gia đình, trực giác và chăm sóc."
+  detailed: |
+    Mahadasha Chandra kéo dài 10 năm, mang năng lượng của tâm trí và cảm xúc.
+    Đây là thời kỳ tập trung vào gia đình, nhà cửa, mẹ và cuộc sống nội tâm.
+    Trực giác mạnh mẽ, sáng tạo nghệ thuật được kích hoạt.
+    Cẩn thận với sự dao động cảm xúc và lo lắng quá mức.
+
+mangala:
+  title: "Mahadasha Mangala (Hỏa Tinh) — 7 năm"
+  short: "Giai đoạn hành động, năng lượng, xung đột và chiến đấu."
+  detailed: |
+    Mahadasha Mangala kéo dài 7 năm, mang năng lượng chiến binh.
+    Đây là thời kỳ hành động mạnh mẽ — thể thao, bất động sản, kỹ thuật.
+    Năng lượng cao nhưng cần kiểm soát — dễ xung đột, tai nạn, phẫu thuật.
+    Anh em trai và các mối quan hệ cạnh tranh nổi bật.
+
+budha:
+  title: "Mahadasha Budha (Thủy Tinh) — 17 năm"
+  short: "Giai đoạn giao tiếp, học hỏi, kinh doanh và trí tuệ."
+  detailed: |
+    Mahadasha Budha kéo dài 17 năm — giai đoạn dài thứ hai.
+    Đây là thời kỳ tập trung vào giao tiếp, thương mại, giáo dục và công nghệ.
+    Trí tuệ phân tích mạnh mẽ, khả năng viết lách và diễn thuyết.
+    Kinh doanh, kế toán, IT và truyền thông phát triển thuận lợi.
+
+guru:
+  title: "Mahadasha Guru (Mộc Tinh) — 16 năm"
+  short: "Giai đoạn mở rộng, trí tuệ, tâm linh và may mắn."
+  detailed: |
+    Mahadasha Guru kéo dài 16 năm, mang năng lượng thầy giáo và nhà hiền triết.
+    Đây là thời kỳ mở rộng — kiến thức, tài chính, gia đình, tâm linh.
+    Con cái, giáo dục cao, luật pháp và tôn giáo nổi bật.
+    Guru tốt mang may mắn lớn; Guru suy yếu có thể gây lãng phí.
+
+shukra:
+  title: "Mahadasha Shukra (Kim Tinh) — 20 năm"
+  short: "Giai đoạn dài nhất — tình yêu, nghệ thuật, xa hoa và hạnh phúc."
+  detailed: |
+    Mahadasha Shukra kéo dài 20 năm — giai đoạn dài nhất trong Vimshottari.
+    Đây là thời kỳ tập trung vào tình yêu, hôn nhân, nghệ thuật, thời trang và xa hoa.
+    Vẻ đẹp, sự thoải mái vật chất và niềm vui cuộc sống được nhấn mạnh.
+    Phương tiện di chuyển, trang sức và các mối quan hệ đối tác quan trọng.
+
+shani:
+  title: "Mahadasha Shani (Thổ Tinh) — 19 năm"
+  short: "Giai đoạn kỷ luật, karma, thử thách và xây dựng nền tảng."
+  detailed: |
+    Mahadasha Shani kéo dài 19 năm, mang năng lượng của nghiệp quả.
+    Đây là thời kỳ làm việc chăm chỉ, kỷ luật và đối mặt với karma.
+    Sức khỏe xương khớp, răng và hệ thần kinh cần chú ý.
+    Thành công đến chậm nhưng bền vững — kiên nhẫn là chìa khóa.
+
+rahu:
+  title: "Mahadasha Rahu (La Hầu) — 18 năm"
+  short: "Giai đoạn tham vọng, ảo tưởng, nước ngoài và đột phá."
+  detailed: |
+    Mahadasha Rahu kéo dài 18 năm, mang năng lượng khao khát và ảo tưởng.
+    Đây là thời kỳ theo đuổi tham vọng lớn — có thể đi xa, tiếp xúc văn hóa khác.
+    Công nghệ, truyền thông và những con đường phi truyền thống thuận lợi.
+    Cẩn thận với sự lừa dối, nghiện ngập và mất phương hướng.
+
+ketu:
+  title: "Mahadasha Ketu (Kế Đô) — 7 năm"
+  short: "Giai đoạn giải thoát, tâm linh, mất mát và buông bỏ."
+  detailed: |
+    Mahadasha Ketu kéo dài 7 năm, mang năng lượng giải thoát và buông bỏ.
+    Đây là thời kỳ tập trung vào tâm linh, thiền định và sự tách rời vật chất.
+    Có thể trải qua mất mát — nhưng mục đích là để giải phóng khỏi ràng buộc.
+    Nghiên cứu huyền bí, chiêm tinh, yoga và các bộ môn tâm linh phát triển.

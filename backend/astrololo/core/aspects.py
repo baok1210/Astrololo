@@ -1,6 +1,6 @@
-from typing import List, Optional
+from typing import List, Optional, Dict
 from astrololo.core.constants import (
-    ASPECTS, angular_distance,
+    ASPECTS, angular_distance, MAJOR_ASPECTS,
 )
 from astrololo.models.chart import AspectData, BodyPosition
 from astrololo.core.coordinates import decimal_to_rounded_dms, dms_to_display_string
@@ -17,7 +17,8 @@ class AspectCalculator:
                  orb_square: float = 8, orb_trine: float = 8, orb_sextile: float = 6,
                  orb_quincunx: float = 3, orb_semisextile: float = 3,
                  orb_semisquare: float = 2, orb_sesquiquadrate: float = 2,
-                 orb_quintile: float = 2):
+                 orb_quintile: float = 2,
+                 include_minor_aspects: bool = True):
         self.orbs = {
             "conjunction": orb_conjunction,
             "opposition": orb_opposition,
@@ -30,7 +31,10 @@ class AspectCalculator:
             "sesquiquadrate": orb_sesquiquadrate,
             "quintile": orb_quintile,
         }
-        self.aspect_list = ["conjunction", "opposition", "square", "trine", "sextile", "quincunx", "semisextile", "semisquare", "sesquiquadrate", "quintile"]
+        if include_minor_aspects:
+            self.aspect_list = ["conjunction", "opposition", "square", "trine", "sextile", "quincunx", "semisextile", "semisquare", "sesquiquadrate", "quintile"]
+        else:
+            self.aspect_list = list(MAJOR_ASPECTS)
 
     def calculate(self, planets: List[BodyPosition]) -> List[AspectData]:
         aspects = []

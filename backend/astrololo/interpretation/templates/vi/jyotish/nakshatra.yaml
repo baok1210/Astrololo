@@ -1,0 +1,273 @@
+# 27 Nakshatra interpretations — Vietnamese
+# Sourced from Navagraha study materials (Seal of Truth)
+
+Ashwini:
+  title: "Ashwini (Mã Tinh)"
+  ruler: "Ketu"
+  deity: "Ashwini Kumaras"
+  short: "Nhanh nhẹn, chữa lành, khởi đầu mới. Có năng lượng tiên phong và khả năng phục hồi."
+  detailed: |
+    Ashwini là nakshatra đầu tiên, mang năng lượng khởi đầu mạnh mẽ. Người có hành tinh
+    quan trọng ở đây thường nhanh nhẹn, quyết đoán và có khả năng chữa lành tự nhiên.
+    Ashwini Kumaras là những thầy thuốc thần thánh — bạn có thể có thiên hướng về y học,
+    chữa lành hoặc bất kỳ lĩnh vực nào yêu cầu hành động nhanh.
+
+Bharani:
+  title: "Bharani (Vị Tinh)"
+  ruler: "Shukra (Kim Tinh)"
+  deity: "Yama"
+  short: "Sáng tạo, đam mê, chuyển hóa. Mang năng lượng sinh tử và tái sinh."
+  detailed: |
+    Bharani được cai quản bởi Yama — thần chết, mang ý nghĩa về sự chuyển hóa sâu sắc.
+    Đây là nakshatra của sự sáng tạo mãnh liệt, đam mê và khả năng chịu đựng.
+    Người Bharani thường có trải nghiệm cuộc sống sâu đậm, đầy cảm xúc.
+
+Krittika:
+  title: "Krittika (Mão Tinh)"
+  ruler: "Surya (Mặt Trời)"
+  deity: "Agni"
+  short: "Sắc bén, quyết liệt, thanh lọc. Lửa của sự thật và phân biệt."
+  detailed: |
+    Krittika là nakshatra của lửa thanh lọc. Người có ảnh hưởng Krittika mạnh thường
+    thẳng thắn, sắc bén trong phán đoán và có khả năng cắt bỏ những gì không cần thiết.
+    Agni — thần lửa — ban cho sức mạnh tiêu hóa và chuyển hóa.
+
+Rohini:
+  title: "Rohini (Tất Tinh)"
+  ruler: "Chandra (Mặt Trăng)"
+  deity: "Brahma"
+  short: "Phì nhiêu, quyến rũ, nghệ thuật. Nakshatra được Moon vượng."
+  detailed: |
+    Rohini là nơi Mặt Trăng vượng — mang năng lượng phì nhiêu, quyến rũ và sáng tạo
+    nghệ thuật. Đây là nakshatra của vẻ đẹp, sự thịnh vượng và hưởng thụ vật chất.
+    Brahma — đấng sáng tạo — ban cho khả năng kiến tạo và nuôi dưỡng.
+
+Mrigashira:
+  title: "Mrigashira (Sâm Tinh)"
+  ruler: "Mangala (Hỏa Tinh)"
+  deity: "Soma"
+  short: "Tìm kiếm, tò mò, nhạy cảm. Luôn trong hành trình khám phá."
+  detailed: |
+    Mrigashira — đầu con nai — tượng trưng cho sự tìm kiếm không ngừng.
+    Người Mrigashira luôn tò mò, nhạy cảm và có khả năng nghiên cứu tốt.
+    Soma mang năng lượng thanh khiết, thần bí.
+
+Ardra:
+  title: "Ardra (Tỉnh Tinh)"
+  ruler: "Rahu (La Hầu)"
+  deity: "Rudra"
+  short: "Bão tố, chuyển hóa, trí tuệ sắc bén. Phá hủy để tái tạo."
+  detailed: |
+    Ardra — giọt nước mắt — mang năng lượng bão tố của Rudra (Shiva phá hủy).
+    Đây là nakshatra của sự chuyển hóa mạnh mẽ qua đau khổ. Trí tuệ sắc bén,
+    khả năng phân tích và nghiên cứu khoa học. Rahu tăng cường tham vọng.
+
+Punarvasu:
+  title: "Punarvasu (Quỷ Tinh)"
+  ruler: "Guru (Mộc Tinh)"
+  deity: "Aditi"
+  short: "Phục hồi, trở lại, trí tuệ. Luôn tìm thấy đường về nhà."
+  detailed: |
+    Punarvasu — "trở lại ánh sáng" — mang năng lượng phục hồi và lạc quan.
+    Aditi — mẹ của các vị thần — ban cho sự bao dung và bảo vệ.
+    Guru cai quản mang trí tuệ và khả năng dạy dỗ.
+
+Pushya:
+  title: "Pushya (Liễu Tinh)"
+  ruler: "Shani (Thổ Tinh)"
+  deity: "Brihaspati"
+  short: "Nuôi dưỡng, bền vững, thiêng liêng. Nakshatra tốt lành nhất."
+  detailed: |
+    Pushya được coi là nakshatra tốt lành nhất cho mọi khởi đầu.
+    Mang năng lượng nuôi dưỡng, kiên nhẫn và bền vững. Brihaspati — thầy của
+    các vị thần — ban cho trí tuệ tâm linh. Shani cai quản tạo nên kỷ luật.
+
+Ashlesha:
+  title: "Ashlesha (Tinh Tinh)"
+  ruler: "Budha (Thủy Tinh)"
+  deity: "Sarpa"
+  short: "Huyền bí, trực giác, năng lượng Kundalini. Rắn thiêng."
+  detailed: |
+    Ashlesha — rắn — mang năng lượng huyền bí và trực giác sâu sắc.
+    Đây là nakshatra của Kundalini, sự thấu hiểu tâm lý và khả năng thao túng.
+    Budha cai quản tạo nên sự thông minh nhưng cũng ma mãnh.
+
+Magha:
+  title: "Magha (Trương Tinh)"
+  ruler: "Ketu"
+  deity: "Pitris"
+  short: "Vương giả, tổ tiên, uy quyền. Kết nối với dòng tộc."
+  detailed: |
+    Magha — ngai vàng — mang năng lượng vương giả và uy quyền tự nhiên.
+    Pitris — tổ tiên — kết nối với dòng dõi và truyền thống. Ketu cai quản
+    mang tính tâm linh và giải thoát.
+
+Purva_Phalguni:
+  title: "Purva Phalguni (Dực Tinh)"
+  ruler: "Shukra (Kim Tinh)"
+  deity: "Bhaga"
+  short: "Hưởng thụ, nghệ thuật, tình yêu. Năng lượng sáng tạo và vui chơi."
+  detailed: |
+    Purva Phalguni — chiếc giường — tượng trưng cho sự nghỉ ngơi, hưởng thụ
+    và sáng tạo. Bhaga — thần may mắn — ban cho sự thịnh vượng và niềm vui.
+    Shukra cai quản mang vẻ đẹp, nghệ thuật và tình yêu.
+
+Uttara_Phalguni:
+  title: "Uttara Phalguni (Chẩn Tinh)"
+  ruler: "Surya (Mặt Trời)"
+  deity: "Aryaman"
+  short: "Trách nhiệm, hôn nhân, từ thiện. Lãnh đạo thông qua phục vụ."
+  detailed: |
+    Uttara Phalguni mang năng lượng trách nhiệm và cam kết. Aryaman — thần
+    hôn nhân — ban cho sự ổn định trong quan hệ. Surya cai quản tạo nên
+    sự lãnh đạo bằng tấm gương và trách nhiệm xã hội.
+
+Hasta:
+  title: "Hasta (Giác Tinh)"
+  ruler: "Chandra (Mặt Trăng)"
+  deity: "Savitar"
+  short: "Khéo léo, thủ công, chữa lành bằng tay. Kỹ năng thực hành."
+  detailed: |
+    Hasta — bàn tay — tượng trưng cho sự khéo léo và kỹ năng thủ công.
+    Savitar — mặt trời buổi sáng — mang năng lượng sáng tạo và chuyển hóa.
+    Chandra cai quản tạo nên sự nhạy cảm và trực giác trong công việc tay chân.
+
+Chitra:
+  title: "Chitra (Cang Tinh)"
+  ruler: "Mangala (Hỏa Tinh)"
+  deity: "Tvashtar"
+  short: "Nghệ thuật, kiến trúc, vẻ đẹp rực rỡ. Sáng tạo hình dáng."
+  detailed: |
+    Chitra — ngọc trai lấp lánh — mang năng lượng sáng tạo hình ảnh và vẻ đẹp.
+    Tvashtar — kiến trúc sư thiên đình — ban cho tài năng thiết kế và xây dựng.
+    Mangala cai quản mang sự táo bạo trong sáng tạo.
+
+Swati:
+  title: "Swati (Đê Tinh)"
+  ruler: "Rahu (La Hầu)"
+  deity: "Vayu"
+  short: "Độc lập, linh hoạt, kinh doanh. Cây non uốn theo gió."
+  detailed: |
+    Swati — cây non trong gió — tượng trưng cho sự linh hoạt và khả năng thích nghi.
+    Vayu — thần gió — ban cho sự tự do và chuyển động. Rahu cai quản
+    mang tham vọng vật chất và khả năng kinh doanh.
+
+Vishakha:
+  title: "Vishakha (Phòng Tinh)"
+  ruler: "Guru (Mộc Tinh)"
+  deity: "Indragni"
+  short: "Quyết tâm, mục tiêu, lửa thiêng. Không từ bỏ cho đến khi đạt được."
+  detailed: |
+    Vishakha — cổng vòm — mang năng lượng quyết tâm và tập trung mục tiêu.
+    Indragni — Indra và Agni kết hợp — ban cho sức mạnh và lửa nội tâm.
+    Guru cai quản mang niềm tin và lý tưởng cao cả.
+
+Anuradha:
+  title: "Anuradha (Tâm Tinh)"
+  ruler: "Shani (Thổ Tinh)"
+  deity: "Mitra"
+  short: "Tình bạn, tổ chức, kỷ luật. Thành công qua hợp tác."
+  detailed: |
+    Anuradha — theo sau Radha — mang năng lượng tình bạn và hợp tác.
+    Mitra — thần tình bạn — ban cho khả năng tạo và duy trì mối quan hệ.
+    Shani cai quản tạo nên kỷ luật và kiên nhẫn trong mọi nỗ lực.
+
+Jyeshtha:
+  title: "Jyeshtha (Vĩ Tinh)"
+  ruler: "Budha (Thủy Tinh)"
+  deity: "Indra"
+  short: "Quyền lực, bảo vệ, trưởng thành. Vua của các vị thần."
+  detailed: |
+    Jyeshtha — anh cả — mang năng lượng quyền lực và trách nhiệm bảo vệ.
+    Indra — vua của các vị thần — ban cho sức mạnh chiến thắng nhưng cũng kiêu ngạo.
+    Budha cai quản mang trí tuệ chiến lược.
+
+Moola:
+  title: "Moola (Cơ Tinh)"
+  ruler: "Ketu"
+  deity: "Nirriti"
+  short: "Gốc rễ, phá hủy, tìm kiếm sự thật. Đào sâu đến tận cùng."
+  detailed: |
+    Moola — rễ cây — tượng trưng cho việc đào bới đến tận gốc rễ vấn đề.
+    Nirriti — nữ thần hủy diệt — mang năng lượng phá hủy để tìm sự thật.
+    Ketu cai quản tạo nên sự giải thoát và buông bỏ.
+
+Purva_Ashadha:
+  title: "Purva Ashadha (Đẩu Tinh)"
+  ruler: "Shukra (Kim Tinh)"
+  deity: "Apas"
+  short: "Chiến thắng, thanh lọc, nghệ thuật nước. Không thể bị đánh bại."
+  detailed: |
+    Purva Ashadha — "chiến thắng trước" — mang năng lượng bất khả chiến bại.
+    Apas — thần nước — ban cho sức mạnh thanh lọc và tái sinh.
+    Shukra cai quản mang vẻ đẹp và khả năng ngoại giao.
+
+Uttara_Ashadha:
+  title: "Uttara Ashadha (Ngưu Tinh)"
+  ruler: "Surya (Mặt Trời)"
+  deity: "Vishvedevas"
+  short: "Chiến thắng cuối cùng, lãnh đạo phổ quát. Kiên định đến cùng."
+  detailed: |
+    Uttara Ashadha — "chiến thắng sau cùng" — mang năng lượng lãnh đạo bền vững.
+    Vishvedevas — tất cả các vị thần — ban cho sự ủng hộ từ mọi phương.
+    Surya cai quản tạo nên uy quyền tự nhiên và trách nhiệm lãnh đạo.
+
+Shravana:
+  title: "Shravana (Nữ Tinh)"
+  ruler: "Chandra (Mặt Trăng)"
+  deity: "Vishnu"
+  short: "Lắng nghe, học hỏi, truyền thông. Kết nối qua âm thanh."
+  detailed: |
+    Shravana — đôi tai — tượng trưng cho khả năng lắng nghe và tiếp thu kiến thức.
+    Vishnu — đấng bảo tồn — ban cho sự bảo vệ và duy trì trật tự.
+    Chandra cai quản mang trực giác và khả năng thấu hiểu qua cảm nhận.
+
+Dhanishta:
+  title: "Dhanishta (Hư Tinh)"
+  ruler: "Mangala (Hỏa Tinh)"
+  deity: "Vasus"
+  short: "Giàu có, âm nhạc, nhịp điệu. Năng lượng thịnh vượng."
+  detailed: |
+    Dhanishta — trống — mang năng lượng nhịp điệu, âm nhạc và sự giàu có.
+    Vasus — 8 vị thần thiên nhiên — ban cho sự thịnh vượng vật chất.
+    Mangala cai quản mang sự năng động và quyết đoán.
+
+Shatabhisha:
+  title: "Shatabhisha (Nguy Tinh)"
+  ruler: "Rahu (La Hầu)"
+  deity: "Varuna"
+  short: "Chữa lành, bí ẩn, khoa học. Trăm vị thuốc."
+  detailed: |
+    Shatabhisha — trăm vị thuốc — mang năng lượng chữa lành và nghiên cứu.
+    Varuna — thần đại dương — ban cho sự bí ẩn và chiều sâu.
+    Rahu cai quản mang tham vọng khám phá những điều ẩn giấu.
+
+Purva_Bhadrapada:
+  title: "Purva Bhadrapada (Thất Tinh)"
+  ruler: "Guru (Mộc Tinh)"
+  deity: "Aja Ekapada"
+  short: "Cực đoan, tâm linh, chuyển hóa. Lửa thiêng đốt cháy ảo tưởng."
+  detailed: |
+    Purva Bhadrapada mang năng lượng cực đoan — từ vật chất đến tâm linh.
+    Aja Ekapada — rắn một chân — tượng trưng cho Kundalini thức tỉnh.
+    Guru cai quản mang niềm tin mạnh mẽ nhưng đôi khi cuồng tín.
+
+Uttara_Bhadrapada:
+  title: "Uttara Bhadrapada (Bích Tinh)"
+  ruler: "Shani (Thổ Tinh)"
+  deity: "Ahir Budhnya"
+  short: "Chiều sâu, thiền định, từ bi. Con rắn dưới đáy đại dương."
+  detailed: |
+    Uttara Bhadrapada mang năng lượng chiều sâu tâm linh và từ bi vô bờ.
+    Ahir Budhnya — rắn dưới đáy biển — tượng trưng cho Kundalini đã kiểm soát.
+    Shani cai quản mang kỷ luật tâm linh và sự chín muồi.
+
+Revati:
+  title: "Revati (Khuê Tinh)"
+  ruler: "Budha (Thủy Tinh)"
+  deity: "Pushan"
+  short: "Nuôi dưỡng, bảo vệ, hành trình. Nakshatra cuối cùng — hoàn thành chu kỳ."
+  detailed: |
+    Revati — cá — là nakshatra cuối cùng, mang năng lượng hoàn thành và chuẩn bị
+    cho chu kỳ mới. Pushan — thần mục đồng — bảo vệ trên mọi hành trình.
+    Budha cai quản mang khả năng giao tiếp và kết nối.

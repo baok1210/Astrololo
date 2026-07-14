@@ -41,12 +41,33 @@ class ChartRequest(BaseModel):
     node_type: str = Field("mean", pattern="^(mean|true)$")
     lang: str = Field("vi", pattern="^(vi|en)$")
     esoteric: bool = Field(True, description="Show esoteric astrology content")
+    zodiac_type: str = Field("tropical", pattern="^(tropical|sidereal)$", description="Zodiac system")
+    ayanamsa: str = Field("lahiri", pattern="^(lahiri|raman|krishnamurti)$", description="Ayanamsa for sidereal")
+    include_minor_aspects: bool = Field(True, description="Include minor aspects (quincunx, semisextile, etc.)")
+    orb_conjunction: float = Field(8.0, ge=0.0, le=15.0, description="Orb for conjunction (degrees)")
+    orb_opposition: float = Field(8.0, ge=0.0, le=15.0, description="Orb for opposition (degrees)")
+    orb_square: float = Field(8.0, ge=0.0, le=15.0, description="Orb for square (degrees)")
+    orb_trine: float = Field(8.0, ge=0.0, le=15.0, description="Orb for trine (degrees)")
+    orb_sextile: float = Field(6.0, ge=0.0, le=15.0, description="Orb for sextile (degrees)")
+    orb_quincunx: float = Field(3.0, ge=0.0, le=10.0, description="Orb for quincunx (degrees)")
+    orb_semisextile: float = Field(3.0, ge=0.0, le=10.0, description="Orb for semisextile (degrees)")
+    orb_semisquare: float = Field(2.0, ge=0.0, le=10.0, description="Orb for semisquare (degrees)")
+    orb_sesquiquadrate: float = Field(2.0, ge=0.0, le=10.0, description="Orb for sesquiquadrate (degrees)")
+    orb_quintile: float = Field(2.0, ge=0.0, le=10.0, description="Orb for quintile (degrees)")
 
 
 class TransitRequest(ChartRequest):
     transit_year: int = Field(..., ge=1900, le=2100, description="Transit year")
     transit_month: int = Field(..., ge=1, le=12, description="Transit month")
     transit_day: int = Field(..., ge=1, le=31, description="Transit day")
+
+
+class ProgressionRequest(ChartRequest):
+    age: float = Field(..., ge=0.0, le=120.0, description="Age in years for secondary progression")
+
+
+class SolarReturnRequest(ChartRequest):
+    target_year: int = Field(..., ge=1900, le=2100, description="Year for solar return calculation")
 
 
 class SynastryRequest(BaseModel):
@@ -72,6 +93,17 @@ class SynastryRequest(BaseModel):
     node_type: str = Field("mean", pattern="^(mean|true)$")
     lang: str = Field("vi", pattern="^(vi|en)$")
     esoteric: bool = Field(True, description="Show esoteric astrology content")
+    include_minor_aspects: bool = Field(True, description="Include minor aspects (quincunx, semisextile, etc.)")
+    orb_conjunction: float = Field(8.0, ge=0.0, le=15.0)
+    orb_opposition: float = Field(8.0, ge=0.0, le=15.0)
+    orb_square: float = Field(8.0, ge=0.0, le=15.0)
+    orb_trine: float = Field(8.0, ge=0.0, le=15.0)
+    orb_sextile: float = Field(6.0, ge=0.0, le=15.0)
+    orb_quincunx: float = Field(3.0, ge=0.0, le=10.0)
+    orb_semisextile: float = Field(3.0, ge=0.0, le=10.0)
+    orb_semisquare: float = Field(2.0, ge=0.0, le=10.0)
+    orb_sesquiquadrate: float = Field(2.0, ge=0.0, le=10.0)
+    orb_quintile: float = Field(2.0, ge=0.0, le=10.0)
 
 
 def _build_subject(req: ChartRequest) -> AstrologicalSubject:
@@ -113,10 +145,31 @@ async def health():
 
 @app.post("/api/v1/natal")
 async def natal_chart(request: ChartRequest):
-    logger.info(f"Generating natal chart for {request.name} ({request.year}-{request.month}-{request.day} {request.hour:02d}:{request.minute:02d} {request.latitude},{request.longitude})")
+    logger.info(f"Generating {request.zodiac_type} natal chart for {request.name} ({request.year}-{request.month}-{request.day} {request.hour:02d}:{request.minute:02d} {request.latitude},{request.longitude})")
     subject = _build_subject(request)
     try:
-        chart = create_natal_chart(subject, house_system=request.house_system, node_type=request.node_type, lang=request.lang, esoteric=request.esoteric)
+        if request.zodiac_type == "sidereal":
+            from astrololo.analysis.jyotish_natal import create_jyotish_chart
+            chart = create_jyotish_chart(
+                subject, house_system=request.house_system,
+                node_type=request.node_type, lang=request.lang,
+                ayanamsa_system=request.ayanamsa,
+                include_minor_aspects=request.include_minor_aspects,
+                orb_conjunction=request.orb_conjunction, orb_opposition=request.orb_opposition,
+                orb_square=request.orb_square, orb_trine=request.orb_trine, orb_sextile=request.orb_sextile,
+                orb_quincunx=request.orb_quincunx, orb_semisextile=request.orb_semisextile,
+                orb_semisquare=request.orb_semisquare, orb_sesquiquadrate=request.orb_sesquiquadrate,
+                orb_quintile=request.orb_quintile,
+            )
+        else:
+            chart = create_natal_chart(subject, house_system=request.house_system, node_type=request.node_type, lang=request.lang, esoteric=request.esoteric,
+                include_minor_aspects=request.include_minor_aspects,
+                orb_conjunction=request.orb_conjunction, orb_opposition=request.orb_opposition,
+                orb_square=request.orb_square, orb_trine=request.orb_trine, orb_sextile=request.orb_sextile,
+                orb_quincunx=request.orb_quincunx, orb_semisextile=request.orb_semisextile,
+                orb_semisquare=request.orb_semisquare, orb_sesquiquadrate=request.orb_sesquiquadrate,
+                orb_quintile=request.orb_quintile,
+            )
         logger.info(f"Natal chart generated successfully with {len(chart.planets)} planets, {len(chart.aspects)} aspects")
     except Exception as e:
         logger.exception(f"Error generating natal chart for {request.name}: {e}")
@@ -129,7 +182,14 @@ async def interpret_chart(request: ChartRequest):
     logger.info(f"Generating interpretation for {request.name} ({request.year}-{request.month}-{request.day} {request.hour:02d}:{request.minute:02d})")
     subject = _build_subject(request)
     try:
-        chart = create_natal_chart(subject, house_system=request.house_system, node_type=request.node_type, lang=request.lang, esoteric=request.esoteric)
+        chart = create_natal_chart(subject, house_system=request.house_system, node_type=request.node_type, lang=request.lang, esoteric=request.esoteric,
+            include_minor_aspects=request.include_minor_aspects,
+            orb_conjunction=request.orb_conjunction, orb_opposition=request.orb_opposition,
+            orb_square=request.orb_square, orb_trine=request.orb_trine, orb_sextile=request.orb_sextile,
+            orb_quincunx=request.orb_quincunx, orb_semisextile=request.orb_semisextile,
+            orb_semisquare=request.orb_semisquare, orb_sesquiquadrate=request.orb_sesquiquadrate,
+            orb_quintile=request.orb_quintile,
+        )
         logger.info(f"Chart generated for interpretation with {len(chart.planets)} planets")
     except Exception as e:
         logger.exception(f"Error generating chart for interpretation: {e}")
@@ -145,6 +205,31 @@ async def interpret_chart(request: ChartRequest):
             "overall": interp.get("overall_interpretation"),
         },
     }
+
+
+@app.post("/api/v1/export/pdf")
+async def export_pdf(request: ChartRequest):
+    logger.info(f"Generating PDF export for {request.name}")
+    subject = _build_subject(request)
+    from astrololo.analysis.export_pdf import create_pdf_export
+    from fastapi.responses import Response
+    try:
+        pdf_bytes = create_pdf_export(
+            subject, lang=request.lang,
+            house_system=request.house_system, node_type=request.node_type,
+            esoteric=request.esoteric,
+        )
+        name_slug = request.name.replace(" ", "_").lower()
+        filename = f"astrololo_{name_slug}.pdf"
+        logger.info(f"PDF generated: {len(pdf_bytes)} bytes")
+        return Response(
+            content=pdf_bytes,
+            media_type="application/pdf",
+            headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+        )
+    except Exception as e:
+        logger.exception(f"Error generating PDF: {e}")
+        raise HTTPException(status_code=500, detail="PDF generation failed")
 
 
 @app.post("/api/v1/transit")
@@ -163,12 +248,100 @@ async def transit_chart(request: TransitRequest):
         result = create_transits(
             subject, request.transit_year, request.transit_month, request.transit_day,
             request.house_system, request.node_type, request.lang, request.esoteric,
+            include_minor_aspects=request.include_minor_aspects,
+            orb_conjunction=request.orb_conjunction, orb_opposition=request.orb_opposition,
+            orb_square=request.orb_square, orb_trine=request.orb_trine, orb_sextile=request.orb_sextile,
+            orb_quincunx=request.orb_quincunx, orb_semisextile=request.orb_semisextile,
+            orb_semisquare=request.orb_semisquare, orb_sesquiquadrate=request.orb_sesquiquadrate,
+            orb_quintile=request.orb_quintile,
         )
         logger.info(f"Transit calculated with {len(result.get('aspects', []))} aspects")
         return {"success": True, "data": result}
     except Exception as e:
         logger.exception(f"Error calculating transit: {e}")
         raise HTTPException(status_code=500, detail="Transit calculation failed")
+
+
+@app.post("/api/v1/progression")
+async def progression_chart(request: ProgressionRequest):
+    logger.info(f"Calculating secondary progression at age {request.age} for {request.name}")
+    from astrololo.analysis.progression import create_progressions
+    subject = _build_subject(ChartRequest(
+        name=request.name, year=request.year, month=request.month,
+        day=request.day, hour=request.hour, minute=request.minute,
+        latitude=request.latitude, longitude=request.longitude,
+        timezone_str=request.timezone_str,
+        house_system=request.house_system, node_type=request.node_type, lang=request.lang,
+        esoteric=request.esoteric,
+    ))
+    try:
+        result = create_progressions(
+            subject, request.age,
+            request.house_system, request.node_type, request.lang, request.esoteric,
+            include_minor_aspects=request.include_minor_aspects,
+            orb_conjunction=request.orb_conjunction, orb_opposition=request.orb_opposition,
+            orb_square=request.orb_square, orb_trine=request.orb_trine, orb_sextile=request.orb_sextile,
+            orb_quincunx=request.orb_quincunx, orb_semisextile=request.orb_semisextile,
+            orb_semisquare=request.orb_semisquare, orb_sesquiquadrate=request.orb_sesquiquadrate,
+            orb_quintile=request.orb_quintile,
+        )
+        logger.info(f"Progression calculated with {len(result.get('progressed_aspects', []))} aspects")
+        return {"success": True, "data": result}
+    except Exception as e:
+        logger.exception(f"Error calculating progression: {e}")
+        raise HTTPException(status_code=500, detail="Progression calculation failed")
+
+
+@app.post("/api/v1/solar-return")
+async def solar_return_chart(request: SolarReturnRequest):
+    logger.info(f"Calculating solar return for {request.target_year} for {request.name}")
+    from astrololo.analysis.solar_return import create_solar_return
+    subject = _build_subject(ChartRequest(
+        name=request.name, year=request.year, month=request.month,
+        day=request.day, hour=request.hour, minute=request.minute,
+        latitude=request.latitude, longitude=request.longitude,
+        timezone_str=request.timezone_str,
+        house_system=request.house_system, node_type=request.node_type, lang=request.lang,
+        esoteric=request.esoteric,
+    ))
+    try:
+        result = create_solar_return(
+            subject, request.target_year,
+            request.house_system, request.node_type, request.lang, request.esoteric,
+            include_minor_aspects=request.include_minor_aspects,
+            orb_conjunction=request.orb_conjunction, orb_opposition=request.orb_opposition,
+            orb_square=request.orb_square, orb_trine=request.orb_trine, orb_sextile=request.orb_sextile,
+            orb_quincunx=request.orb_quincunx, orb_semisextile=request.orb_semisextile,
+            orb_semisquare=request.orb_semisquare, orb_sesquiquadrate=request.orb_sesquiquadrate,
+            orb_quintile=request.orb_quintile,
+        )
+        logger.info(f"Solar return calculated for {request.target_year}")
+        return {"success": True, "data": result}
+    except Exception as e:
+        logger.exception(f"Error calculating solar return: {e}")
+        raise HTTPException(status_code=500, detail="Solar return calculation failed")
+
+
+@app.post("/api/v1/daily")
+async def daily_chart(request: ChartRequest):
+    logger.info(f"Calculating daily horoscope for {request.name}")
+    from astrololo.analysis.transit import create_daily
+    subject = _build_subject(request)
+    try:
+        result = create_daily(
+            subject, request.house_system, request.node_type, request.lang, request.esoteric,
+            include_minor_aspects=request.include_minor_aspects,
+            orb_conjunction=request.orb_conjunction, orb_opposition=request.orb_opposition,
+            orb_square=request.orb_square, orb_trine=request.orb_trine, orb_sextile=request.orb_sextile,
+            orb_quincunx=request.orb_quincunx, orb_semisextile=request.orb_semisextile,
+            orb_semisquare=request.orb_semisextile, orb_sesquiquadrate=request.orb_sesquiquadrate,
+            orb_quintile=request.orb_quintile,
+        )
+        logger.info(f"Daily horoscope calculated with {len(result.get('daily', {}).get('aspect_picks', []))} picks")
+        return {"success": True, "data": result}
+    except Exception as e:
+        logger.exception(f"Error calculating daily horoscope: {e}")
+        raise HTTPException(status_code=500, detail="Daily horoscope calculation failed")
 
 
 @app.post("/api/v1/synastry")
@@ -194,7 +367,14 @@ async def synastry_chart(request: SynastryRequest):
         esoteric=request.esoteric,
     ))
     try:
-        result = create_synastry(p1, p2, request.house_system, request.node_type, request.lang, request.esoteric)
+        result = create_synastry(p1, p2, request.house_system, request.node_type, request.lang, request.esoteric,
+            include_minor_aspects=request.include_minor_aspects,
+            orb_conjunction=request.orb_conjunction, orb_opposition=request.orb_opposition,
+            orb_square=request.orb_square, orb_trine=request.orb_trine, orb_sextile=request.orb_sextile,
+            orb_quincunx=request.orb_quincunx, orb_semisextile=request.orb_semisextile,
+            orb_semisquare=request.orb_semisquare, orb_sesquiquadrate=request.orb_sesquiquadrate,
+            orb_quintile=request.orb_quintile,
+        )
         logger.info(f"Synastry calculated with {len(result.get('cross_aspects', []))} cross aspects")
         return {"success": True, "data": result}
     except Exception as e:
@@ -207,7 +387,14 @@ async def interpret_ai(request: ChartRequest):
     logger.info(f"Generating AI interpretation for {request.name}")
     subject = _build_subject(request)
     try:
-        chart = create_natal_chart(subject, house_system=request.house_system, node_type=request.node_type, lang=request.lang, esoteric=request.esoteric)
+        chart = create_natal_chart(subject, house_system=request.house_system, node_type=request.node_type, lang=request.lang, esoteric=request.esoteric,
+            include_minor_aspects=request.include_minor_aspects,
+            orb_conjunction=request.orb_conjunction, orb_opposition=request.orb_opposition,
+            orb_square=request.orb_square, orb_trine=request.orb_trine, orb_sextile=request.orb_sextile,
+            orb_quincunx=request.orb_quincunx, orb_semisextile=request.orb_semisextile,
+            orb_semisquare=request.orb_semisquare, orb_sesquiquadrate=request.orb_sesquiquadrate,
+            orb_quintile=request.orb_quintile,
+        )
         logger.info("Chart generated for AI interpretation")
     except Exception as e:
         logger.exception(f"Error generating chart for AI interpretation: {e}")
@@ -360,6 +547,114 @@ async def get_keywords(
         result = filtered
 
     return {"success": True, "data": result}
+
+
+@app.get("/api/v1/jyotish/constants")
+async def get_jyotish_constants():
+    """Return Jyotish-specific constants: Navagraha, Nakshatras, Dasha periods."""
+    from astrololo.core.jyotish_constants import (
+        NAVAGRAHA, NAKSHATRAS, DASHA_YEARS, DASHA_SEQUENCE,
+        JYOTISH_SIGN_RULERS, RASHI_NAMES, TATTWA_NAMES_VI, GUNA_NAMES_VI,
+        DIGNITY_NAMES_VI,
+    )
+    return {
+        "success": True,
+        "data": {
+            "navagraha": {
+                k: {
+                    "name_sa": v.name_sa, "name_vi": v.name_vi, "name_en": v.name_en,
+                    "symbol": v.symbol, "tattwa": v.tattwa, "guna": v.guna,
+                    "nature": v.nature, "own_signs": v.own_signs,
+                    "exaltation": v.exaltation_sign, "debilitation": v.debilitation_sign,
+                    "vara_day": v.vara_day,
+                }
+                for k, v in NAVAGRAHA.items()
+            },
+            "nakshatras": [
+                {
+                    "number": n.number, "name_sa": n.name_sa, "name_vi": n.name_vi,
+                    "ruler": n.ruler, "deity": n.deity, "gana": n.gana,
+                }
+                for n in NAKSHATRAS
+            ],
+            "dasha_years": DASHA_YEARS,
+            "dasha_sequence": DASHA_SEQUENCE,
+            "sign_rulers": JYOTISH_SIGN_RULERS,
+            "rashi_names": {k: {"sa": v[0], "vi": v[1]} for k, v in RASHI_NAMES.items()},
+            "tattwa_names": TATTWA_NAMES_VI,
+            "guna_names": GUNA_NAMES_VI,
+            "dignity_names": DIGNITY_NAMES_VI,
+        },
+    }
+
+
+@app.post("/api/v1/jyotish/dasha")
+async def get_dasha(request: ChartRequest):
+    """Calculate Vimshottari Dasha for a birth chart."""
+    logger.info(f"Calculating Vimshottari Dasha for {request.name}")
+    subject = _build_subject(request)
+    try:
+        from astrololo.analysis.jyotish_natal import create_jyotish_chart
+        chart = create_jyotish_chart(
+            subject, house_system=request.house_system,
+            node_type=request.node_type, lang=request.lang,
+            ayanamsa_system=request.ayanamsa,
+            include_minor_aspects=request.include_minor_aspects,
+            orb_conjunction=request.orb_conjunction, orb_opposition=request.orb_opposition,
+            orb_square=request.orb_square, orb_trine=request.orb_trine, orb_sextile=request.orb_sextile,
+            orb_quincunx=request.orb_quincunx, orb_semisextile=request.orb_semisextile,
+            orb_semisquare=request.orb_semisquare, orb_sesquiquadrate=request.orb_sesquiquadrate,
+            orb_quintile=request.orb_quintile,
+        )
+    except Exception as e:
+        logger.exception(f"Error calculating Dasha: {e}")
+        raise HTTPException(status_code=500, detail="Dasha calculation failed")
+
+    if not chart.dasha:
+        raise HTTPException(status_code=500, detail="Dasha data unavailable")
+
+    return {"success": True, "data": chart.dasha.model_dump()}
+
+
+@app.post("/api/v1/jyotish/remedies")
+async def get_remedies(request: ChartRequest):
+    """Get Navagraha remedies based on chart weaknesses."""
+    logger.info(f"Getting remedies for {request.name}")
+    subject = _build_subject(request)
+    try:
+        from astrololo.analysis.jyotish_natal import create_jyotish_chart
+        from astrololo.interpretation.jyotish_loader import get_remedy
+        chart = create_jyotish_chart(
+            subject, house_system=request.house_system,
+            node_type=request.node_type, lang=request.lang,
+            ayanamsa_system=request.ayanamsa,
+            include_minor_aspects=request.include_minor_aspects,
+            orb_conjunction=request.orb_conjunction, orb_opposition=request.orb_opposition,
+            orb_square=request.orb_square, orb_trine=request.orb_trine, orb_sextile=request.orb_sextile,
+            orb_quincunx=request.orb_quincunx, orb_semisextile=request.orb_semisextile,
+            orb_semisquare=request.orb_semisquare, orb_sesquiquadrate=request.orb_sesquiquadrate,
+            orb_quintile=request.orb_quintile,
+        )
+    except Exception as e:
+        logger.exception(f"Error calculating chart for remedies: {e}")
+        raise HTTPException(status_code=500, detail="Chart calculation failed")
+
+    from astrololo.core.jyotish_constants import WESTERN_TO_GRAHA
+    remedies = []
+    for bp in chart.planets:
+        if bp.jyotish_dignity in ("neecha",):
+            graha_key = WESTERN_TO_GRAHA.get(bp.name, "")
+            remedy = get_remedy(graha_key, request.lang)
+            if remedy:
+                remedies.append({
+                    "graha": graha_key,
+                    "graha_name_vi": bp.graha_name_vi or bp.name_vi,
+                    "dignity": bp.jyotish_dignity,
+                    "sign": bp.sidereal_sign,
+                    "remedy": remedy,
+                })
+
+    return {"success": True, "data": remedies}
 
 
 if __name__ == "__main__":

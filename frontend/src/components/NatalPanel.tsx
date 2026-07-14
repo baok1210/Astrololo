@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { getNatal, getNatalRaw, getAIInterpretation, BirthData, NatalResponse, AIResponse } from '../api'
+import { getNatal, getNatalRaw, getAIInterpretation, getDaily, geocodeCity, tzFromCoords, BirthData, NatalResponse, AIResponse, DailyResponse } from '../api'
 import ChartWheel from './ChartWheel'
 import InterpretationView from './InterpretationView'
 
@@ -23,6 +23,10 @@ export default function NatalPanel({ lang }: { lang: 'vi' | 'en' }) {
   const [rawData, setRawData] = useState<any>(null)
   const [aiResult, setAIResult] = useState<AIResponse | null>(null)
   const [error, setError] = useState('')
+  const [cityQuery, setCityQuery] = useState('')
+  const [cityResults, setCityResults] = useState<any[]>([])
+  const [cityLoading, setCityLoading] = useState(false)
+  const [daily, setDaily] = useState<DailyResponse | null>(null)
 
   const getData = (): BirthData => ({
     name: name.trim(), year, month, day, hour, minute,
@@ -54,33 +58,26 @@ export default function NatalPanel({ lang }: { lang: 'vi' | 'en' }) {
 
   const planets = rawData?.planets
   const houses = rawData?.houses
-  const aspects = rawData?.aspects
-  const hasChart = planets && houses
-
-  const LOCATIONS = [
-    { label: '📍 Hà Nội, Việt Nam', lat: 21.03, lng: 105.85, tz: 7 },
-    { label: '📍 TP. Hồ Chí Minh', lat: 10.82, lng: 106.63, tz: 7 },
-    { label: '📍 Đà Nẵng', lat: 16.05, lng: 108.22, tz: 7 },
-    { label: '📍 Hải Phòng', lat: 20.84, lng: 106.69, tz: 7 },
-    { label: '📍 Cần Thơ', lat: 10.04, lng: 105.78, tz: 7 },
-    { label: '📍 New York, USA', lat: 40.71, lng: -74.01, tz: -4 },
-    { label: '📍 London, UK', lat: 51.51, lng: -0.13, tz: 1 },
-    { label: '📍 Tokyo, Nhật Bản', lat: 35.68, lng: 139.69, tz: 9 },
-    { label: '📍 Sydney, Úc', lat: -33.87, lng: 151.21, tz: 11 },
-    { label: '📍 Paris, Pháp', lat: 48.86, lng: 2.35, tz: 2 },
-    { label: '📍 Berlin, Đức', lat: 52.52, lng: 13.41, tz: 2 },
-    { label: '📍 Seoul, Hàn Quốc', lat: 37.57, lng: 126.98, tz: 9 },
-  ]
 
   const inputStyle: React.CSSProperties = { width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ccc', fontSize: 13, boxSizing: 'border-box' }
   const labelStyle: React.CSSProperties = { fontSize: 12, color: '#555', marginBottom: 2, display: 'block' }
 
-  function applyLocation(e: React.ChangeEvent<HTMLSelectElement>) {
-    const loc = LOCATIONS.find(l => l.label === e.target.value)
-    if (loc) { setLat(loc.lat); setLng(loc.lng); setTz(loc.tz) }
+  async function handleCitySearch(e: React.ChangeEvent<HTMLInputElement>) {
+    const q = e.target.value
+    setCityQuery(q)
+    if (q.trim().length < 2) { setCityResults([]); return }
+    setCityLoading(true)
+    try {
+      const found = await geocodeCity(q)
+      setCityResults(found)
+    } catch { setCityResults([]) }
+    finally { setCityLoading(false) }
   }
 
-  const currentLoc = LOCATIONS.find(l => l.lat === lat && l.lng === lng && l.tz === tz)
+  function pickCity(c: any) {
+    setLat(+c.lat.toFixed(2)); setLng(+c.lng.toFixed(2)); setTz(+c.tz || +tzFromCoords(c.lat, c.lng).replace('Etc/GMT', '').replace('-', '') || 0)
+    setCityResults([]); setCityQuery(c.name)
+  }
 
   return (
     <div>
@@ -96,12 +93,24 @@ export default function NatalPanel({ lang }: { lang: 'vi' | 'en' }) {
           <div><label style={labelStyle}>{t('Giờ (0-23)', 'Hour (0-23)')}</label><input type="number" min={0} max={23} value={hour} onChange={e => setHour(+e.target.value)} style={inputStyle} /></div>
           <div><label style={labelStyle}>{t('Phút', 'Minute')}</label><input type="number" min={0} max={59} value={minute} onChange={e => setMinute(+e.target.value)} style={inputStyle} /></div>
           <div><label style={labelStyle}>{t('Múi Giờ (UTC+?)', 'Time Zone (UTC+?)')}</label><input type="number" value={tz} onChange={e => setTz(+e.target.value)} style={inputStyle} /></div>
-          <div style={{ gridColumn: 'span 2' }}>
-            <label style={labelStyle}>{t('🌍 Vị trí (chọn thành phố)', '🌍 Location (select city)')}</label>
-            <select value={currentLoc?.label || ''} onChange={applyLocation} style={{ ...inputStyle, background: '#fff' }}>
-              <option value="" disabled>{t('-- Chọn thành phố --', '-- Select city --')}</option>
-              {LOCATIONS.map(l => <option key={l.label} value={l.label}>{l.label}</option>)}
-            </select>
+          <div style={{ gridColumn: 'span 2', position: 'relative' }}>
+            <label style={labelStyle}>{t('🌍 Tìm thành phố', '🌍 Search city')}</label>
+            <input
+              value={cityQuery}
+              onChange={handleCitySearch}
+              placeholder={t('Nhập tên thành phố...', 'Type a city name...')}
+              style={{ ...inputStyle, background: '#fff' }}
+            />
+            {cityLoading && <div style={{ fontSize: 11, color: '#888', marginTop: 2 }}>{t('Đang tìm...', 'Searching...')}</div>}
+            {cityResults.length > 0 && (
+              <div style={{ position: 'absolute', zIndex: 20, width: '100%', background: '#fff', border: '1px solid #ccc', borderRadius: 4, marginTop: 2, maxHeight: 180, overflowY: 'auto' }}>
+                {cityResults.map((c, i) => (
+                  <div key={i} onClick={() => pickCity(c)} style={{ padding: '6px 8px', fontSize: 12, cursor: 'pointer', borderBottom: i < cityResults.length - 1 ? '1px solid #eee' : 'none' }}>
+                    📍 {c.name}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <div style={{ display: 'flex', gap: 6 }}>
             <div style={{ flex: 1 }}><label style={labelStyle}>{t('Vĩ Độ', 'Latitude')}</label><input type="number" step={0.01} value={lat} onChange={e => setLat(+e.target.value)} style={inputStyle} /></div>
@@ -140,12 +149,24 @@ export default function NatalPanel({ lang }: { lang: 'vi' | 'en' }) {
           <button type="submit" disabled={loading} style={{ flex: 1, padding: 10, background: '#6b3a3a', color: '#fff', border: 'none', borderRadius: 6, fontSize: 14, cursor: 'pointer' }}>
             {loading ? t('Đang tính toán...', 'Calculating...') : t('Tra cứu Lá Số', 'View Chart')}
           </button>
+          <button type="button" disabled={loading} onClick={async () => {
+            if (!name.trim()) { setError(t('Vui lòng nhập họ tên.', 'Please enter your name.')); return }
+            setLoading(true); setError('')
+            try {
+              const d = await getDaily(getData())
+              setDaily(d)
+            } catch (err: any) {
+              setError(err.response?.data?.detail || err.message || t('Lỗi kết nối.', 'Connection error.'))
+            } finally { setLoading(false) }
+          }} style={{ flex: 1, padding: 10, background: '#3a5a6b', color: '#fff', border: 'none', borderRadius: 6, fontSize: 14, cursor: 'pointer' }}>
+            {t('Horoscope Hôm Nay', 'Daily Horoscope')}
+          </button>
         </div>
       </form>
 
       {error && <div style={{ background: '#fdd', padding: 12, borderRadius: 6, marginBottom: 16, fontSize: 13 }}>{error}</div>}
 
-      {hasChart && <ChartWheel chartData={rawData} />}
+      {rawData?.planets && <ChartWheel chartData={rawData} />}
 
       {result && <InterpretationView sections={result.interpretation} overall={result.overall} lang={lang} />}
 

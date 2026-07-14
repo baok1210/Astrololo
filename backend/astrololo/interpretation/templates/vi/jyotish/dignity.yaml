@@ -1,0 +1,44 @@
+# Jyotish dignity interpretations — Vietnamese
+
+uchcha:
+  title: "Vượng (Uchcha/Exalted)"
+  short: "Hành tinh ở trạng thái mạnh nhất — năng lượng được khuếch đại tối đa."
+  detailed: |
+    Khi một Graha ở trạng thái Uchcha (Vượng), năng lượng của nó được biểu hiện
+    ở mức cao nhất và thuần khiết nhất. Các phẩm chất tích cực được tăng cường,
+    mang lại thành công và may mắn trong lĩnh vực mà Graha đó cai quản.
+    Tuy nhiên, Vượng quá mức đôi khi tạo ra sự tự mãn hoặc kiêu ngạo.
+
+neecha:
+  title: "Suy (Neecha/Debilitated)"
+  short: "Hành tinh ở trạng thái yếu nhất — cần nỗ lực để vượt qua thử thách."
+  detailed: |
+    Khi một Graha ở trạng thái Neecha (Suy), năng lượng của nó bị suy giảm
+    và gặp khó khăn trong việc biểu hiện. Các thử thách liên quan đến lĩnh vực
+    mà Graha cai quản sẽ xuất hiện. Tuy nhiên, Neecha Bhanga (hủy suy) có thể
+    xảy ra nếu có các yếu tố hỗ trợ trong bản đồ — biến thử thách thành sức mạnh.
+
+moolatrikona:
+  title: "Moolatrikona"
+  short: "Hành tinh ở vùng Moolatrikona — mạnh gần như Vượng, hoạt động tự nhiên."
+  detailed: |
+    Moolatrikona là vùng mà Graha hoạt động tự nhiên và hiệu quả nhất.
+    Khác với Uchcha (sức mạnh tối đa) hay Swakshetra (thoải mái),
+    Moolatrikona là nơi Graha thực hiện dharma — nhiệm vụ thiêng liêng — của mình.
+    Đây là trạng thái rất tốt, mang lại kết quả bền vững.
+
+swakshetra:
+  title: "Tự quản (Swakshetra/Own Sign)"
+  short: "Hành tinh ở nhà riêng — thoải mái, tự chủ, bền vững."
+  detailed: |
+    Khi Graha ở trong cung mà nó cai quản (Swakshetra), nó cảm thấy như ở nhà.
+    Năng lượng được biểu hiện tự nhiên, không bị ép buộc hay cản trở.
+    Các phẩm chất của Graha hoạt động ổn định và đáng tin cậy.
+    Đây là trạng thái tốt — mang lại sự tự chủ và nền tảng vững chắc.
+
+neutral:
+  title: "Trung tính"
+  short: "Hành tinh ở trạng thái trung tính — kết quả phụ thuộc vào các yếu tố khác."
+  detailed: |
+    Khi Graha không ở trạng thái đặc biệt nào, kết quả phụ thuộc vào
+    các yếu tố khác trong bản đồ: aspects, nhà, và mối quan hệ với các Graha khác.

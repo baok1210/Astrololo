@@ -73,7 +73,9 @@ class SynthesisRule(InterpretationRule):
         ruler_sign = SIGN_NAME_VI.get(ruler_body.sign, ruler_body.sign)
         rh = ruler_body.house
         ht = HOUSES.get(rh)
-        ht_label = _HOUSE_TYPE_VI.get(ht.type_, "") if ht and lang == "vi" else _HOUSE_TYPE_EN.get(ht.type_, "")
+        ht_label = ""
+        if ht:
+            ht_label = _HOUSE_TYPE_VI.get(ht.type_, "") if lang == "vi" else _HOUSE_TYPE_EN.get(ht.type_, "")
         house_label = HOUSE_NAME_VI.get(rh, f"Nhà {rh}") if lang == "vi" else f"House {rh}"
 
         # Ruler description
@@ -98,7 +100,7 @@ class SynthesisRule(InterpretationRule):
 
         # Get template key based on house type
         type_key_map = {"angular": "asc_ruler_angular", "succedent": "asc_ruler_succedent", "cadent": "asc_ruler_cadent"}
-        tpl_key = type_key_map.get(ht.type_, "asc_ruler_cadent")
+        tpl_key = type_key_map.get(ht.type_, "asc_ruler_cadent") if ht else "asc_ruler_cadent"
 
         if lang == "vi":
             title = f"Cung Mọc {asc_name} — Chủ Tinh {ruler_name} tại {house_label}"

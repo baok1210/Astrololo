@@ -11,11 +11,20 @@ Make Astrololo interpret all aspects, planets-in-sign, and planets-in-house with
 
 ## Progress
 
-### Done (Phase 3)
-- **Part of Fortune now has its own section**: Changed `pof_rule.py` category from `"synthesis"` to `"part_of_fortune"`. Added `"part_of_fortune"` to `section_order`, `category_titles`, and limit logic in `engine.py`. Added `SECTION_TITLES` + `SECTION_COLORS` entry in `InterpretationView.tsx`.
-- **Part of Fortune shown on chart wheel**: Added PoF marker (⊕, gold dot) to `ChartWheel.tsx` by reading `chartData.part_of_fortune.longitude`.
-- **Aspect fallback text greatly improved**: Rewrote `_make_fallback_aspect()` in `template_loader.py` — replaced single generic template with per-aspect-type descriptions (9 aspect types), 26 planet-pair interaction intros (e.g., "Sun represents ego, Moon represents emotions"), and aspect-type behavioral insights (conjunction = blend, square = tension/action, trine = natural flow). Output now 4-6 paragraphs vs 3 before.
-- **Fixed pre-existing ruff F841 warning**: Removed unused `max_score` variable in `engine.py`.
+### Done (OCLoop Wave 1 — User Config & Summary)
+- **User-configurable Orbs**: Added 10 orb fields (`orb_conjunction`..`orb_quintile`, 0-15°) + `include_minor_aspects` toggle to `ChartRequest`, `SynastryRequest`, `TransitRequest`. Passed through all endpoints → `AspectCalculator` constructor across natal/transit/synastry/jyotish charts.
+- **Toggle Minor Aspects**: `AspectCalculator.__init__()` filters `aspect_list` to 5 major (default) or 10 major+minor based on `include_minor_aspects`.
+- **Strengths & Weaknesses Table Rule**: New `strength_weakness_rule.py` (priority 3) — scans essential dignity (rulership/exaltation/detriment/fall), house strength (angular/cadent), retrograde, aspect counts (harmonious/challenging), and element imbalance. Outputs bilingual "=== STRENGTHS === / === WEAKNESSES ===" section.
+
+### Done (OCLoop Wave 2 — Predictive Astrology Upgrade)
+- **Synastry House Overlays**: Each planet P1 → house of P2 calculated via `find_house()`, interpreted via `get_planet_in_house()`. Bidirectional (P1→P2 + P2→P1). Added to synastry response as `house_overlays.p1_in_p2` / `p2_in_p1`.
+- **Synastry Composite Chart**: `_build_composite_chart()` computes midpoint longitudes for all planets + angles. Full `InterpretationEngine` run on composite. Added as `composite` field.
+- **Secondary Progressions**: Day-for-a-year method in `analysis/progression.py`. Endpoint `POST /api/v1/progression` with `age` parameter. Progressed JD = birth JD + age_days. Full chart + progressed→natal aspects + interpretation.
+- **Solar Return**: `analysis/solar_return.py` with `_find_solar_return_jd()` using SWISSEPH `swe.solcross_ut()` or binary search fallback. Endpoint `POST /api/v1/solar-return` with `target_year`. Full SR chart + SR→natal aspects.
+
+### Done (OCLoop Wave 3 — Export & Validation)
+- **PDF Export**: `analysis/export_pdf.py` using `fpdf2`. Generates multi-page PDF with cover page, planet table, overview, and all interpretation sections. Endpoint `POST /api/v1/export/pdf`.
+- **Benchmark 50 Profiles**: `analysis/benchmark.py` validates 50 diverse birth profiles (all 12 signs, 6 generations, 18 countries). Metrics: 16 avg planets, 118 avg aspects, 19/19 categories. **100% pass rate** (VI and EN).
 
 ### Done
 - **Engine returns individual results**: `PlanetInSignRule`, `AspectRule`, `CombinationRule`, `PlanetInHouseRule` now return `List[RuleResult]` (one per planet/aspect) instead of aggregating all into one `RuleResult`. Engine handler extends `all_results` from both single results and lists.

@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 class BodyPosition(BaseModel):
-    body_type: Literal["planet", "node", "angle"] = "planet"
+    body_type: Literal["planet", "node", "angle", "fixed_star"] = "planet"
     name: str
     name_vi: str
     name_en: str = ""
@@ -25,6 +25,20 @@ class BodyPosition(BaseModel):
     minor_dignities: List[str] = Field(default_factory=list)
     declination: float = 0.0
     cusp_proximity: Optional[Dict[str, Any]] = None
+
+    # Jyotish fields (populated only when zodiac_type="sidereal")
+    sidereal_longitude: Optional[float] = None
+    sidereal_sign: Optional[str] = None
+    sidereal_sign_degree: Optional[float] = None
+    nakshatra: Optional[str] = None
+    nakshatra_vi: Optional[str] = None
+    nakshatra_pada: Optional[int] = None
+    nakshatra_lord: Optional[str] = None
+    graha_name: Optional[str] = None
+    graha_name_vi: Optional[str] = None
+    tattwa: Optional[str] = None
+    guna: Optional[str] = None
+    jyotish_dignity: Optional[str] = None
 
 
 # Backward-compatible alias — existing code using PlanetPosition still works
@@ -98,6 +112,38 @@ class MidpointData(BaseModel):
     position_in_sign: float
 
 
+class DashaPeriod(BaseModel):
+    graha: str
+    graha_name_vi: str = ""
+    start_date: Optional[datetime] = None
+    end_date: Optional[datetime] = None
+    years: float = 0
+    sub_periods: List["DashaPeriod"] = Field(default_factory=list)
+
+
+class DashaData(BaseModel):
+    birth_nakshatra: str = ""
+    birth_nakshatra_ruler: str = ""
+    balance_at_birth: float = 0
+    mahadasha_sequence: List[DashaPeriod] = Field(default_factory=list)
+
+
+class TattwaDistribution(BaseModel):
+    agni: float = 0
+    jala: float = 0
+    prithvi: float = 0
+    vayu: float = 0
+    akash: float = 0
+    dominant: Optional[str] = None
+
+
+class GunaDistribution(BaseModel):
+    sattwa: float = 0
+    rajas: float = 0
+    tamas: float = 0
+    dominant: Optional[str] = None
+
+
 class ChartData(BaseModel):
     subject_name: str = "Unknown"
     chart_type: str = "natal"
@@ -119,9 +165,19 @@ class ChartData(BaseModel):
     is_daytime: bool = True
     moon_phase: Optional[str] = None
     part_of_fortune: Optional[Dict[str, Any]] = None  # longitude, sign, sign_vi, house
+    fixed_stars: List[Dict[str, Any]] = Field(default_factory=list)  # name, longitude, sign, magnitude, etc.
     midpoints: List[MidpointData] = Field(default_factory=list)
     interpretation: Optional[Dict[str, Any]] = None
     validation: Optional[Dict[str, Any]] = None
+
+    # Jyotish fields (populated only when zodiac_type="sidereal")
+    zodiac_type: str = "tropical"
+    ayanamsa: Optional[str] = None
+    ayanamsa_degrees: Optional[float] = None
+    dasha: Optional[DashaData] = None
+    vara: Optional[str] = None
+    tattwa_distribution: Optional[TattwaDistribution] = None
+    guna_distribution: Optional[GunaDistribution] = None
 
 
 class InterpretationResult(BaseModel):

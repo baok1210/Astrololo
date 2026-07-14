@@ -4,7 +4,24 @@ from astrololo.core.constants import (
     get_dignity_score,
     HOUSES,
     MINOR_DIGNITY_SCORES,
+    PLANET_ORDER,
 )
+
+# Body-class weight: classical planets dominate a chart far more than outer
+# planets / asteroids. Without this, Pluto/Juno/Vesta rack up aspect+house points
+# and wrongly outrank the Sun/Moon in "dominant planet" + chart strength.
+# classical (Sun..Pluto) = 1.0, minor asteroids (chiron/ceres/pallas/juno/vesta)
+# and lilith = 0.5 (informational, not chart-ruling).
+_BODY_WEIGHT = {
+    "sun": 1.0, "moon": 1.0, "mercury": 1.0, "venus": 1.0, "mars": 1.0,
+    "jupiter": 1.0, "saturn": 1.0, "uranus": 0.8, "neptune": 0.8, "pluto": 0.8,
+    "chiron": 0.5, "ceres": 0.5, "pallas": 0.5, "juno": 0.5, "vesta": 0.5,
+    "lilith": 0.5,
+}
+
+
+def body_weight(name: str) -> float:
+    return _BODY_WEIGHT.get(name, 1.0 if name in PLANET_ORDER else 0.5)
 
 
 class ChartScorer:
@@ -16,6 +33,7 @@ class ChartScorer:
         house_weight = (
             HOUSES.get(planet.house, HOUSES[1]).weight if planet.house >= 1 else 0
         )
+        bw = body_weight(planet.name)
 
         aspect_score = 0
         for a in self.chart.aspects:
@@ -25,8 +43,9 @@ class ChartScorer:
         # Essential dignity: planet-in-sign quality + minor dignities (triplicity, term, face)
         minor_bonus = sum(MINOR_DIGNITY_SCORES.get(d, 0) for d in planet.minor_dignities)
         essential = dignity + minor_bonus
-        # Accidental dignity: house + aspects + rulership bonuses
-        accidental = house_weight + aspect_score
+        # Accidental dignity: house + aspects + rulership bonuses, scaled by body class
+        # so asteroids/Pluto don't outrank the luminaries purely via aspect counts.
+        accidental = (house_weight + aspect_score) * bw
 
         total = essential + accidental
 

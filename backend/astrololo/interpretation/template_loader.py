@@ -17,6 +17,12 @@ from astrololo.interpretation.knowledge_base import (
     enrich_planet_in_house,
     is_kb_available,
 )
+from astrololo.interpretation.knowledge_retriever import (
+    retrieve_planet_in_sign as _kb_retrieve_sign,
+    retrieve_planet_in_house as _kb_retrieve_house,
+    retrieve_aspect as _kb_retrieve_aspect,
+    is_available as _kb_retriever_available,
+)
 
 _ESOTERIC_MODE = True
 
@@ -106,6 +112,11 @@ def _load_yaml(lang: str, filename: str) -> dict:
     return _cache[cache_key]
 
 
+def _load_baked_yaml(filename: str) -> dict:
+    """Baked EN templates generated from the crawled corpus (durable, no runtime dep)."""
+    return _load_yaml("en", filename)
+
+
 def _normalize_sign_entry(entry, planet, sign, lang):
     """Convert string entry to dict format with title/short/detailed.
 
@@ -140,6 +151,31 @@ def get_planet_in_sign(planet: str, sign: str, lang: str = "vi") -> Optional[Dic
             entry = _enrich_via_kb_or_fallback(planet, sign, entry)
         return entry
     if lang == "en":
+        # 1) curated EN template already returned above
+        # 2) baked corpus YAML (durable)
+        baked = _load_baked_yaml("planet_in_sign_baked.yaml")
+        bentry = (baked.get(planet, {}) or {}).get(sign)
+        if bentry and isinstance(bentry, dict):
+            bentry = dict(bentry)
+            p = PLANETS.get(planet); s = SIGNS.get(sign)
+            bentry.setdefault("title", f"{p.name_en if p else planet} in {s.name_en if s else sign}")
+            bentry.setdefault("short", bentry.get("title", ""))
+            return bentry
+        # 3) live retriever over corpus
+        kb = _kb_retrieve_sign(planet, sign) if _kb_retriever_available() else None
+        if kb:
+            p = PLANETS.get(planet); s = SIGNS.get(sign)
+            p_name = p.name_en if p else planet
+            s_name = s.name_en if s else sign
+            dignity = get_dignity_label(planet, sign)
+            tag = f" ({dignity})" if dignity != "neutral" else ""
+            return {
+                "title": f"{p_name} in {s_name}{tag}",
+                "short": f"{p_name} in {s_name}",
+                "detailed": kb,
+                "strength": "See description",
+                "weakness": "See description",
+            }
         return _make_fallback_planet_in_sign_en(planet, sign)
     return _make_fallback_planet_in_sign(planet, sign)
 
@@ -314,6 +350,26 @@ def get_planet_in_house(planet: str, house: int, lang: str = "vi") -> Optional[D
             entry = _enrich_house_via_kb(planet, house, entry)
         return entry
     if lang == "en":
+        baked = _load_baked_yaml("planet_in_house_baked.yaml")
+        bentry = (baked.get(planet, {}) or {}).get(str(house))
+        if bentry and isinstance(bentry, dict):
+            bentry = dict(bentry)
+            p = PLANETS.get(planet); h = HOUSES.get(house)
+            bentry.setdefault("title", f"{p.name_en if p else planet} in the {h.name_en if h else 'House ' + str(house)}")
+            bentry.setdefault("short", bentry.get("title", ""))
+            return bentry
+        kb = _kb_retrieve_house(planet, house) if _kb_retriever_available() else None
+        if kb:
+            p = PLANETS.get(planet); h = HOUSES.get(house)
+            p_name = p.name_en if p else planet
+            h_name = h.name_en if h else f"House {house}"
+            return {
+                "title": f"{p_name} in the {h_name}",
+                "short": f"{p_name} in the {h_name}",
+                "detailed": kb,
+                "strength": "See description",
+                "weakness": "See description",
+            }
         return _make_fallback_planet_in_house_en(planet, house)
     return _make_fallback_planet_in_house(planet, house)
 
@@ -508,6 +564,30 @@ def get_aspect(planet1: str, planet2: str, aspect_type: str, lang: str = "vi") -
             return {"title": f"{a_name}: {p1_name} - {p2_name}", "short": entry[:100], "detailed": entry}
         return entry
     if lang == "en":
+        baked = _load_baked_yaml("aspects_baked.yaml")
+        bentry = (baked.get(aspect_type, {}) or {}).get(f"{planet1}_{planet2}")
+        if bentry and isinstance(bentry, dict):
+            bentry = dict(bentry)
+            a = ASPECTS.get(aspect_type)
+            a_name = a.name_en if a else aspect_type
+            p1 = PLANETS.get(planet1); p2 = PLANETS.get(planet2)
+            bentry.setdefault("title", f"{a_name}: {p1.name_en if p1 else planet1} - {p2.name_en if p2 else planet2}")
+            bentry.setdefault("short", bentry.get("title", ""))
+            return bentry
+        kb = _kb_retrieve_aspect(planet1, planet2, aspect_type) if _kb_retriever_available() else None
+        if kb:
+            a = ASPECTS.get(aspect_type)
+            a_name = a.name_en if a else aspect_type
+            p1 = PLANETS.get(planet1); p2 = PLANETS.get(planet2)
+            p1_name = p1.name_en if p1 else planet1
+            p2_name = p2.name_en if p2 else planet2
+            return {
+                "title": f"{a_name}: {p1_name} - {p2_name}",
+                "short": f"{p1_name} {a_name} {p2_name}",
+                "detailed": kb,
+                "strength": "See description",
+                "weakness": "See description",
+            }
         return _make_fallback_aspect_en(planet1, planet2, aspect_type)
     return _make_fallback_aspect(planet1, planet2, aspect_type)
 
@@ -785,6 +865,96 @@ def get_combination(
     if entry and not is_placeholder_combination(entry):
         return entry
     return make_combination_synthesis(planet, sign, house, chart=chart, lang=lang)
+
+
+def get_fixed_star_conjunction(
+    star_name: str, planet_name: str, lang: str = "vi"
+) -> Optional[Dict[str, Any]]:
+    from astrololo.core.fixed_stars import FIXED_STARS
+
+    star = FIXED_STARS.get(star_name)
+    if not star:
+        return None
+    planet_obj = PLANETS.get(planet_name, {})
+    p_name_vi = getattr(planet_obj, "name_vi", planet_name)
+    p_name_en = getattr(planet_obj, "name_en", planet_name)
+    s_name_vi = star["name_vi"]
+    s_name_en = star["name_en"]
+    meaning_vi = star.get("meaning_vi", "")
+    meaning_en = star.get("meaning_en", "")
+    keywords_vi = star.get("keywords_vi", [])
+    keywords_en = star.get("keywords_en", [])
+    nature = star.get("nature", "neutral")
+    mag = star.get("mag", 1.0)
+
+    if nature == "benefic":
+        nature_effect_vi = "Đây là một dấu hiệu thuận lợi, mang lại may mắn và bảo vệ."
+        nature_effect_en = "This is a favorable indicator, bringing luck and protection."
+    elif nature == "malefic":
+        nature_effect_vi = "Đây là một dấu hiệu thách thức, đòi hỏi sự thận trọng và sức mạnh nội tâm."
+        nature_effect_en = "This is a challenging indicator, requiring caution and inner strength."
+    else:
+        nature_effect_vi = "Tác động của ngôi sao này phụ thuộc vào cách bạn sử dụng năng lượng của nó."
+        nature_effect_en = "The star influence depends on how you channel its energy."
+
+    if lang == "vi":
+        title = f"{s_name_vi} hợp {p_name_vi}"
+        nature_text = "tốt" if nature == "benefic" else "xấu" if nature == "malefic" else "trung tính"
+        detail = f"""Sao cố định {s_name_vi} (sao {nature_text}, cấp sao {mag}) kết hợp với {p_name_vi} trong lá số của bạn.
+
+{s_name_vi}: {meaning_vi}
+
+Khi một ngôi sao cố định mạnh mẽ như {s_name_vi} kết hợp với {p_name_vi}, nó tô màu và khuếch đại năng lượng của hành tinh này. {nature_effect_vi}
+
+Từ khóa liên quan: {', '.join(keywords_vi)}."""
+    else:
+        title = f"{s_name_en} conjunct {p_name_en}"
+        detail = f"""The fixed star {s_name_en} (magnitude {mag}, {nature} nature) conjoins your {p_name_en}.
+
+{s_name_en}: {meaning_en}
+
+When a powerful fixed star like {s_name_en} conjoins {p_name_en}, it colors and amplifies the planet's energy. {nature_effect_en}
+
+Related keywords: {', '.join(keywords_en)}."""
+
+    return {"title": title, "short": "", "detailed": detail}
+
+
+def get_ascendant_entry(sign: str, lang: str = "en") -> Optional[Dict[str, Any]]:
+    """Get ascendant interpretation for a sign. Only EN has templates."""
+    data = _load_yaml(lang, "ascendant.yaml")
+    entry = data.get(sign)
+    if entry and isinstance(entry, dict):
+        if not entry.get("title"):
+            s = SIGNS.get(sign)
+            s_name = s.name_en if s and lang == "en" else s.name_vi if s else sign
+            entry = dict(entry)
+            entry["title"] = f"Ascendant in {s_name}" if lang == "en" else f"Cung Mọc {s_name}"
+        return entry
+    return None
+
+
+def get_mc_entry(sign: str, lang: str = "en") -> Optional[Dict[str, Any]]:
+    """Get MC interpretation for a sign. Only EN has templates."""
+    data = _load_yaml(lang, "mc.yaml")
+    entry = data.get(sign)
+    if entry and isinstance(entry, dict):
+        if not entry.get("title"):
+            s = SIGNS.get(sign)
+            s_name = s.name_en if s and lang == "en" else s.name_vi if s else sign
+            entry = dict(entry)
+            entry["title"] = f"MC in {s_name}" if lang == "en" else f"MC ở {s_name}"
+        return entry
+    return None
+
+
+def get_retrograde_text(planet: str, lang: str = "vi", count: int = 1, names: str = "") -> Optional[str]:
+    """Get retrograde interpretation for a planet from template."""
+    data = _load_yaml(lang, "retrogrades.yaml")
+    entry = data.get(planet)
+    if entry and isinstance(entry, str):
+        return entry.format(count=count, planets=names)
+    return None
 
 
 def clear_cache():

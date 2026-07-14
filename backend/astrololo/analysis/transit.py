@@ -16,8 +16,21 @@ from astrololo.core.validation import validate_chart
 def create_transits(natal_subject: AstrologicalSubject,
                     transit_year: int, transit_month: int, transit_day: int,
                     house_system: str = "placidus", node_type: str = "mean", lang: str = "vi",
-                    esoteric: bool = True):
-    natal = create_natal_chart(natal_subject, house_system, node_type, lang, esoteric)
+                    esoteric: bool = True,
+                    include_minor_aspects: bool = True,
+                    orb_conjunction: float = 8, orb_opposition: float = 8,
+                    orb_square: float = 8, orb_trine: float = 8, orb_sextile: float = 6,
+                    orb_quincunx: float = 3, orb_semisextile: float = 3,
+                    orb_semisquare: float = 2, orb_sesquiquadrate: float = 2,
+                    orb_quintile: float = 2):
+    natal = create_natal_chart(natal_subject, house_system, node_type, lang, esoteric,
+        include_minor_aspects=include_minor_aspects,
+        orb_conjunction=orb_conjunction, orb_opposition=orb_opposition,
+        orb_square=orb_square, orb_trine=orb_trine, orb_sextile=orb_sextile,
+        orb_quincunx=orb_quincunx, orb_semisextile=orb_semisextile,
+        orb_semisquare=orb_semisquare, orb_sesquiquadrate=orb_sesquiquadrate,
+        orb_quintile=orb_quintile,
+    )
 
     transit_jd = calc_julian_day(transit_year, transit_month, transit_day, 12, 0)
     transit_date = f"{transit_year}-{transit_month:02d}-{transit_day:02d}"
@@ -64,7 +77,14 @@ def create_transits(natal_subject: AstrologicalSubject,
                 break
 
     # Aspects: transit planets to natal planets
-    calc = AspectCalculator()
+    calc = AspectCalculator(
+        include_minor_aspects=include_minor_aspects,
+        orb_conjunction=orb_conjunction, orb_opposition=orb_opposition,
+        orb_square=orb_square, orb_trine=orb_trine, orb_sextile=orb_sextile,
+        orb_quincunx=orb_quincunx, orb_semisextile=orb_semisextile,
+        orb_semisquare=orb_semisquare, orb_sesquiquadrate=orb_sesquiquadrate,
+        orb_quintile=orb_quintile,
+    )
     transit_to_natal = []
     for tp in transit_planets:
         for np in natal.planets:
@@ -130,3 +150,85 @@ def create_transits(natal_subject: AstrologicalSubject,
         "aspect_count": len(transit_to_natal),
         "transit_interpretation": transit_specific,
     }
+
+
+def create_daily(natal_subject: AstrologicalSubject,
+                 house_system: str = "placidus", node_type: str = "mean",
+                 lang: str = "vi", esoteric: bool = True,
+                 include_minor_aspects: bool = True,
+                 orb_conjunction: float = 8, orb_opposition: float = 8,
+                 orb_square: float = 8, orb_trine: float = 8, orb_sextile: float = 6,
+                 orb_quincunx: float = 3, orb_semisextile: float = 3,
+                 orb_semisquare: float = 2, orb_sesquiquadrate: float = 2,
+                 orb_quintile: float = 2):
+    """Daily horoscope: transit of *today* over the native chart, condensed."""
+    from datetime import datetime
+    now = datetime.now()
+    full = create_transits(
+        natal_subject, now.year, now.month, now.day,
+        house_system, node_type, lang, esoteric,
+        include_minor_aspects=include_minor_aspects,
+        orb_conjunction=orb_conjunction, orb_opposition=orb_opposition,
+        orb_square=orb_square, orb_trine=orb_trine, orb_sextile=orb_sextile,
+        orb_quincunx=orb_quincunx, orb_semisextile=orb_semisextile,
+        orb_semisquare=orb_semisquare, orb_sesquiquadrate=orb_sesquiquadrate,
+        orb_quintile=orb_quintile,
+    )
+    # Keep only major-to-moderate aspects for a daily snapshot.
+    key = {"conjunction", "opposition", "trine", "square", "sextile"}
+    daily_aspects = [a for a in full["transit_aspects"]
+                     if a.get("aspect_type") in key and a.get("orb", 9) <= 3.0]
+    # Rank by nature (harmonious first) for headline picks.
+    daily_aspects.sort(key=lambda a: (a.get("nature") != "harmonious", -a.get("weight", 0)))
+
+    def _label(a):
+        p1 = next((p for p in full["natal"]["planets"] if p["name"] == a["planet2"]), None)
+        natal_sign = p1["sign_name_vi"] if p1 and lang == "vi" else (p1["sign_name_en"] if p1 else a["planet2"])
+        pname = a["planet1"]
+        if lang == "vi":
+            from astrololo.core.constants import PLANETS as _P
+            pname = _P.get(a["planet1"]).name_vi if _P.get(a["planet1"]) else a["planet1"]
+        else:
+            from astrololo.core.constants import PLANETS as _P
+            pname = _P.get(a["planet1"]).name_en if _P.get(a["planet1"]) else a["planet1"]
+        return pname, natal_sign
+
+    picks = []
+    for a in daily_aspects[:5]:
+        pname, natal_sign = _label(a)
+        picks.append({
+            "transit_planet": a["planet1"],
+            "transit_planet_label": pname,
+            "aspect": a["aspect_type"],
+            "to_natal_planet": a["planet2"],
+            "to_natal_sign": natal_sign,
+            "orb": a.get("orb"),
+            "nature": a.get("nature"),
+        })
+
+    if lang == "vi":
+        if not picks:
+            headline = "Hôm nay các hành tinh di chuyển êm ả — không có góc chiếu mạnh nào chiếu vào lá số của bạn. Đây là ngày để quan sát và nghỉ ngơi."
+        else:
+            har = sum(1 for p in picks if p["nature"] == "harmonious")
+            headline = (f"Hôm nay có {len(picks)} góc chiếu đáng chú ý "
+                        f"({har} thuận / {len(picks)-har} nghịch). "
+                        f"Nổi bật: {picks[0]['transit_planet_label']} "
+                        f"{picks[0]['aspect']} {picks[0]['to_natal_sign']}.")
+    else:
+        if not picks:
+            headline = "Planets move gently today — no strong aspects hit your chart. A good day to observe and rest."
+        else:
+            har = sum(1 for p in picks if p["nature"] == "harmonious")
+            headline = (f"Today brings {len(picks)} notable aspects "
+                        f"({har} harmonious / {len(picks)-har} challenging). "
+                        f"Highlight: {picks[0]['transit_planet_label']} "
+                        f"{picks[0]['aspect']} {picks[0]['to_natal_sign']}.")
+
+    full["daily"] = {
+        "date": full["transit_date"],
+        "headline": headline,
+        "aspect_picks": picks,
+    }
+    return full
+

@@ -28,6 +28,8 @@ _RULE_MODULES = [
     "astrololo.interpretation.rules.pattern_rules",
     "astrololo.interpretation.rules.combination_rules",
     "astrololo.interpretation.rules.synthesis_rules",
+    "astrololo.interpretation.rules.fixed_star_rule",
+    "astrololo.interpretation.rules.strength_weakness_rule",
 ]
 
 

@@ -8,7 +8,7 @@ Produces a single List[BodyPosition] with correct body_type:
 Every BodyPosition uses raw float longitude (0-360). String conversion happens
 ONLY at display layer via core/coordinates.py.
 """
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from astrololo.models.chart import BodyPosition
 from astrololo.core.constants import (
     PLANETS, SIGNS, SIGN_ORDER, PLANET_ORDER,
@@ -16,8 +16,9 @@ from astrololo.core.constants import (
     get_element, get_quality,
 )
 from astrololo.core.ephemeris import (
-    calc_planet_position_ut, calc_declination, HAS_SWISSEPH,
+    calc_planet_position_ut, calc_declination, calc_fixed_star_lon, HAS_SWISSEPH,
 )
+from astrololo.core.fixed_stars import FIXED_STARS, FIXED_STAR_LIST
 
 _ADDITIONAL_KEYS = ["chiron", "ceres", "pallas", "juno", "vesta", "lilith"]
 _ANGLE_NAMES = {k: PLANETS[k].name_vi for k in ("ascendant", "mc", "descendant", "ic")}
@@ -202,6 +203,39 @@ def build_angles(asc: float, mc: float) -> List[BodyPosition]:
             )
         )
     return bodies
+
+
+def build_fixed_stars(jd_ut: float) -> List[Dict[str, Any]]:
+    """Build fixed star positions with precession applied.
+
+    Returns list of dicts (not BodyPosition) since fixed stars don't
+    participate in houses, aspects, dignity, or element logic.
+    """
+    stars = []
+    for sk in FIXED_STAR_LIST:
+        info = FIXED_STARS[sk]
+        lon = calc_fixed_star_lon(jd_ut, info["lon_j2000"])
+        sign = _to_sign(lon)
+        pos_in_sign = lon % 30
+        stars.append({
+            "name": sk,
+            "name_en": info["name_en"],
+            "name_vi": info["name_vi"],
+            "longitude": round(lon, 4),
+            "sign": sign,
+            "sign_name_vi": _to_sign_vi(lon),
+            "sign_name_en": _to_sign_en(lon),
+            "position_in_sign": round(pos_in_sign, 4),
+            "magnitude": info["mag"],
+            "nature": info["nature"],
+            "meaning_en": info["meaning_en"],
+            "meaning_vi": info["meaning_vi"],
+            "keywords_en": info["keywords_en"],
+            "keywords_vi": info["keywords_vi"],
+            "orb": info["orb"],
+            "constellation": info["constellation"],
+        })
+    return stars
 
 
 def build_all_bodies(jd_ut: float, asc: float, mc: float, node_type: str = "mean", is_daytime: bool = True) -> List[BodyPosition]:

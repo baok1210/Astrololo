@@ -38,12 +38,14 @@ class InterpretationEngine:
             cat = r.category
             if cat not in categorized:
                 categorized[cat] = []
-            limit = 50 if cat == "aspect" else 20 if cat in ("planet_in_sign", "planet_in_house", "house_cusp") else 12 if cat == "house_placement" else 10 if cat in ("synthesis", "part_of_fortune", "aspect_synthesis") else 5
+            limit = 50 if cat == "aspect" else 20 if cat in ("planet_in_sign", "planet_in_house", "house_cusp") else 12 if cat == "house_placement" else 10 if cat in ("synthesis", "part_of_fortune", "aspect_synthesis") else 20 if cat == "fixed_stars" else 5
             if len(categorized[cat]) < limit:
                 categorized[cat].append(r)
 
         section_order = [
             "synthesis",
+            "strength_weakness",
+            "fixed_stars",
             "sun_moon",
             "dominant_planet",
             "part_of_fortune",
@@ -101,6 +103,7 @@ class InterpretationEngine:
             return None
         category_titles = {
             "synthesis": ("Tổng Hợp Đa Yếu Tố", "Multi-Factor Synthesis"),
+            "strength_weakness": ("Điểm Mạnh & Điểm Yếu", "Strengths & Weaknesses"),
             "sun_moon": ("Kết Hợp Mặt Trời - Mặt Trăng", "Sun-Moon Combination"),
             "dominant_planet": ("Hành Tinh Nổi Bật", "Dominant Planets"),
             "part_of_fortune": ("Phần Tài Lộc", "Part of Fortune"),
@@ -118,6 +121,7 @@ class InterpretationEngine:
             "aspect": ("Các Góc Chiếu", "Aspects"),
             "aspect_synthesis": ("Tổng Hợp Góc Chiếu Theo Hành Tinh", "Per-Planet Aspect Synthesis"),
             "midpoints": ("Trung Điểm", "Midpoints"),
+            "fixed_stars": ("Sao Cố Định", "Fixed Stars"),
         }
         idx = 0 if self.lang == "vi" else 1
         title = category_titles.get(category, ("", ""))

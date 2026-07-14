@@ -21,7 +21,7 @@ from astrololo.core.constants import (
     SIGN_ORDER,
 )
 from astrololo.core.aspects import AspectCalculator
-from astrololo.core.points import build_all_bodies
+from astrololo.core.points import build_all_bodies, build_fixed_stars
 from astrololo.analysis.midpoints import calc_midpoints
 
 
@@ -64,6 +64,12 @@ def _calc_houses(
 def create_natal_chart(
     subject: AstrologicalSubject, house_system: str = "placidus", node_type: str = "mean", lang: str = "vi",
     esoteric: bool = True,
+    include_minor_aspects: bool = True,
+    orb_conjunction: float = 8, orb_opposition: float = 8,
+    orb_square: float = 8, orb_trine: float = 8, orb_sextile: float = 6,
+    orb_quincunx: float = 3, orb_semisextile: float = 3,
+    orb_semisquare: float = 2, orb_sesquiquadrate: float = 2,
+    orb_quintile: float = 2,
 ) -> ChartData:
     utc_dt = subject.birth_datetime_utc
     jd_ut = calc_julian_day(
@@ -115,7 +121,14 @@ def create_natal_chart(
     house_list = [HouseData(**h) for h in houses_raw]
 
     # Aspect calculation uses ALL bodies (planets + nodes + angles)
-    aspect_calc = AspectCalculator()
+    aspect_calc = AspectCalculator(
+        include_minor_aspects=include_minor_aspects,
+        orb_conjunction=orb_conjunction, orb_opposition=orb_opposition,
+        orb_square=orb_square, orb_trine=orb_trine, orb_sextile=orb_sextile,
+        orb_quincunx=orb_quincunx, orb_semisextile=orb_semisextile,
+        orb_semisquare=orb_semisquare, orb_sesquiquadrate=orb_sesquiquadrate,
+        orb_quintile=orb_quintile,
+    )
     aspects = aspect_calc.calculate(all_bodies)
 
     moon_phase = calc_moon_phase(jd_ut)
@@ -230,6 +243,9 @@ def create_natal_chart(
         is_daytime=day_time,
         moon_phase=moon_phase["phase"],
     )
+
+    # Fixed Stars
+    chart.fixed_stars = build_fixed_stars(jd_ut)
 
     # Part of Fortune
     sun_bp = next((p for p in all_bodies if p.name == "sun" and p.body_type == "planet"), None)

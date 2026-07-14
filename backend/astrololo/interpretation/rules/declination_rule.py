@@ -3,14 +3,13 @@ from astrololo.interpretation.rules.base import InterpretationRule, RuleResult
 from astrololo.interpretation.rules.registry import RuleRegistry
 from astrololo.models.chart import ChartData
 from astrololo.core.constants import PLANETS
+from astrololo.interpretation.keywords import get_planet_function
 
 
 _PARALLEL_ORB = 1.0
 
 
 class DeclinationRule(InterpretationRule):
-    """Detect parallel (same declination) and contraparallel (opposite declination) aspects."""
-
     def __init__(self):
         super().__init__(priority=40)
 
@@ -44,18 +43,67 @@ class DeclinationRule(InterpretationRule):
                 n1 = pl1.name_vi if pl1 and lang == "vi" else pl1.name_en if pl1 else p1.name
                 n2 = pl2.name_vi if pl2 and lang == "vi" else pl2.name_en if pl2 else p2.name
 
-                if lang == "vi":
-                    label = "Song Song" if aspect_type == "parallel" else "Đối Song"
-                    title = f"{n1} {label} {n2}"
-                    text = (f"{n1} ({p1.declination:.1f}°) và {n2} ({p2.declination:.1f}°) "
-                            f"tạo góc {label.lower()}, nghĩa là chúng có cùng cường độ xích vĩ. "
-                            f"Điều này tăng cường sự kết nối năng lượng giữa hai hành tinh.")
+                f1 = get_planet_function(p1.name) or ""
+                f2 = get_planet_function(p2.name) or ""
+                f1_short = f1.split(".")[0] + "." if f1 else ""
+                f2_short = f2.split(".")[0] + "." if f2 else ""
+
+                stren = (
+                    "kết nối này tăng cường và khuếch đại sự tương tác giữa hai nguồn năng lượng"
+                    if lang == "vi"
+                    else "this connection strengthens and amplifies the interaction between the two energies"
+                )
+                if aspect_type == "parallel":
+                    if lang == "vi":
+                        label = "Song Song"
+                        nature = (
+                            "cùng nằm ở cùng một phía xích vĩ, cho thấy chúng hoạt động "
+                            "hài hòa và hỗ trợ lẫn nhau"
+                        )
+                    else:
+                        label = "Parallel"
+                        nature = (
+                            "share the same declination side, indicating they work "
+                            "in harmony and support each other"
+                        )
                 else:
-                    label = "Parallel" if aspect_type == "parallel" else "Contraparallel"
+                    if lang == "vi":
+                        label = "Đối Song"
+                        nature = (
+                            "nằm ở hai phía đối lập của xích vĩ, tạo ra sự căng thẳng "
+                            "sáng tạo và bổ sung cho nhau"
+                        )
+                    else:
+                        label = "Contraparallel"
+                        nature = (
+                            "lie on opposite sides of the declination, creating "
+                            "creative tension and complementing each other"
+                        )
+
+                if lang == "vi":
                     title = f"{n1} {label} {n2}"
-                    text = (f"{n1} ({p1.declination:.1f}°) and {n2} ({p2.declination:.1f}°) "
-                            f"form a {label.lower()} aspect, sharing the same declination magnitude. "
-                            f"This strengthens the energetic connection between the two planets.")
+                    parts = [
+                        f"{n1} ({p1.declination:.1f}°) và {n2} ({p2.declination:.1f}°) "
+                        f"tạo góc {label.lower()}, nghĩa là {nature}.",
+                        f"Trong bối cảnh này, {stren}."
+                    ]
+                    if f1_short:
+                        parts.append(f"{n1}: {f1_short}")
+                    if f2_short:
+                        parts.append(f"{n2}: {f2_short}")
+                    text = " ".join(parts)
+                else:
+                    title = f"{n1} {label} {n2}"
+                    parts = [
+                        f"{n1} ({p1.declination:.1f}°) and {n2} ({p2.declination:.1f}°) "
+                        f"form a {label.lower()} aspect, meaning they {nature}.",
+                        f"In this context, {stren}."
+                    ]
+                    if f1_short:
+                        parts.append(f"{n1}: {f1_short}")
+                    if f2_short:
+                        parts.append(f"{n2}: {f2_short}")
+                    text = " ".join(parts)
 
                 results.append(RuleResult(
                     title_vi=title if lang == "vi" else "",

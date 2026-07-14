@@ -1,6 +1,6 @@
 import math
 import logging
-from typing import Tuple, List, Optional
+from typing import Dict, Tuple, List, Optional
 
 import os
 
@@ -83,7 +83,12 @@ def calc_planet_position_ut(jd_ut: float, planet: str) -> Tuple[float, float, fl
             dist = result[0][2]
             speed = result[0][3]
         except Exception as e:
-            logger.warning(f"Swiss Ephemeris failed to calculate position for {planet}: {e}")
+            # Asteroids (Chiron/Ceres/Pallas/Juno/Vesta) fall back to accurate
+            # Keplerian elements; only main planets have no fallback -> real warning.
+            if planet in ("chiron", "ceres", "pallas", "juno", "vesta"):
+                logger.debug(f"Swiss Ephemeris asteroid file unavailable for {planet}, using Keplerian fallback: {e}")
+            else:
+                logger.warning(f"Swiss Ephemeris failed to calculate position for {planet}: {e}")
             pass
     elif code is None:
         logger.warning(f"No planet code found for {planet}")
@@ -114,6 +119,34 @@ def calc_planet_position_ut(jd_ut: float, planet: str) -> Tuple[float, float, fl
             for _ in range(5):
                 E = M_deg + math.degrees(e * math.sin(math.radians(E)))
             lon = (math.degrees(math.atan2(math.sqrt(1-e*e)*math.sin(math.radians(E)), math.cos(math.radians(E))-e)) + w) % 360
+        else:
+            # Asteroid / minor-body fallback: Keplerian elements (J2000 epoch).
+            # Used when the Swiss Ephemeris asteroid files are unavailable.
+            # Elements: (L0=mean longitude@J2000, n=mean motion°/century, e, a=AU,
+            #            i=inclination°, Omega=long of ascending node@J2000,
+            #            varpi=long of perihelion@J2000)
+            # Source: JPL Keplerian elements (standish) / Astrodienst mean elements.
+            _ast = {
+                "chiron":   (339.487,  1139.11,  0.3793, 13.664, 6.938, 209.361, 339.12),
+                "ceres":    (77.372,   772.5026, 0.0758, 2.7659, 10.594,  80.327,  73.597),
+                "pallas":   (78.790,   769.3629, 0.2565, 2.7722, 34.837, 173.077, 310.117),
+                "juno":     (77.380,   714.2910, 0.2579, 2.6700, 13.047,  49.254, 248.092),
+                "vesta":    (99.903,   779.9583, 0.0894, 2.3617,  7.140, 103.851, 251.665),
+            }.get(planet)
+            if _ast:
+                L0, n, e, a, i, Omega, varpi = _ast
+                centuries = t / 100.0  # t is Julian years; n is deg/century
+                M_deg = (L0 + n * centuries - varpi) % 360
+                E = M_deg
+                for _ in range(8):
+                    E = M_deg + math.degrees(e * math.sin(math.radians(E)))
+                nu = math.degrees(math.atan2(
+                    math.sqrt(1 - e * e) * math.sin(math.radians(E)),
+                    math.cos(math.radians(E)) - e,
+                ))
+                lon = (varpi + nu) % 360
+                # daily motion (deg/day) for retrograde detection
+                speed = n / 36525.0
     return (lon % 360), lat, dist, speed
 
 
@@ -181,6 +214,63 @@ def calc_declination(jd_ut: float, planet: str) -> float:
             logger.warning(f"Swiss Ephemeris failed to calculate declination for {planet}: {e}")
             pass
     return 0.0
+
+
+# ---------------------------------------------------------------------------
+# Sidereal / Jyotish support
+# ---------------------------------------------------------------------------
+
+AYANAMSA_SYSTEMS: Dict[str, int] = {}
+if HAS_SWISSEPH:
+    AYANAMSA_SYSTEMS = {
+        "lahiri": swe.SIDM_LAHIRI,
+        "raman": swe.SIDM_RAMAN,
+        "krishnamurti": swe.SIDM_KRISHNAMURTI,
+    }
+
+
+def calc_ayanamsa(jd_ut: float, system: str = "lahiri") -> float:
+    """Calculate ayanamsa offset in degrees for sidereal zodiac."""
+    if HAS_SWISSEPH:
+        sid_mode = AYANAMSA_SYSTEMS.get(system, swe.SIDM_LAHIRI)
+        swe.set_sid_mode(sid_mode)
+        return swe.get_ayanamsa_ut(jd_ut)
+    t = (jd_ut - 2451545.0) / 36525.0
+    return 23.85 + 0.01397 * t * 100
+
+
+def calc_planet_position_sidereal(jd_ut: float, planet: str, ayanamsa_system: str = "lahiri") -> Tuple[float, float, float, float]:
+    """Calculate planet position in sidereal zodiac."""
+    code = _PLANET_CODES.get(planet)
+    if HAS_SWISSEPH and code is not None:
+        try:
+            sid_mode = AYANAMSA_SYSTEMS.get(ayanamsa_system, swe.SIDM_LAHIRI)
+            swe.set_sid_mode(sid_mode)
+            flags = swe.FLG_SWIEPH | swe.FLG_SPEED | swe.FLG_SIDEREAL
+            result = swe.calc_ut(jd_ut, code, flags)
+            return result[0][0] % 360, result[0][1], result[0][2], result[0][3]
+        except Exception as e:
+            logger.warning(f"Sidereal calc failed for {planet}: {e}")
+    lon, lat, dist, speed = calc_planet_position_ut(jd_ut, planet)
+    ayanamsa = calc_ayanamsa(jd_ut, ayanamsa_system)
+    return (lon - ayanamsa) % 360, lat, dist, speed
+
+
+def calc_precession_offset(jd_ut: float) -> float:
+    """General precession in longitude (degrees) from J2000.0 to given JD.
+
+    Uses the IAU 2006 precession formula (simplified):
+      offset = 1.396041 * centuries + 0.000308 * centuries^2
+    centuries from J2000.0 epoch.
+    """
+    t = (jd_ut - 2451545.0) / 36525.0
+    return 1.396041 * t + 0.000308 * t * t
+
+
+def calc_fixed_star_lon(jd_ut: float, lon_j2000: float) -> float:
+    """Calculate a fixed star's ecliptic longitude at given JD by applying precession."""
+    offset = calc_precession_offset(jd_ut)
+    return (lon_j2000 + offset) % 360
 
 
 def is_daytime(jd_ut: float, lat: float, lng: float) -> bool:

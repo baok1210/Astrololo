@@ -3,11 +3,10 @@ from astrololo.interpretation.rules.base import InterpretationRule, RuleResult
 from astrololo.interpretation.rules.registry import RuleRegistry
 from astrololo.models.chart import ChartData
 from astrololo.core.constants import PLANETS
+from astrololo.interpretation.template_loader import get_retrograde_text
 
 
 class RetrogradeRule(InterpretationRule):
-    """Interpret retrograde planets."""
-
     def __init__(self):
         super().__init__(priority=20)
 
@@ -25,17 +24,17 @@ class RetrogradeRule(InterpretationRule):
             pl = PLANETS.get(p.name)
             n = pl.name_vi if pl and lang == "vi" else pl.name_en if pl else p.name
             names.append(n)
+        count = len(retros)
+        names_str = ", ".join(names)
 
         results = []
         for p in retros:
             pl = PLANETS.get(p.name)
             n = pl.name_vi if pl and lang == "vi" else pl.name_en if pl else p.name
-            if lang == "vi":
-                title = f"{n} Nghịch Hành"
-                text = f"{n} nghịch hành trong lá số của bạn."
-            else:
-                title = f"{n} Retrograde"
-                text = f"{n} is retrograde in your chart."
+            text = get_retrograde_text(p.name, lang, count, names_str)
+            if not text:
+                text = f"{n} nghịch hành trong lá số của bạn." if lang == "vi" else f"{n} is retrograde in your chart."
+            title = f"{n} Nghịch Hành" if lang == "vi" else f"{n} Retrograde"
             results.append(RuleResult(
                 title_vi=title if lang == "vi" else "",
                 title_en=title if lang == "en" else "",

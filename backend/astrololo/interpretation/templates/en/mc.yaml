@@ -1,61 +1,132 @@
-aries:
-  title: MC in Aries
-  short: You seek a career that allows independence, leadership, and initiative.
-  detailed: You seek a career that allows independence, leadership, and initiative.
-    You are ambitious and competitive, drawn to pioneering fields.
-taurus:
-  title: MC in Taurus
-  short: Your career path is steady, patient, and focused on building tangible value.
-  detailed: Your career path is steady, patient, and focused on building tangible
-    value. You seek financial security and comfort through persistent effort.
-gemini:
-  title: MC in Gemini
-  short: Your career involves communication, writing, teaching, or media.
-  detailed: Your career involves communication, writing, teaching, or media. You need
-    variety and mental stimulation in your professional life.
-cancer:
-  title: MC in Cancer
-  short: You are drawn to careers involving nurturing, real estate, history, or food.
-  detailed: You are drawn to careers involving nurturing, real estate, history, or
-    food. Emotional security and caring for others drive your professional choices.
-leo:
-  title: MC in Leo
-  short: You seek recognition and creative expression in your career.
-  detailed: You seek recognition and creative expression in your career. Leadership
-    roles, entertainment, or positions that showcase your talents suit you.
-virgo:
-  title: MC in Virgo
-  short: Your career path involves service, health, analysis, or detailed craftsmanship.
-  detailed: Your career path involves service, health, analysis, or detailed craftsmanship.
-    You excel at refining systems and helping others improve.
-libra:
-  title: MC in Libra
-  short: You are drawn to careers in law, diplomacy, design, or counseling.
-  detailed: You are drawn to careers in law, diplomacy, design, or counseling. Partnership
-    and balance are key themes in your professional life.
-scorpio:
-  title: MC in Scorpio
-  short: Your career involves research, investigation, psychology, or transformation.
-  detailed: Your career involves research, investigation, psychology, or transformation.
-    You dig deep and are drawn to uncovering hidden truths.
-sagittarius:
-  title: MC in Sagittarius
-  short: You seek a career involving travel, education, publishing, or philosophy.
-  detailed: You seek a career involving travel, education, publishing, or philosophy.
-    Freedom and exploration are essential to your professional fulfillment.
-capricorn:
-  title: MC in Capricorn
-  short: Your career is marked by ambition, discipline, and long-term planning.
-  detailed: Your career is marked by ambition, discipline, and long-term planning.
-    You are drawn to positions of authority and responsibility.
 aquarius:
+  detailed: With the Midheaven in Aquarius, your professional life is about innovation, humanitarianism, and progressive ideas.
+    You are a visionary with a gift for seeing future trends and connecting with like-minded communities. You excel in technology,
+    science, social work, community organizing, astrology, or any field that pushes boundaries. Your professional style is
+    original, collaborative, and intellectually independent. You march to your own beat. You are driven to make the world
+    better and often place collective good above personal ambition. Challenges include difficulty with authority, emotional
+    detachment, and impatience with tradition. Learning to balance your ideals with practical implementation is your growth
+    edge. Saturn and Uranus rule your MC, so their transits mark significant career turning points.
+  short: Your career path involves innovation, technology, and social progress. You thrive in unconventional roles that serve
+    the greater good.
   title: MC in Aquarius
-  short: Your career involves technology, social reform, innovation, or community
-    organizing.
-  detailed: Your career involves technology, social reform, innovation, or community
-    organizing. You think outside the box and value freedom above status.
+aries:
+  detailed: With the Midheaven in Aries, you are driven to forge your own path in your career and public life. You possess
+    natural leadership abilities and the courage to take risks that others might avoid. You thrive in competitive environments
+    where you can be first, whether in entrepreneurship, sales, athletics, or any field that rewards initiative. Your professional
+    style is direct, assertive, and pioneering. You prefer to be your own boss or to work in positions where you have independence.
+    Challenges include impatience with slow progress and a tendency to start projects without finishing them. Learning patience
+    and follow-through will amplify your natural leadership gifts. Mars rules your MC, so Mars transits mark significant career
+    turning points.
+  short: You are ambitious, pioneering, and driven to lead. Your career path involves independence, competition, and initiating
+    new projects.
+  title: MC in Aries
+cancer:
+  detailed: With the Midheaven in Cancer, your professional identity is shaped by your need to nurture, protect, and create
+    security. You are naturally empathetic and intuitive about the needs of others, making you excellent in caregiving professions.
+    You excel in real estate, childcare, psychology, history, antiques, or food-related businesses. Your professional reputation
+    is one of loyalty and emotional intelligence. People feel safe with you. You are sensitive to public opinion and need
+    to feel emotionally connected to your work. Challenges include taking criticism too personally and letting mood swings
+    affect your career decisions. Building professional boundaries is essential for long-term success. The Moon rules your
+    MC, so lunar transits mark significant career turning points.
+  short: Your career path involves nurturing, protecting, and creating emotional security. You are drawn to work that cares
+    for others or preserves history.
+  title: MC in Cancer
+capricorn:
+  detailed: With the Midheaven in Capricorn, your professional identity is built on ambition, discipline, and responsibility.
+    You are a natural leader with a strong work ethic and the patience to build success over decades. You excel in management,
+    banking, government, engineering, architecture, or any field requiring structure. Your professional style is serious,
+    competent, and authoritative. You command respect through reliability. You are driven to achieve recognition and are willing
+    to work harder than anyone else to earn it. Challenges include workaholism, pessimism, and difficulty balancing career
+    with personal life. Learning to enjoy the journey while pursuing the summit is essential. Saturn rules your MC, so Saturn
+    transits mark significant career turning points.
+  short: Your career path is marked by ambition, discipline, and long-term achievement. You are naturally suited for positions
+    of authority.
+  title: MC in Capricorn
+gemini:
+  detailed: With the Midheaven in Gemini, your professional life is built on communication, curiosity, and versatility. You
+    are a natural networker, gifted at connecting ideas and people. You need variety and mental stimulation or you become
+    restless. You excel in fields involving writing, teaching, journalism, public relations, media, or sales. Your professional
+    style is quick, adaptable, and intellectually engaged. You may have multiple careers or simultaneous projects that showcase
+    your diverse talents. Challenges include a tendency to scatter energy across too many interests and difficulty with detailed
+    follow-through. Depth, not just breadth, is your growth edge. Mercury rules your MC, so Mercury transits mark significant
+    career turning points.
+  short: Your career path involves communication, variety, and intellectual exchange. You thrive in roles that require adaptability
+    and mental agility.
+  title: MC in Gemini
+leo:
+  detailed: With the Midheaven in Leo, your career path is about creative self-expression, leadership, and recognition. You
+    have a natural flair for the dramatic and an ability to inspire and motivate others. You excel in entertainment, management,
+    politics, coaching, design, or any role where you can shine. Your professional style is warm, generous, and confident.
+    You naturally take center stage. You need to feel appreciated and recognized for your contributions. Challenges include
+    ego conflicts with authority figures and difficulty sharing the spotlight. Humility and genuine appreciation for others'
+    contributions will take you further than pride alone. The Sun rules your MC, so solar transits mark significant career
+    turning points.
+  short: You seek recognition, creative expression, and leadership in your career. You shine when you can be the center of
+    attention and inspire others.
+  title: MC in Leo
+libra:
+  detailed: With the Midheaven in Libra, your professional life is centered on partnership, balance, and aesthetic harmony.
+    You are a natural diplomat with a gift for seeing all sides of an issue and finding common ground. You excel in law, diplomacy,
+    design, counseling, human resources, or the arts. Your professional style is gracious, cooperative, and fair-minded. You
+    build consensus naturally. You thrive in collaborative environments and may build your career around key partnerships.
+    Challenges include indecisiveness and a tendency to avoid conflict at the cost of your own needs. Learning to stand firm
+    in your convictions while remaining diplomatic is essential. Venus rules your MC, so Venus transits mark significant career
+    turning points.
+  short: Your career path involves partnership, diplomacy, and creating harmony. You excel in roles that require negotiation
+    and aesthetic sense.
+  title: MC in Libra
 pisces:
+  detailed: With the Midheaven in Pisces, your professional identity is creative, compassionate, and spiritually attuned.
+    You possess remarkable imagination and empathy, with a gift for artistic expression and healing. You excel in music, art,
+    film, nursing, spiritual counseling, charitable work, or any field requiring compassion. Your professional style is intuitive,
+    adaptable, and quietly influential. You lead through inspiration, not force. You are drawn to work that serves others
+    and connects to something greater than yourself. Challenges include lack of boundaries, difficulty with practical details,
+    and tendency toward escapism. Learning to ground your dreams in practical reality while maintaining your visionary gifts
+    is key. Jupiter and Neptune rule your MC, so their transits mark significant career turning points.
+  short: Your career path involves creativity, spirituality, and compassionate service. You are drawn to artistic and healing
+    professions.
   title: MC in Pisces
-  short: You are drawn to creative, spiritual, or healing professions.
-  detailed: You are drawn to creative, spiritual, or healing professions. Music, art,
-    film, or charitable work aligns with your compassionate nature.
+sagittarius:
+  detailed: With the Midheaven in Sagittarius, your professional life is a quest for meaning, truth, and expansion. You are
+    a natural teacher and philosopher with a gift for seeing the big picture. You excel in education, publishing, travel industry,
+    philosophy, import/export, or any field involving cross-cultural exchange. Your professional style is optimistic, enthusiastic,
+    and freedom-loving. You need room to grow. You are at your best when exploring new frontiers, whether physical, intellectual,
+    or spiritual. Challenges include overcommitment, restlessness, and difficulty with detailed follow-through. Learning to
+    balance your expansive vision with practical grounding is your growth edge. Jupiter rules your MC, so Jupiter transits
+    mark significant career turning points.
+  short: Your career path involves exploration, teaching, and expanding horizons. You thrive when you can share knowledge
+    and pursue truth.
+  title: MC in Sagittarius
+scorpio:
+  detailed: With the Midheaven in Scorpio, your professional identity is intense, transformative, and investigative. You possess
+    remarkable depth perception and the ability to see beneath the surface of any situation. You excel in research, psychology,
+    investigative journalism, detective work, surgery, or transformational coaching. Your professional style is focused, determined,
+    and penetrating. You do not rest until you find the truth. You are drawn to work that involves crisis, transformation,
+    and helping others regenerate their lives. Challenges include power struggles, secrecy, and difficulty trusting colleagues.
+    Learning to share power and be vulnerable while maintaining your strength is key. Mars and Pluto rule your MC, so their
+    transits mark significant career turning points.
+  short: Your career path involves transformation, investigation, and deep psychological insight. You are drawn to uncovering
+    hidden truths.
+  title: MC in Scorpio
+taurus:
+  detailed: 'With the Midheaven in Taurus, you build success steadily and methodically over time. You are patient, persistent,
+    and practical, with a deep need for financial and professional security. You excel in careers that allow you to create
+    tangible value: banking, real estate, agriculture, finance, or the culinary arts. Your professional reputation is one
+    of reliability and determination. People trust you to follow through. You are at your best when working at your own pace,
+    building something that lasts. Challenges include resistance to change and a tendency to become too comfortable in routine.
+    Learning adaptability while maintaining your steady nature is key. Venus rules your MC, so Venus transits mark significant
+    career turning points.'
+  short: You build steady, lasting success through patience and persistence. Your career path values stability, practicality,
+    and tangible results.
+  title: MC in Taurus
+virgo:
+  detailed: With the Midheaven in Virgo, your professional identity is built on service, precision, and analytical thinking.
+    You have a keen eye for detail and a gift for improving systems and processes. You excel in healthcare, editing, accounting,
+    research, data analysis, or any field requiring meticulous attention. Your professional style is modest, efficient, and
+    reliable. You do your best work behind the scenes. You are a natural problem-solver who takes pride in getting things
+    right. Challenges include perfectionism, self-criticism, and difficulty delegating to others. Learning to see the big
+    picture while valuing your own contributions is your growth path. Mercury rules your MC, so Mercury transits mark significant
+    career turning points.
+  short: Your career path involves service, analysis, precision, and continuous improvement. You excel at refining systems
+    and helping others.
+  title: MC in Virgo

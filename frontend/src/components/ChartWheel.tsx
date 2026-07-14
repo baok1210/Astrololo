@@ -28,12 +28,22 @@ interface Planet {
   aspects?: any[]
 }
 
+interface FixedStar {
+  name: string
+  name_en: string
+  name_vi: string
+  longitude: number
+  sign: string
+  magnitude: number
+}
+
 interface ChartData {
   planets: Planet[]
   houses: any[]
   ascendant: number
   aspects?: any[]
   part_of_fortune?: { longitude: number; sign: string; sign_vi?: string; house?: number }
+  fixed_stars?: FixedStar[]
 }
 
 export default function ChartWheel({ chartData }: { chartData: ChartData }) {
@@ -43,6 +53,7 @@ export default function ChartWheel({ chartData }: { chartData: ChartData }) {
   const aspects = chartData?.aspects || []
   const ascendant = chartData?.ascendant || 0
   const pof = chartData?.part_of_fortune
+  const fixedStars = chartData?.fixed_stars || []
 
   useEffect(() => {
     if (!ref.current) return
@@ -255,6 +266,30 @@ export default function ChartWheel({ chartData }: { chartData: ChartData }) {
         .attr('font-weight', 'bold')
         .text('⊕')
     }
+
+    // Fixed Stars (★ dots with magnitude-based sizing)
+    const starR = R - 32
+    fixedStars.forEach((fs: FixedStar) => {
+      const fsAngle = (fs.longitude - 90) * Math.PI / 180
+      const size = Math.max(2, Math.min(5, 5 - (fs.magnitude || 3) * 0.8))
+      g.append('circle')
+        .attr('cx', starR * Math.cos(fsAngle))
+        .attr('cy', starR * Math.sin(fsAngle))
+        .attr('r', size)
+        .attr('fill', '#a070d0')
+        .attr('stroke', '#fff')
+        .attr('stroke-width', 0.8)
+        .attr('opacity', 0.8)
+      g.append('text')
+        .attr('x', (starR + 8) * Math.cos(fsAngle))
+        .attr('y', (starR + 8) * Math.sin(fsAngle))
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'central')
+        .attr('font-size', '6')
+        .attr('fill', '#a070d0')
+        .attr('opacity', 0.7)
+        .text('★')
+    })
 
     // Center label
     g.append('text')

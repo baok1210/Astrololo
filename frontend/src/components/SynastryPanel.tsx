@@ -70,6 +70,7 @@ export default function SynastryPanel({ lang }: { lang: 'vi' | 'en' }) {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<SynastryResponse | null>(null)
   const [error, setError] = useState('')
+  const [tab, setTab] = useState<'overlap' | 'composite'>('overlap')
 
   function toBirthData(p: any): BirthData {
     return { name: p.name, year: p.year, month: p.month, day: p.day, hour: p.hour, minute: p.minute, latitude: p.lat, longitude: p.lng, timezone_str: `Etc/GMT${p.tz >= 0 ? '-' : '+'}${Math.abs(p.tz)}`, house_system: houseSystem, node_type: nodeType, lang }
@@ -145,11 +146,49 @@ export default function SynastryPanel({ lang }: { lang: 'vi' | 'en' }) {
           </div>
 
           <div style={{ background: '#fff', padding: 16, borderRadius: 8, marginBottom: 16, boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
-            <h3 style={{ margin: '0 0 4px', fontSize: 15, color: '#4a2c2a' }}>{t('Tổng Quan Tương Hợp', 'Synastry Overview')}</h3>
-            {result.summary && <p style={{ fontSize: 13, color: '#555', marginTop: 8 }}>{lang === 'vi' ? result.summary.vi : result.summary.en}</p>}
-            <p style={{ fontSize: 12, color: '#888', marginTop: 4 }}>
-              {result.cross_aspect_count} {t('góc chiếu', 'aspects')} · {result.harmonious_aspects} {t('thuận', 'harmonious')} · {result.challenging_aspects} {t('nghịch', 'challenging')}
-            </p>
+            <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+              <button onClick={() => setTab('overlap')} style={{ flex: 1, padding: 8, border: 'none', borderRadius: 6, fontSize: 13, cursor: 'pointer', background: tab === 'overlap' ? '#6b3a3a' : '#eee', color: tab === 'overlap' ? '#fff' : '#555' }}>{t('Góc Chiếu (Overlap)', 'Aspects (Overlap)')}</button>
+              <button onClick={() => setTab('composite')} disabled={!result.composite} style={{ flex: 1, padding: 8, border: 'none', borderRadius: 6, fontSize: 13, cursor: 'pointer', background: tab === 'composite' ? '#6b3a3a' : '#eee', color: tab === 'composite' ? '#fff' : '#555', opacity: result.composite ? 1 : 0.5 }}>{t('Lá Số Chung (Composite)', 'Composite Chart')}</button>
+            </div>
+            {tab === 'overlap' ? (
+              <div>
+                <h3 style={{ margin: '0 0 4px', fontSize: 15, color: '#4a2c2a' }}>{t('Tổng Quan Tương Hợp', 'Synastry Overview')}</h3>
+                {result.compatibility_score !== undefined && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '8px 0' }}>
+                    <div style={{ position: 'relative', width: 64, height: 64 }}>
+                      <svg width={64} height={64} viewBox="0 0 64 64">
+                        <circle cx={32} cy={32} r={28} fill="none" stroke="#eee" strokeWidth={6} />
+                        <circle cx={32} cy={32} r={28} fill="none" stroke="#6b3a3a" strokeWidth={6}
+                          strokeDasharray={`${(result.compatibility_score / 100) * 175.9} 175.9`}
+                          strokeLinecap="round" transform="rotate(-90 32 32)" />
+                      </svg>
+                      <span style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 15, fontWeight: 'bold', color: '#4a2c2a' }}>
+                        {result.compatibility_score}
+                      </span>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 14, fontWeight: 600, color: '#4a2c2a' }}>{result.compatibility_label}</div>
+                      <div style={{ fontSize: 12, color: '#888' }}>{t('Điểm tương hợp', 'Compatibility score')}</div>
+                    </div>
+                  </div>
+                )}
+                {result.summary && <p style={{ fontSize: 13, color: '#555', marginTop: 8 }}>{lang === 'vi' ? result.summary.vi : result.summary.en}</p>}
+                <p style={{ fontSize: 12, color: '#888', marginTop: 4 }}>
+                  {result.cross_aspect_count} {t('góc chiếu', 'aspects')} · {result.harmonious_aspects} {t('thuận', 'harmonious')} · {result.challenging_aspects} {t('nghịch', 'challenging')}
+                </p>
+              </div>
+            ) : (
+              result.composite && (
+                <div>
+                  <h3 style={{ margin: '0 0 8px', fontSize: 15, color: '#4a2c2a' }}>{t('Lá Số Chung (Composite)', 'Composite Chart')}</h3>
+                  <p style={{ fontSize: 12, color: '#666', marginBottom: 12 }}>{t('Lá số được tính từ điểm giữa (midpoint) của hai lá số — thể hiện bản chất mối quan hệ.', 'Chart computed from the midpoint of both charts — the relationship\'s own nature.')}</p>
+                  <ChartWheel chartData={{ planets: result.composite.planets, houses: result.composite.houses, ascendant: result.composite.ascendant, aspects: result.composite.aspects || [] }} />
+                  {result.composite.interpretation?.sections && (
+                    <InterpretationView sections={result.composite.interpretation.sections} lang={lang} />
+                  )}
+                </div>
+              )
+            )}
           </div>
 
           {result.cross_interpretation && result.cross_interpretation.length > 0 && (
