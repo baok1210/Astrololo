@@ -1,0 +1,93 @@
+# Astrology encyclopedia — foundational knowledge (English)
+# Integrated per user request (2026-07-14).
+# Rule: encyclopedia_rule.py (priority 30, section "encyclopedia")
+
+chart_types:
+  title: "Overview of Chart Types"
+  natal:
+    name: "Natal Chart"
+    text: "Based on date, month, year and especially birth time to determine the energy of the 12 zodiac signs and the houses. This is the root chart reflecting a person's birth blueprint."
+  synastry:
+    name: "Synastry Chart"
+    text: "Two natal charts overlaid to read the interaction between both people's planets — showing where they harmonize and where they clash."
+  composite:
+    name: "Composite Chart"
+    text: "Calculated from the midpoint of each planet from both charts, producing a third chart that represents the relationship itself as a distinct entity — not either individual."
+  progressed:
+    name: "Progressed Chart"
+    text: "Using the 'one day for one year' method, it shows a person's current developmental stage — where you are now and which new phase you are moving into."
+  solar_return:
+    name: "Solar Return"
+    text: "Calculated when the Sun returns to its exact birth position (yearly), showing the yearly forecast for career, love and health over the next 12 months."
+  lunar_return:
+    name: "Lunar Return"
+    text: "Calculated when the Moon returns to its birth position (monthly), showing the monthly forecast for emotions, family and inner needs."
+  transit:
+    name: "Transit"
+    text: "The planets currently moving across the real sky, impacting the natal chart at a specific moment — reflecting in-the-moment external energy."
+
+structure:
+  title: "Detailed Structure of a Chart"
+  intro: "A chart is built from four core elements:"
+  elements:
+    - "12 Zodiac Energies: ordered Aries, Taurus, Gemini, Cancer, Leo, Virgo, Libra, Scorpio, Sagittarius, Capricorn, Aquarius, Pisces."
+    - "12 Houses: each corresponding to a concrete area of life."
+    - "Planets: concrete energy-bearing bodies placed in signs and houses."
+    - "Aspects: the geometric interaction between planets."
+
+houses:
+  title: "Meaning of the 12 Houses"
+  intro: "The houses show different areas of human life:"
+  items:
+    "1": "House 1 (Aries-ruler): Physical appearance and the outer personality one shows the world."
+    "2": "House 2 (Taurus-ruler): Material matters, money-making ability, personal values and accumulation."
+    "3": "House 3 (Gemini-ruler): Surface-level communication, quick learning, imitation and short-term information handling."
+    "4": "House 4 (Cancer-ruler): Family, roots, origins, the place one retreats to recharge."
+    "5": "House 5 (Leo-ruler): Personal joy, creativity, children (as a pride), lovers and hobbies."
+    "6": "House 6 (Virgo-ruler): Money skills, daily work (routine), physical health and how one handles pressure."
+    "7": "House 7 (opposite House 1): Partnerships, companions, marriage or even opponents."
+    "8": "House 8 (opposite House 2): The value of others, shared assets."
+    "9": "House 9 (opposite House 3): Higher education, deep thought systems, teachers, spiritual belief."
+    "10": "House 10 (opposite House 4): Social status, career, position, influence and boss image."
+    "11": "House 11 (opposite House 5): Group relations, friends, community-level joy."
+    "12": "House 12 (opposite House 6): Psychological health, the hidden world, solitude."
+
+hemispheres:
+  title: "Chart Hemispheres"
+  intro: "Planet positions across chart halves reveal personality trends:"
+  upper_lower:
+    - "Lower half (Houses 1-6): activities flow easily, naturally, with little effort — personal, internal."
+    - "Upper half (Houses 7-12): aspects needing effort, pushing or striving to achieve — social, external."
+  left_right:
+    - "Left half: high subjectivity, acting from self-want, no external reason needed."
+    - "Right half: objectivity, acting only with a reason or relating to others."
+
+planets:
+  title: "Planet Meanings and Sub-indices"
+  items:
+    sun: "Sun: how one seeks life meaning, core joy — not just outer personality but the deepest self."
+    moon: "Moon: emotional needs, where one feels safe, belonging and how one recharges."
+    mercury: "Mercury: how one thinks, learns and speaks."
+    mars: "Mars: how one acts, moves, expends energy and even anger."
+    jupiter: "Jupiter: luck, vision and energy expansion."
+    saturn: "Saturn: limits, challenges and responsibility."
+  degree:
+    title: "Degree Index"
+    text: "Each sign is 30 degrees. The closer a planet is to the early degrees (e.g. 0 degrees), the purer and stronger that sign's energy; toward the end (20-29 degrees) the energy begins blending into the next sign."
+
+elements_qualities:
+  title: "Elements and Qualities"
+  intro: "A chart divides by:"
+  elements: "Elements: Fire (Aries, Leo, Sagittarius), Earth (Taurus, Virgo, Capricorn), Air (Gemini, Libra, Aquarius), Water (Cancer, Scorpio, Pisces)."
+  qualities: "Qualities: Cardinal (4 season-starting signs), Fixed (4 mid-season signs), Mutable (4 end-season signs)."
+  example: "Example: Fire + Cardinal people tend to be passionate, wanting to lead, initiate and sometimes seen as patriarchal — like Aries (Fire, Cardinal)."
+
+aspects:
+  title: "Aspects"
+  intro: "Aspects show how energy streams interact:"
+  good: "Soft aspects (green): energies harmonize and support each other, creating smoothness in life."
+  challenging: "Hard aspects / tension (red): create pressure, requiring the person to learn balance."
+  conjunction: "Conjunction (0 deg): two planets at the same spot, both energies flare up together — sometimes imbalance if too many conjunct."
+  square: "Square (90 deg): creates tension, forcing action and overcoming challenge."
+  opposition: "Opposition (180 deg): two energies at opposite poles; focusing one tends to neglect the other."
+  trine_sextile: "Trine (120 deg) and Sextile (60 deg): supportive energies that heal and elevate each other's strengths."

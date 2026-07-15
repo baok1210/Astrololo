@@ -5,6 +5,24 @@ Log ngôn ngữ: tiếng Việt (mô tả) + tiếng Anh (commit message).
 
 ---
 
+## 2026-07-14 — Tích hợp Bách Khoa Chiêm Tinh (Encyclopedia)
+
+### Nguồn
+User cung cấp văn bản chi tiết (TIẾNG VIỆT) về: loại bản đồ, cấu trúc 4 yếu tố, 12 nhà, phân vùng bán cầu, hành tinh + chỉ số độ, nguyên tố/tính chất, góc chiếu. Yêu cầu tích hợp → **Cả VI + EN** (VI làm gốc).
+
+### Thay đổi
+- `templates/vi/encyclopedia.yaml` + `templates/en/encyclopedia.yaml` — nội dung bách khoa (chart_types, structure, houses 1-12, hemispheres, planets+degree, elements/qualities, aspects).
+- `encyclopedia_rule.py` (mới) — rule priority 30, luôn `matches()`, trả 1 `RuleResult` category `encyclopedia`.
+- `registry.py` — đăng ký `encyclopedia_rule`.
+- `engine.py` — thêm `"encyclopedia"` vào `category_titles` + `section_order` (cuối cùng).
+
+### Verification (ad-hoc)
+- Rule VI/EN: title + text>500c đúng, category=encyclopedia.
+- Engine VI + EN đều có section `encyclopedia` → PASS.
+- `pytest` → 156 passed.
+
+---
+
 ## 2026-07-14 — Mở rộng KB: Synastry + Compatibility (tiếp tục)
 
 ### Thay đổi

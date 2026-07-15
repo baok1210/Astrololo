@@ -63,6 +63,7 @@ class InterpretationEngine:
             "aspect",
             "aspect_synthesis",
             "midpoints",
+            "encyclopedia",
         ]
 
         for cat in section_order:
@@ -122,6 +123,7 @@ class InterpretationEngine:
             "aspect_synthesis": ("Tổng Hợp Góc Chiếu Theo Hành Tinh", "Per-Planet Aspect Synthesis"),
             "midpoints": ("Trung Điểm", "Midpoints"),
             "fixed_stars": ("Sao Cố Định", "Fixed Stars"),
+            "encyclopedia": ("Bách Khoa Chiêm Tinh", "Astrology Encyclopedia"),
         }
         idx = 0 if self.lang == "vi" else 1
         title = category_titles.get(category, ("", ""))

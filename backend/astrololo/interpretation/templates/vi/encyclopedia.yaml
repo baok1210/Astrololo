@@ -1,0 +1,93 @@
+# Bách khoa chiêm tinh — kiến thức nền tảng (tiếng Việt)
+# Được tích hợp theo yêu cầu người dùng (2026-07-14).
+# Rule: encyclopedia_rule.py (priority 30, section "encyclopedia")
+
+chart_types:
+  title: "Tổng quan các loại bản đồ sao"
+  natal:
+    name: "Bản đồ sao cá nhân (Natal Chart)"
+    text: "Dựa trên ngày, tháng, năm và đặc biệt là giờ sinh để xác định năng lượng của 12 cung hoàng đạo và các cung nhà. Đây là bản đồ gốc phản ánh bán sinh của một người."
+  synastry:
+    name: "Bản đồ sao cặp đôi (Synastry)"
+    text: "Hai bản đồ sao cá nhân được lồng vào nhau để xem sự tương tác giữa các hành tinh của hai người — chỉ ra điểm hòa hợp và thử thách."
+  composite:
+    name: "Bản đồ sao trung bình (Composite)"
+    text: "Tính toán điểm giữa (midpoint) của các hành tinh từ hai lá số, tạo ra một bản đồ thứ ba đại diện cho chính mối quan hệ như một thực thể riêng biệt — không phải của cá nhân nào."
+  progressed:
+    name: "Bản đồ sao tiến trình (Progressed Chart)"
+    text: "Dựa trên phương pháp 'một ngày cho một năm', chỉ ra giai đoạn phát triển hiện tại của cá nhân, giúp biết mình đang ở đâu và sắp chuyển sang giai đoạn mới nào."
+  solar_return:
+    name: "Bản đồ sao vận hạn — Solar Return"
+    text: "Tính khi Mặt trời quay về đúng vị trí lúc sinh (hàng năm), xem vận hạn theo năm về sự nghiệp, tình cảm, sức khỏe trong 12 tháng tới."
+  lunar_return:
+    name: "Bản đồ sao vận hạn — Lunar Return"
+    text: "Tính khi Mặt trăng quay về vị trí lúc sinh (hàng tháng), xem vận hạn theo tháng về cảm xúc, gia đình và nhu cầu nội tâm."
+  transit:
+    name: "Bản đồ sao vận hạn — Transit"
+    text: "Các hành tinh đang di chuyển trên bầu trời thực tế tác động trực tiếp vào bản đồ sao cá nhân tại một thời điểm cụ thể — phản ánh năng lượng tức thì từ bên ngoài."
+
+structure:
+  title: "Cấu trúc chi tiết của bản đồ sao"
+  intro: "Một bản đồ sao được cấu thành từ bốn yếu tố chính:"
+  elements:
+    - "12 Năng lượng hoàng đạo: Sắp xếp theo thứ tự Bạch Dương, Kim Ngưu, Song Tử, Cự Giải, Sư Tử, Xử Nữ, Thiên Bình, Bọ Cạp, Nhân Mã, Ma Kết, Bảo Bình, Song Ngư."
+    - "12 Cung nhà (Houses): Tương ứng với các lĩnh vực cụ thể trong cuộc sống."
+    - "Hành tinh (Planets): Các thực thể mang năng lượng cụ thể, đặt trong các nhà và cung."
+    - "Góc chiếu (Aspects): Sự tương tác hình học giữa các hành tinh."
+
+houses:
+  title: "Ý nghĩa chi tiết của 12 Cung nhà"
+  intro: "Các cung nhà thể hiện các khía cạnh khác nhau của đời sống con người:"
+  items:
+    "1": "Nhà 1 (Đồng dạng Bạch Dương): Thể hiện diện mạo, tính cách bên ngoài mà một người show ra cho thế giới thấy — bản sắc bề mặt."
+    "2": "Nhà 2 (Đồng dạng Kim Ngưu): Liên quan đến vật chất, khả năng kiếm tiền, giá trị cá nhân và sự tích lũy."
+    "3": "Nhà 3 (Đồng dạng Song Tử): Tư duy giao tiếp bề mặt, khả năng học hỏi nhanh, bắt chước và xử lý thông tin ngắn hạn."
+    "4": "Nhà 4 (Đồng dạng Cự Giải): Gia đình, gốc rễ, cội nguồn, nơi một người lui về để sạc lại năng lượng."
+    "5": "Nhà 5 (Đồng dạng Sư Tử): Niềm vui cá nhân, sự sáng tạo, con cái (như một niềm tự hào), người yêu và sở thích."
+    "6": "Nhà 6 (Đồng dạng Xử Nữ): Kỹ năng kiếm tiền, công việc hàng ngày (routine), sức khỏe vật lý và cách đối diện với áp lực."
+    "7": "Nhà 7 (Đối trọng Nhà 1): Các mối quan hệ đối tác, đồng hành, hôn nhân hoặc thậm chí là đối thủ."
+    "8": "Nhà 8 (Đối trọng Nhà 2): Giá trị của người khác, tài sản chung, sự gắn kết sâu."
+    "9": "Nhà 9 (Đối trọng Nhà 3): Học vấn cao, hệ thống tư duy sâu sắc, người thầy, niềm tin tâm linh."
+    "10": "Nhà 10 (Đối trọng Nhà 4): Địa vị xã hội, sự nghiệp, vị thế, tầm ảnh hưởng và hình ảnh người sếp."
+    "11": "Nhà 11 (Đối trọng Nhà 5): Mối quan hệ hội nhóm, bạn bè, niềm vui mang tính cộng đồng."
+    "12": "Nhà 12 (Đối trọng Nhà 6): Sức khỏe tâm lý, thế giới ẩn dật, sự một mình và tiềm thức."
+
+hemispheres:
+  title: "Phân vùng Bản đồ sao (Bán cầu)"
+  intro: "Vị trí của các hành tinh trên các nửa bản đồ sao nói lên xu hướng tính cách:"
+  upper_lower:
+    - "Nửa dưới (Nhà 1-6): Các hoạt động diễn ra dễ dàng, tự nhiên, không tốn nhiều công sức — mang tính cá nhân, nội tại."
+    - "Nửa trên (Nhà 7-12): Những khía cạnh cần phải nỗ lực, gồng mình hoặc cố gắng mới đạt được — mang tính xã hội, hướng ngoại."
+  left_right:
+    - "Nửa bên trái: Tính chủ quan cao, làm vì bản thân muốn, không cần lý do từ bên ngoài."
+    - "Nửa bên phải: Tính khách quan, làm việc cần có lý do hoặc liên quan đến người khác."
+
+planets:
+  title: "Ý nghĩa các Hành tinh và Chỉ số phụ"
+  items:
+    sun: "Mặt trời (Sun): Cách một người tìm kiếm ý nghĩa cuộc sống, niềm vui cốt lõi — không chỉ là tính cách bề ngoài mà là cái tôi sâu nhất."
+    moon: "Mặt trăng (Moon): Nhu cầu cảm xúc, nơi cảm thấy an toàn, thuộc về và cách sạc năng lượng."
+    mercury: "Sao Thủy (Mercury): Cách tư duy, học tập và lời ăn tiếng nói — trí tuệ bề mặt."
+    mars: "Sao Hỏa (Mars): Cách hành động, vận động, xả năng lượng và cả cơn giận — dục năng sống."
+    jupiter: "Sao Mộc (Jupiter): Sự may mắn, tầm nhìn và sự khuếch đại năng lượng — mang lại sự mở rộng."
+    saturn: "Sao Thổ (Saturn): Các giới hạn, thử thách và trách nhiệm — người thầy nghiêm khắc dạy qua kinh nghiệm."
+  degree:
+    title: "Chỉ số độ"
+    text: "Mỗi cung có 30 độ. Hành tinh càng ở những độ đầu tiên (như 0 độ - 9 độ, gọi là 'đầu cung') thì năng lượng của cung đó càng thuần khiết và mạnh mẽ; càng về cuối cung (20-29 độ) năng lượng càng pha trộn với cung kế tiếp."
+
+elements_qualities:
+  title: "Nguyên tố và Tính chất"
+  intro: "Bản đồ sao được phân chia theo:"
+  elements: "Nguyên tố: Lửa (Fire - Bạch Dương, Sư Tử, Nhân Mã), Đất (Earth - Kim Ngưu, Xử Nữ, Ma Kết), Khí (Air - Song Tử, Thiên Bình, Bảo Bình), Nước (Water - Cự Giải, Bọ Cạp, Song Ngư)."
+  qualities: "Tính chất: Thống lĩnh (Cardinal - 4 cung khởi đầu mùa), Kiên định (Fixed - 4 cung giữa mùa), Linh hoạt (Mutable - 4 cung cuối mùa)."
+  example: "Ví dụ: Người trội Lửa và Thống lĩnh thường có xu hướng nhiệt tình, muốn dẫn dắt, khởi xướng và đôi khi bị coi là gia trưởng — như Bạch Dương (Lửa, Thống lĩnh)."
+
+aspects:
+  title: "Góc chiếu (Aspects)"
+  intro: "Góc chiếu thể hiện cách các dòng năng lượng tương tác với nhau:"
+  good: "Góc đẹp (màu xanh): Các năng lượng hòa hợp, hỗ trợ nhau, tạo sự trơn tru trong cuộc sống."
+  challenging: "Góc xấu/căng thẳng (màu đỏ): Gây ra áp lực, đòi hỏi cá nhân phải học cách cân bằng và trưởng thành."
+  conjunction: "Góc trùng (Conjunction, 0°): Hai hành tinh ở cùng một vị trí, làm năng lượng của cả hai bật lên cùng lúc, đôi khi gây mất cân bằng nếu có quá nhiều hành tinh trùng tụ."
+  square: "Góc vuông (Square, 90°): Gây căng thẳng, buộc cá nhân hành động và vượt qua thử thách."
+  opposition: "Góc đối đỉnh (Opposition, 180°): Hai năng lượng ở hai cực đối lập, khi tập trung vào cái này thường quên cái kia — cần sự cân bằng."
+  trine_sextile: "Góc Tam hợp (Trine, 120°) và Lục hợp (Sextile, 60°): Các năng lượng hỗ trợ, giúp chữa lành và nâng cao những điểm tốt của nhau."
