@@ -5,6 +5,20 @@ Log ngôn ngữ: tiếng Việt (mô tả) + tiếng Anh (commit message).
 
 ---
 
+## 2026-07-14 — Mở rộng KB: Synastry + Compatibility (tiếp tục)
+
+### Thay đổi
+- `knowledge_retriever.py`: thêm `retrieve_compatibility(p1, p2)` → lấy overview từ corpus `love_compatibility` (100 file).
+- `synastry.py`: thêm field `compatibility_text` (EN) lấy từ corpus, trả về trong response.
+- `api.ts` + `SynastryPanel.tsx`: hiển thị `compatibility_text` (EN) dưới summary.
+- Fix `_sign_of` để đọc `chart.planets` (list) thay vì `.get()` (dict).
+
+### Verification (ad-hoc)
+- Synastry EN: `compatibility_text` trả prose corpus ("**Synastry** is the art of relationship astrology..."), composite present, score 37/100 (in range).
+- `pytest` → 156 passed. `npm run build` clean. `benchmark` 50/50 (19/19 categories, "No issues found!").
+
+---
+
 ## 2026-07-14 — Tích hợp kho kiến thức crawl (KB Integration) + P0/P1
 
 ### Mục tiêu

@@ -222,6 +222,19 @@ def create_synastry(person1: AstrologicalSubject, person2: AstrologicalSubject,
     except Exception:
         composite = None
 
+    # KB-sourced synastry overview (EN) from the love_compatibility corpus
+    compatibility_text = None
+    if lang == "en":
+        from astrololo.interpretation.knowledge_retriever import retrieve_compatibility
+        def _sign_of(chart, body):
+            for pl in chart.planets:
+                if getattr(pl, "name", "") == body:
+                    return getattr(pl, "sign", "")
+            return ""
+        p1sig = _sign_of(chart1, "sun")
+        p2sig = _sign_of(chart2, "sun")
+        compatibility_text = retrieve_compatibility(p1sig, p2sig)
+
     # Generate a simple synastry summary interpretation
     if total > 0:
         if harmonious > challenging * 1.5:
@@ -252,6 +265,7 @@ def create_synastry(person1: AstrologicalSubject, person2: AstrologicalSubject,
             "p2_in_p1": overlays_2in1,
         },
         "composite": composite,
+        "compatibility_text": compatibility_text,
         "summary": {
             "vi": summary_vi,
             "en": summary_en,

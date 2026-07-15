@@ -173,6 +173,9 @@ export default function SynastryPanel({ lang }: { lang: 'vi' | 'en' }) {
                   </div>
                 )}
                 {result.summary && <p style={{ fontSize: 13, color: '#555', marginTop: 8 }}>{lang === 'vi' ? result.summary.vi : result.summary.en}</p>}
+                {lang === 'en' && result.compatibility_text && (
+                  <p style={{ fontSize: 12, color: '#666', marginTop: 8, lineHeight: 1.5, whiteSpace: 'pre-line' }}>{result.compatibility_text}</p>
+                )}
                 <p style={{ fontSize: 12, color: '#888', marginTop: 4 }}>
                   {result.cross_aspect_count} {t('góc chiếu', 'aspects')} · {result.harmonious_aspects} {t('thuận', 'harmonious')} · {result.challenging_aspects} {t('nghịch', 'challenging')}
                 </p>

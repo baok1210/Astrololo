@@ -53,6 +53,7 @@ export interface SynastryResponse {
   challenging_aspects: number
   compatibility_score: number
   compatibility_label: string
+  compatibility_text?: string
   cross_interpretation?: SectionItem[]
   summary?: { vi: string; en: string }
 }

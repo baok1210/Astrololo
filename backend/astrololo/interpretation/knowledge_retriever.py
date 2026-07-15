@@ -306,3 +306,23 @@ def retrieve_aspect(planet1: str, planet2: str, aspect_type: str, max_chars: int
         return None
     snippet = _extract_relevant(docs[0].text, want, max_chars)
     return f"{snippet}  (source: {docs[0].source})" if snippet else None
+
+
+def retrieve_compatibility(person1: str, person2: str, max_chars: int = 1100) -> Optional[str]:
+    """Whole-pair synastry overview from the love_compatibility corpus."""
+    p1 = _PLANET_ALIASES.get(person1, person1)
+    p2 = _PLANET_ALIASES.get(person2, person2)
+    for k in [f"{p1}_{p2}", f"{p2}_{p1}", "synastry", "compatibility_overview"]:
+        doc = _file_match([k])
+        if doc:
+            snippet = _extract_relevant(doc.text, _tokens(p1, p2), max_chars)
+            if snippet:
+                return f"{snippet}  (source: {doc.source})"
+    want = _tokens(p1, p2)
+    docs = _best_docs(want, "love_compatibility", f"{p1}_{p2}")
+    if not docs:
+        docs = _best_docs(want, "compatibility", "")
+    if not docs:
+        return None
+    snippet = _extract_relevant(docs[0].text, want, max_chars)
+    return f"{snippet}  (source: {docs[0].source})" if snippet else None
