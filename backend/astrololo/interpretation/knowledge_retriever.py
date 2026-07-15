@@ -36,6 +36,14 @@ _LINKMENU_RE = re.compile(r"^[\s\|]*\[?\]?\(?https?://", re.MULTILINE)  # lines 
 _CLICK_RE = re.compile(r"click (on|here)|read (more|about)|see what the year|the following are interpretations|sign up|subscribe", re.IGNORECASE)
 # A line that just enumerates all 12 signs is a menu, not content.
 _SIGNLIST_RE = re.compile(r"^(aries taurus gemini cancer leo virgo libra scorpio sagittarius capricorn aquarius pisces|aries taurus gemini cancer leo virgo libra scorpio sagittarius capricorn aquarius and pisces)", re.IGNORECASE)
+# Corpus "index" pages that only list links to sub-pages (not real content).
+_INDEX_RE = re.compile(r"aspect page|the following aspects are presented|presented on this page|the meaning of the following|this page lists|following (aspects|pages)|aspects? (index|overview)", re.IGNORECASE)
+
+
+def _is_index_page(text: str) -> bool:
+    """True if the doc is a nav/index page listing sub-links, not real prose."""
+    head = text[:400].lower()
+    return bool(_INDEX_RE.search(head))
 
 _HOUSE_WORDS = {
     1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "sixth",
@@ -189,6 +197,7 @@ def _best_docs(want_tokens: set, cat_hint: str, sub_hint: str, limit: int = 3) -
     scored = [( _score(d, want_tokens, cat_hint, sub_hint), d) for d in _INDEX]
     scored = [x for x in scored if x[0] > 0]
     scored = [x for x in scored if (want_tokens & x[1].tokens)]  # require a wanted token
+    scored = [x for x in scored if not _is_index_page(x[1].text)]  # skip nav/index
     scored.sort(key=lambda x: x[0], reverse=True)
     out: List[_Doc] = []
     used_src: set = set()
@@ -243,6 +252,8 @@ def _file_match(keys: List[str]) -> Optional[_Doc]:
         if not any(k in fk for k in keys):
             continue
         for doc in docs:
+            if _is_index_page(doc.text):
+                continue
             sc = _SOURCE_QUALITY.get(doc.source, 1.0)
             if sc > best_score:
                 best_score = sc
@@ -298,8 +309,16 @@ def retrieve_aspect(planet1: str, planet2: str, aspect_type: str, max_chars: int
             snippet = _extract_relevant(doc.text, _tokens(p1, p2, a), max_chars)
             if snippet:
                 return f"{snippet}  (source: {doc.source})"
+    # broader: any corpus file whose name contains BOTH planets (e.g. sun_and_moon)
+    for fk, docs in _BY_FILE.items():
+        if p1 in fk and p2 in fk and not _is_index_page(docs[0].text):
+            snippet = _extract_relevant(docs[0].text, _tokens(p1, p2, a), max_chars)
+            if snippet:
+                return f"{snippet}  (source: {docs[0].source})"
     want = _tokens(p1, p2, a)
     docs = _best_docs(want, "aspects", f"{p1}_{p2}")
+    if not docs:
+        docs = _best_docs(want, "aspects", "")
     if not docs:
         docs = _best_docs(want, "compatibility", f"{p1}_{p2}")
     if not docs:

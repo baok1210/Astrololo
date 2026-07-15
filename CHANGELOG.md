@@ -5,6 +5,24 @@ Log ngôn ngữ: tiếng Việt (mô tả) + tiếng Anh (commit message).
 
 ---
 
+## 2026-07-14 — Vá EN aspect fallback + Nối Frontend Predictive (Làm đi)
+
+### (a) Vá retriever EN aspect
+- `knowledge_retriever.py`: thêm `_is_index_page()` lọc trang index/nav ("aspect page", "following aspects") khỏi `_file_match` + `_best_docs`. Mở rộng `retrieve_aspect` bắt file chứa CẢ 2 hành tinh (`sun_and_moon`...).
+- Audit: EN aspect fallback-ish 45/400 → 43/400 (phần còn lại là cặp asteroid/node thiếu trong corpus — giới hạn nguồn).
+
+### (b) Nối Frontend Predictive
+- `api.ts`: thêm `PredictiveResponse` type + `getProgression` / `getSolarReturn` (giữ `getTransit` nguyên).
+- `PredictivePanel.tsx` (mới): 3 tab Progressed / Solar Return / Transit, form birth riêng, hiển thị qua `InterpretationView`.
+- `App.tsx`: thêm tab "Tiến Trình" → render `PredictivePanel`.
+- Note: backend `/progression` `/solar-return` trả nested `progression.interpretation.sections` → Panel map nested → top-level `sections`.
+
+### Verification (ad-hoc)
+- Progression VI: 17 sections; Solar Return VI: 17 sections; Progression EN có `encyclopedia` → PASS.
+- `pytest` → 156 passed. `npm run build` clean (655 modules).
+
+---
+
 ## 2026-07-14 — Tích hợp Bách Khoa Chiêm Tinh (Encyclopedia)
 
 ### Nguồn

@@ -3,13 +3,15 @@ import ErrorBoundary from './components/ErrorBoundary'
 import NatalPanel from './components/NatalPanel'
 import TransitPanel from './components/TransitPanel'
 import SynastryPanel from './components/SynastryPanel'
+import PredictivePanel from './components/PredictivePanel'
 
-type Tab = 'natal' | 'transit' | 'synastry'
+type Tab = 'natal' | 'transit' | 'synastry' | 'predictive'
 
 const TABS: { key: Tab; label: string; label_en: string; icon: string }[] = [
   { key: 'natal', label: 'Lá Số Cá Nhân', label_en: 'Natal Chart', icon: '☉' },
   { key: 'transit', label: 'Quá Cảnh', label_en: 'Transits', icon: '♄' },
   { key: 'synastry', label: 'Tương Hợp', label_en: 'Synastry', icon: '♀♂' },
+  { key: 'predictive', label: 'Tiến Trình', label_en: 'Predictive', icon: '⏳' },
 ]
 
 export default function App() {
@@ -76,6 +78,7 @@ export default function App() {
         {tab === 'natal' && <NatalPanel lang={lang} />}
         {tab === 'transit' && <TransitPanel lang={lang} />}
         {tab === 'synastry' && <SynastryPanel lang={lang} />}
+        {tab === 'predictive' && <PredictivePanel lang={lang} />}
       </div>
     </ErrorBoundary>
   )

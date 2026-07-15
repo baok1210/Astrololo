@@ -145,6 +145,26 @@ export async function getDaily(data: BirthData): Promise<DailyResponse> {
   return res.data.data
 }
 
+export interface PredictiveResponse {
+  chart_summary?: any
+  sections?: SectionData[]
+  cross_aspects?: any[]
+  aspect_interpretations?: any[]
+  summary?: { vi: string; en: string }
+  target_date?: string
+  age?: number
+}
+
+export async function getProgression(data: BirthData & { age: number }): Promise<PredictiveResponse> {
+  const res = await api.post('/progression', { ...data, age: data.age })
+  return res.data.data
+}
+
+export async function getSolarReturn(data: BirthData & { target_year: number }): Promise<PredictiveResponse> {
+  const res = await api.post('/solar-return', { ...data, target_year: data.target_year })
+  return res.data.data
+}
+
 export interface CityGeo {
   name: string
   lat: number
