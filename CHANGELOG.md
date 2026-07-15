@@ -5,6 +5,30 @@ Log ngôn ngữ: tiếng Việt (mô tả) + tiếng Anh (commit message).
 
 ---
 
+## 2026-07-14 — tra-cuu-ban-do-sao-1: Life Areas + Moon + Aspect Groups (P0–P3)
+
+Phát triển tính năng báo cáo lá số theo chuẩn MystechX (Đoàn Việt Bảo).
+
+### Backend
+- `analysis/life_areas.py` (mới): tính **14 khía cạnh đời sống** (Công danh, Bản thân, Tình yêu, Tài chính, Chuyển hóa, Xã hội, Gia đình, Con cái, Sức khỏe, Học tập, Giao tiếp, Hôn nhân, Tiềm thức, Di chuyển) → **score 0–100** (reuse `ChartScorer`/`body_weight`/`dignity`).
+- `interpretation/rules/life_area_rule.py` (mới): section "14 Khía Cạnh Cuộc Sống" (14 items + điểm + prose corpus).
+- `interpretation/rules/moon_sign_rule.py` (mới): prose sâu **Mặt Trăng** (lấp gap A2).
+- `interpretation/rules/aspect_group_rule.py` (mới): tách góc hợp thành 3 nhóm (nổi bật / hài hòa / thử thách) — C20–C22.
+- `registry.py`: đăng ký 3 rule mới.
+- `engine.py`: thêm `moon_sign`/`life_area`/`aspect_group` vào `category_titles` + `section_order`; nới limit items 5→20 cho `life_area`.
+
+### Frontend
+- `InterpretationView.tsx`: thêm `moon_sign`/`life_area`/`aspect_group`/`encyclopedia` vào `SECTION_TITLES`; render **score badge 0–100** (màu theo mức) cho `life_area`.
+
+### Tests
+- `tests/test_life_areas.py` (mới): 3 tests (count/range, engine output, career score).
+
+### Verification (ad-hoc)
+- Đoàn Việt Bảo: `moon_sign` ✓, `life_area` = 14 items (Công danh 53, Bản thân 68, Giao tiếp 83...), `aspect_group` = 3 nhóm (nổi bật 59 / hài hòa 43 / thử thách 60) → PASS.
+- pytest → 159 passed (156 + 3 mới). `npm run build` clean.
+
+---
+
 ## 2026-07-14 — Vá EN aspect fallback + Nối Frontend Predictive (Làm đi)
 
 ### (a) Vá retriever EN aspect

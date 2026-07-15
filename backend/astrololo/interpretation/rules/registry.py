@@ -30,6 +30,9 @@ _RULE_MODULES = [
     "astrololo.interpretation.rules.synthesis_rules",
     "astrololo.interpretation.rules.fixed_star_rule",
     "astrololo.interpretation.rules.strength_weakness_rule",
+    "astrololo.interpretation.rules.life_area_rule",
+    "astrololo.interpretation.rules.moon_sign_rule",
+    "astrololo.interpretation.rules.aspect_group_rule",
     "astrololo.interpretation.rules.encyclopedia_rule",
 ]
 

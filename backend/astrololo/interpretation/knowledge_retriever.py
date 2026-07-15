@@ -37,13 +37,13 @@ _CLICK_RE = re.compile(r"click (on|here)|read (more|about)|see what the year|the
 # A line that just enumerates all 12 signs is a menu, not content.
 _SIGNLIST_RE = re.compile(r"^(aries taurus gemini cancer leo virgo libra scorpio sagittarius capricorn aquarius pisces|aries taurus gemini cancer leo virgo libra scorpio sagittarius capricorn aquarius and pisces)", re.IGNORECASE)
 # Corpus "index" pages that only list links to sub-pages (not real content).
-_INDEX_RE = re.compile(r"aspect page|the following aspects are presented|presented on this page|the meaning of the following|this page lists|following (aspects|pages)|aspects? (index|overview)", re.IGNORECASE)
+_INDEX_RE = re.compile(r"aspect pages?|the following aspects are presented|presented on this page|the meaning of the following|this page lists|following (aspects|pages)|aspects? (index|overview)|see the sun conjunct|see the .* aspect page", re.IGNORECASE)
 
 
 def _is_index_page(text: str) -> bool:
     """True if the doc is a nav/index page listing sub-links, not real prose."""
-    head = text[:400].lower()
-    return bool(_INDEX_RE.search(head))
+    low = text.lower()
+    return bool(_INDEX_RE.search(low))
 
 _HOUSE_WORDS = {
     1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "sixth",

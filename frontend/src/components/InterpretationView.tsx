@@ -21,6 +21,10 @@ const SECTION_TITLES: Record<string, [string, string]> = {
   sun_moon: ['Kết Hợp Mặt Trời - Mặt Trăng', 'Sun-Moon Combination'],
   dominant_planet: ['Hành Tinh Nổi Bật', 'Dominant Planet'],
   fixed_stars: ['Sao Cố Định', 'Fixed Stars'],
+  moon_sign: ['Mặt Trăng — Cảm Xúc & Nội Tâm', 'Moon — Emotions & Inner World'],
+  life_area: ['14 Khía Cạnh Cuộc Sống', '14 Life Areas'],
+  aspect_group: ['Nhóm Góc Chiếu', 'Aspect Groups'],
+  encyclopedia: ['Bách Khoa Chiêm Tinh', 'Astrology Encyclopedia'],
 }
 
 const SECTION_COLORS: Record<string, string> = {
@@ -71,13 +75,23 @@ export default function InterpretationView({
               {section.category === 'house_placement' ? (
                 <HousePlacementTable items={items as (SectionItem & { metadata: NonNullable<SectionItem['metadata']> })[]} lang={lang} />
               ) : (
-                items.map((item, i) => (
+                items.map((item, i) => {
+                  const m = item.metadata as any
+                  const score = (m && typeof m.score === 'number') ? m.score : item.score
+                  const isLife = section.category === 'life_area'
+                  return (
                   <div key={i} style={{ marginBottom: i < items.length - 1 ? 10 : 0, paddingBottom: i < items.length - 1 ? 10 : 0, borderBottom: i < items.length - 1 ? '1px solid #eee' : 'none' }}>
-                    {item.title && <strong style={{ fontSize: 13, color: '#555', display: 'block', marginBottom: 4 }}>{item.title}</strong>}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 8 }}>
+                      {item.title && <strong style={{ fontSize: 13, color: '#555', display: 'block', marginBottom: 4 }}>{item.title}</strong>}
+                      {isLife && score !== undefined && (
+                        <span style={{ fontSize: 12, fontWeight: 600, padding: '2px 8px', borderRadius: 10, background: score >= 70 ? '#27ae60' : score >= 50 ? '#f39c12' : score >= 30 ? '#e67e22' : '#e74c3c', color: '#fff', whiteSpace: 'nowrap' }}>{score}/100</span>
+                      )}
+                    </div>
                     {item.text && <p style={{ margin: 0, fontSize: 13, color: '#444', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>{item.text}</p>}
-                    {item.score !== 0 && <span style={{ fontSize: 11, color: item.score > 0 ? '#27ae60' : '#e74c3c' }}>Score: {item.score > 0 ? '+' : ''}{item.score}</span>}
+                    {!isLife && score !== 0 && <span style={{ fontSize: 11, color: score > 0 ? '#27ae60' : '#e74c3c' }}>Score: {score > 0 ? '+' : ''}{score}</span>}
                   </div>
-                ))
+                  )
+                })
               )}
             </div>
           </div>
