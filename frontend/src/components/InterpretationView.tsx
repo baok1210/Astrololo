@@ -88,6 +88,13 @@ export default function InterpretationView({
                       )}
                     </div>
                     {item.text && <p style={{ margin: 0, fontSize: 13, color: '#444', lineHeight: 1.6, whiteSpace: 'pre-wrap' }}>{item.text}</p>}
+                    {Array.isArray((item as any).evidence) && (item as any).evidence.length > 0 && (
+                      <div style={{ marginTop: 6, display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                        {((item as any).evidence as string[]).map((ev, ei) => (
+                          <span key={ei} style={{ fontSize: 11, padding: '2px 7px', borderRadius: 8, background: '#eef2f7', color: '#3a5a7a', border: '1px solid #d6e0ea' }}>📍 {ev}</span>
+                        ))}
+                      </div>
+                    )}
                     {!isLife && score !== 0 && <span style={{ fontSize: 11, color: score > 0 ? '#27ae60' : '#e74c3c' }}>Score: {score > 0 ? '+' : ''}{score}</span>}
                   </div>
                   )

@@ -30,6 +30,12 @@ class PlanetInSignRule(InterpretationRule):
                 if dignity != "neutral":
                     title += f" ({dignity})"
 
+            s_name_vi = p.sign_name_vi if lang == "vi" else SIGNS[p.sign].name_en
+            ev = [f"{p.name_vi if lang=='vi' else p.name_en} ở {s_name_vi}",
+                  f"Nhà {p.house}" if lang == "vi" else f"House {p.house}",
+                  f"Độ {p.position_in_sign:.1f}° trong cung" if lang == "vi" else f"{p.position_in_sign:.1f}° into sign"]
+            if dignity != "neutral":
+                ev.append(f"Dignity: {dignity}")
             results.append(RuleResult(
                 title_vi=title if lang == "vi" else "",
                 title_en=title if lang == "en" else "",
@@ -40,6 +46,7 @@ class PlanetInSignRule(InterpretationRule):
                 category="planet_in_sign",
                 planet=p.name,
                 tags=[p.name, p.sign, dignity],
+                evidence=ev,
                 metadata={
                     "planet": p.name,
                     "sign": p.sign,

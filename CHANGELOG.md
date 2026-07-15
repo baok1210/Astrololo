@@ -5,6 +5,26 @@ Log ngôn ngữ: tiếng Việt (mô tả) + tiếng Anh (commit message).
 
 ---
 
+## 2026-07-14 — Chart-Linked Interpretation (bằng chứng neo chart)
+
+Cạnh tranh Astro-Seek/Cafe/Astro.com: gắn mỗi đoạn luận giải với bằng chứng chart cụ thể (hành tinh, cung, nhà, độ, góc, orb) để người dùng khồng phải tự so chiếu.
+
+### Backend
+- `rules/base.py`: thêm `evidence: List[str]` vào `RuleResult`.
+- `rules/planet_in_sign_rule.py`: neo evidence (hành tinh ở cung, nhà, độ trong cung, dignity).
+- `rules/aspect_rules.py`: neo evidence (góc + 2 hành tinh, orb, nhà của mỗi hành tinh).
+- `engine.py`: truyền `evidence` vào item output (`_make_section`); thêm `_fallback_evidence()` sinh evidence từ metadata khi rule khộng cung cấp (cover mọi rule, đảm bảo 100% items có chip).
+
+### Frontend
+- `InterpretationView.tsx`: render chip `📍 evidence` dưới mỗi đoạn luận giải.
+
+### Verification (ad-hoc)
+- DVB: "Sao Kim ở Thiên Bình" → evidence ['Sao Kim ở Thiên Bình','Nhà 11','Độ 20.1° trong cung','Dignity: rulership'] ✓
+- "Hợp: Sao Thủy - Sao Diêm Vương" → ['Hợp mercury–pluto','Orb 2.1°','mercury: Nhà 1','pluto: Nhà 1'] ✓
+- `npm run build` clean.
+
+---
+
 ## 2026-07-14 — tra-cuu-ban-do-sao-1: Life Areas + Moon + Aspect Groups (P0–P3)
 
 Phát triển tính năng báo cáo lá số theo chuẩn MystechX (Đoàn Việt Bảo).

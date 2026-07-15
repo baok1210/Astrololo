@@ -16,6 +16,7 @@ class RuleResult:
     tags: List[str] = field(default_factory=list)
     planet: Optional[str] = None
     aspect: Optional[str] = None
+    evidence: List[str] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 

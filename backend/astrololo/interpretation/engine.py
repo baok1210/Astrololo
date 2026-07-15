@@ -18,6 +18,7 @@ class InterpretationEngine:
         set_esoteric_mode(self.esoteric)
         rules = RuleRegistry.get_rules()
         scorer = ChartScorer(chart)
+        self._chart = chart
 
         self._enrich_chart(chart)
 
@@ -143,6 +144,7 @@ class InterpretationEngine:
                 "text": text,
                 "score": r.score,
                 "tags": r.tags,
+                "evidence": r.evidence if r.evidence else self._fallback_evidence(r),
             }
             if r.metadata:
                 item["metadata"] = r.metadata
@@ -153,6 +155,25 @@ class InterpretationEngine:
             "title": section_title,
             "items": items,
         }
+
+    def _fallback_evidence(self, r: "RuleResult") -> List[str]:
+        """Build chart-linked evidence from metadata when a rule didn't supply it."""
+        m = r.metadata or {}
+        ev = []
+        p1, p2 = m.get("planet1"), m.get("planet2")
+        if p1 and p2:
+            ev.append(f"{p1} – {p2}")
+        elif r.planet:
+            ev.append(r.planet)
+        if m.get("aspect_type") or r.aspect:
+            ev.append(str(m.get("aspect_type") or r.aspect))
+        if m.get("orb") is not None:
+            ev.append(f"Orb {float(m['orb']):.1f}°")
+        house_of = {p.name: p.house for p in self._chart.planets}
+        for pn in (p1, p2, r.planet):
+            if pn and house_of.get(pn):
+                ev.append(f"{pn}: Nhà {house_of[pn]}" if self.lang == "vi" else f"{pn}: House {house_of[pn]}")
+        return ev
 
     def _make_chart_summary(self, chart: ChartData) -> Dict[str, Any]:
         asc_sign = chart.ascendant_sign

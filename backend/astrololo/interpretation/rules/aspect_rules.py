@@ -16,6 +16,7 @@ class AspectRule(InterpretationRule):
 
     def interpret(self, chart: ChartData, lang: str = "vi") -> Optional[List[RuleResult]]:
         results = []
+        house_of = {p.name: p.house for p in chart.planets}
         for a in chart.aspects:
             entry = get_aspect(a.planet1, a.planet2, a.aspect_type, lang)
             base_text = entry.get("detailed", "") if entry else ""
@@ -27,6 +28,13 @@ class AspectRule(InterpretationRule):
                     title = f"{a.aspect_name_vi}: {a.planet1} - {a.planet2}"
                 else:
                     title = f"{a.aspect_type}: {a.planet1} - {a.planet2}"
+
+            h1 = house_of.get(a.planet1)
+            h2 = house_of.get(a.planet2)
+            ev = [f"{a.aspect_name_vi if lang=='vi' else a.aspect_type} {a.planet1} – {a.planet2}",
+                  f"Orb {a.orb:.1f}°" if lang == "vi" else f"Orb {a.orb:.1f}°"]
+            if h1: ev.append(f"{a.planet1}: Nhà {h1}" if lang == "vi" else f"{a.planet1}: House {h1}")
+            if h2: ev.append(f"{a.planet2}: Nhà {h2}" if lang == "vi" else f"{a.planet2}: House {h2}")
 
             score = a.weight + get_dignity_score(a.planet1, "") * 0.5
 
@@ -40,6 +48,7 @@ class AspectRule(InterpretationRule):
                 category="aspect",
                 aspect=a.aspect_type,
                 tags=[a.planet1, a.planet2, a.aspect_type],
+                evidence=ev,
                 metadata={
                     "planet1": a.planet1,
                     "planet2": a.planet2,
