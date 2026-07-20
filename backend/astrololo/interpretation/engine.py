@@ -44,6 +44,7 @@ class InterpretationEngine:
                 categorized[cat].append(r)
 
         section_order = [
+            "executive_summary",
             "synthesis",
             "strength_weakness",
             "fixed_stars",
@@ -107,6 +108,7 @@ class InterpretationEngine:
         if not results:
             return None
         category_titles = {
+            "executive_summary": ("Tổng Quan Lá Số Cá Nhân Hóa", "Personalised Chart Overview"),
             "synthesis": ("Tổng Hợp Đa Yếu Tố", "Multi-Factor Synthesis"),
             "strength_weakness": ("Điểm Mạnh & Điểm Yếu", "Strengths & Weaknesses"),
             "sun_moon": ("Kết Hợp Mặt Trời - Mặt Trăng", "Sun-Moon Combination"),

@@ -5,6 +5,24 @@ Log ngôn ngữ: tiếng Việt (mô tả) + tiếng Anh (commit message).
 
 ---
 
+## 2026-07-14 — Executive Summary (vượt Astro-Seek/Cafe/Astro.com)
+
+Tính năng luận giải cá nhân hóa: 1 đoạn overview duy nhất nối Sun+Moon+Rising+Dominant+key aspect+top life-area thành narrative như nhà chiêm tinh viết riêng (đối nghịch với text generic rời rạc của 3 tool kia).
+
+### Backend
+- `rules/executive_summary_rule.py` (mới, priority 1): sinh `executive_summary` section, evidence chips (Sun/Moon/ASC/Dominant/key aspect).
+- `registry.py`: đăng ký rule.
+- `engine.py`: thêm `executive_summary` vào `category_titles` + `section_order` (đầu tiên).
+
+### Frontend
+- `InterpretationView.tsx`: SECTION_TITLES cho `executive_summary`.
+
+### Verification (ad-hoc)
+- DVB: section đầu = executive_summary, text >200 chars, evidence ≥3 chips.
+- `npm run build` clean.
+
+---
+
 ## 2026-07-14 — Chart-Linked Interpretation (bằng chứng neo chart)
 
 Cạnh tranh Astro-Seek/Cafe/Astro.com: gắn mỗi đoạn luận giải với bằng chứng chart cụ thể (hành tinh, cung, nhà, độ, góc, orb) để người dùng khồng phải tự so chiếu.
