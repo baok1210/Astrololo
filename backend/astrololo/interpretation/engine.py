@@ -48,6 +48,7 @@ class InterpretationEngine:
             "chart_shape",
             "micro_synthesis",
             "cross_synthesis",
+            "rulership_axes",
             "synthesis",
             "strength_weakness",
             "fixed_stars",
@@ -145,6 +146,7 @@ class InterpretationEngine:
             "aspect_group": ("Nhóm Góc Chiếu", "Aspect Groups"),
             "encyclopedia": ("Bách Khoa Chiêm Tinh", "Astrology Encyclopedia"),
             "pattern_release": ("Điểm Giải Phóng Cấu Trúc", "Configuration Release Points"),
+            "rulership_axes": ("Logic Chuỗi & Trục Đối Xứng", "Chain Logic & Axes"),
         }
         idx = 0 if self.lang == "vi" else 1
         title = category_titles.get(category, ("", ""))

@@ -5,6 +5,32 @@ Log ngôn ngữ: tiếng Việt (mô tả) + tiếng Anh (commit message).
 
 ---
 
+## 2026-07-20 (4) — P2+P3: Logic Chuỗi Chủ Tinh & Trục Đối Xứng + Xung Đột Nội Tâm
+
+Theo spec user: "kết nối các nhà thành chuỗi logic" thay vì đọc rời rạc.
+
+### P2 — Truy vết Chủ tinh cấp 1 (rulership chain)
+Với mọi nhà: cusp sign → hành tinh chủ (SIGN_NATURAL_RULER, modern) → nhà nó tọa thủ → "Nhà N dẫn dắt qua Nhà M".
+Vd Lang Son 1996: "Chủ Nhà 2 (Cự Giải) là Mặt Trăng @ Nhà 6 (Công Việc) → tài chính dẫn dắt qua công việc". Hanoi 1985: "Chủ Nhà 10 (Song Tử) là Mercury @ Nhà 3 → sự nghiệp qua giao tiếp".
+
+### P3 — Phân tích Trục (luôn cặp, không đơn lẻ)
+- 1-7 (Bản thân – Đối tác), 2-8 (Giá trị – Chung đụng), 4-10 (Gia đình – Sự nghiệp).
+- Mỗi trục báo cân bằng + áp lực 1 đầu giải qua đầu kia.
+
+### Xung đột nội tâm (internal conflict)
+Hard aspect (Vuông/Đối Xung) giữa Sun/Mars (lý tưởng/động lực) và Moon (an toàn nội tâm) → "nên hành động vs cần được che chở".
+
+### Files
+- Mới `rulership_axes_rule.py` (priority 4, category `rulership_axes`).
+- `engine.py`: thêm `rulership_axes` vào section_order (sau cross_synthesis) + category_titles.
+
+### Verification (ad-hoc)
+- Lang Son 1996 & Hanoi 1985: 10-11 link chủ tinh + 3 trục + (Hanoi) Mars□Moon. PASS.
+- LEAK + CONTENT CHECK: có "Chủ"/"Trục", không "18+"/"sensual". PASS.
+- `pytest tests/` chạy (background).
+
+---
+
 ## 2026-07-20 (3) — P1: Điểm Giải Phóng Cấu Trúc (Configuration Release Points)
 
 Theo plan 6 phần. Tái dùng detector có sẵn trong `pattern_rules.py` (Kite/T-Square/Grand Trine/Stellium đã detect được trên chart thật) + THÊM lớp chuyên gia còn thiếu: **apex planet = van xả áp lực**.
