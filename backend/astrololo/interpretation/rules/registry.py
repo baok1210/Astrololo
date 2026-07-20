@@ -36,6 +36,7 @@ _RULE_MODULES = [
     "astrololo.interpretation.rules.node_rule",
     "astrololo.interpretation.rules.mc_ic_axis_rule",
     "astrololo.interpretation.rules.chart_shape_rule",
+    "astrololo.interpretation.rules.micro_synthesis_rule",
     "astrololo.interpretation.rules.encyclopedia_rule",
     "astrololo.interpretation.rules.executive_summary_rule",
 ]

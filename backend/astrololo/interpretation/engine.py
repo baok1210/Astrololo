@@ -46,6 +46,7 @@ class InterpretationEngine:
         section_order = [
             "executive_summary",
             "chart_shape",
+            "micro_synthesis",
             "synthesis",
             "strength_weakness",
             "fixed_stars",
@@ -113,6 +114,7 @@ class InterpretationEngine:
         category_titles = {
             "executive_summary": ("Tổng Quan Lá Số Cá Nhân Hóa", "Personalised Chart Overview"),
             "chart_shape": ("Hình Thái Bản Đồ", "Chart Shape & Balance"),
+            "micro_synthesis": ("Quy Trình Luận Giải Vi Mô", "Micro-Interpretation Workflow"),
             "synthesis": ("Tổng Hợp Đa Yếu Tố", "Multi-Factor Synthesis"),
             "strength_weakness": ("Điểm Mạnh & Điểm Yếu", "Strengths & Weaknesses"),
             "sun_moon": ("Kết Hợp Mặt Trời - Mặt Trăng", "Sun-Moon Combination"),

@@ -5,6 +5,23 @@ Log ngôn ngữ: tiếng Việt (mô tả) + tiếng Anh (commit message).
 
 ---
 
+## 2026-07-14 — Quy trình luận giải vi mô (Micro-Synthesis)
+
+Nối 5 quy trình hạt nhân thành 1 narrative luận giải (khác với dump rời rạc của 3 tool): (1) hành tinh ở cung/nha, (2) tương tác góc chiếu, (3) retrograde/đã chỉnh sửa, (4) năng lượng hoàng đạo của nhà, (5) kết hợp hành tinh×cung×nhà.
+
+### Backend
+- `micro_synthesis_rule.py` (mới, priority 4): pick hành tinh chi phối + góc khắc nghiệt nhất, walk steps 1→5, evidence chips.
+- `registry.py`: đăng ký rule.
+- `engine.py`: thêm `micro_synthesis` vào `category_titles` + `section_order` (sau chart_shape).
+
+### Frontend
+- `InterpretationView.tsx`: SECTION_TITLES cho `micro_synthesis`.
+
+### Verification (ad-hoc)
+- DVB: micro_synthesis (Sao Thủy Nhân Mã/Nhà 1, góc Bán Lục Hợp Ceres orb 0.1°, không retrograde). `npm run build` clean.
+
+---
+
 ## 2026-07-14 — 7-bước luận giải: Chart Shape + Node Axis + MC-IC Axis
 
 Bám sát pipeline 7 bước chuẩn (Chart Overview → Big Three → Personal Planets → Outer → Trục đặc biệt → Aspects → Synthesis). Astrololo đã cover ~90%; bổ sung 3 mảnh thiếu để đủ.

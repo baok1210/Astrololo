@@ -3,6 +3,7 @@ import { SectionData, SectionItem } from '../api'
 const SECTION_TITLES: Record<string, [string, string]> = {
   executive_summary: ['Tổng Quan Lá Số', 'Chart Overview'],
   chart_shape: ['Hình Thái Bản Đồ', 'Chart Shape'],
+  micro_synthesis: ['Quy Trình Vi Mô', 'Micro Workflow'],
   synthesis: ['Tổng Hợp Đa Yếu Tố', 'Multi-Factor Synthesis'],
   part_of_fortune: ['Phần Tài Lộc', 'Part of Fortune'],
   dispositor: ['Chuỗi Chủ Tinh', 'Dispositor Chain'],
