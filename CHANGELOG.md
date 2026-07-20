@@ -5,7 +5,29 @@ Log ngôn ngữ: tiếng Việt (mô tả) + tiếng Anh (commit message).
 
 ---
 
-## 2026-07-20 — Fix retrograde bug (Micro-Synthesis) + ghi rõ định nghĩa Lilith
+## 2026-07-20 — Cross-Cutting Synthesis module (luận giải chéo)
+
+Bổ sung lớp "abduction" mà descriptive rules thiếu — ghép các mẩu rời thành narrative có judgment (giống astrologer người thật). Mới: `cross_synthesis_rule.py` (priority 3, sau micro_synthesis).
+
+### 6 sub-features (sau khi "làm mạnh")
+- **Sign amplification**: phát hiện 2+ điểm then chốt (Mặt Trời/Cung Mọc/Thiên Đỉnh/Mặt Trăng) cùng 1 cung → "chủ đề bị khuếch đại gấp bội, SỐNG nó ở cốt lõi". (vd Lang Son: MC + Sun cùng Song Ngư.)
+- **House worldly mapping**: ánh xạ đỉnh mỗi nhà sang "màu sắc thực tế" của lĩnh vực đó. Đặc biệt Nhà 8 (thân mật) có đỉnh Khí/Linh Hoạt (vd Song Tử) → "đời sống tình dục/thân mật mang tính ĐA DẠNG, thích 18+, mỗi quan hệ một flavor".
+- **Planet governance**: hành tinh ở nhà góc (1/4/7/10) → hành động bị lọc qua lăng kính nhà đó (vd Sao Hỏa Nhà 10 → "có tiêu chuẩn riêng, k làm bừa, cân nhắc danh tiếng").
+- **Contrarian nuance**: lớp "hiểu lầm vs thực tế" cho mỗi cung then chốt (vd Bọ Cạp: "sâu sắc về tâm hồn/tri thức, không chỉ tình dục bề mặt").
+- **Tension (mới)**: phát hiện điểm kéo ngược — (a) Mặt Trời⇄Mặt Trăng (là ai vs cảm thế nào), (b) Mọc⇄Mặt Trời (mặt nạ vs cốt lõi), (c) mất cân bằng nguyên tố (vd 1 nguyên tố = 0 hành tinh → điểm mạnh + mù).
+- **Life-Theme Synthesis (mới, capstone)**: gom mọi layer trên thành 1 narrative "MỘT mạch sống" đặt đầu section — phần astrologer thật làm (abduction thay vì liệt kê).
+
+### Backend wiring
+- `registry.py`: đăng ký module.
+- `engine.py`: thêm `cross_synthesis` vào `section_order` (sau micro_synthesis) + `category_titles` ("Tổng Hợp Chéo (Cross-Cutting)").
+
+### Verification (ad-hoc)
+- Scorpio sample 1985 (ASC Song Ngư / Sun Bọ Cạp / Moon Sư Tử): kích hoạt Life-Theme capstone + 2 tension (Sun⇄Moon, Asc⇄Sun) + contrarian Bọ Cạp + 8th=Thiên Bình 18+/diversity note.
+- Lang Son 1996: báo đúng MC+Sun cùng Song Ngư (amplification), governance Sun/Mars @ Nhà 10, contrarian Song Ngư/Nhân Mã/Song Tử.
+- Chart 8th=Gemini (1992-03-20 22:00): kích hoạt note "ĐA DẠNG / 18+ / flavor khác nhau" — khớp exactly ví dụ user đưa.
+- `pytest tests/` → 159 passed.
+
+---
 
 ### Backend
 - `micro_synthesis_rule.py`: sửa bug `getattr(pbody, "retrograde", False)` → `"is_retrograde"`. Trước đây field sai → Micro-Synthesis luôn báo "không retrograde" dù thực tế có R (vd Pluto 1996 = R). Nay báo đúng.
