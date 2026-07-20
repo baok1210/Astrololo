@@ -36,6 +36,8 @@ class PlanetInSignRule(InterpretationRule):
                   f"Độ {p.position_in_sign:.1f}° trong cung" if lang == "vi" else f"{p.position_in_sign:.1f}° into sign"]
             if dignity != "neutral":
                 ev.append(f"Dignity: {dignity}")
+            if getattr(p, "definition_note", None):
+                ev.append(p.definition_note)
             results.append(RuleResult(
                 title_vi=title if lang == "vi" else "",
                 title_en=title if lang == "en" else "",

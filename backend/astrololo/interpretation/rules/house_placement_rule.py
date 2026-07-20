@@ -195,6 +195,8 @@ class HousePlacementRule(InterpretationRule):
                     p_text = "\n\n".join(p_text_parts) if p_text_parts else ""
 
                 if p_text:
+                    if getattr(p, "definition_note", None):
+                        p_text = p_text + f"\n\n📌 {p.definition_note}"
                     parts.append(
                         f"{p.name_vi} ({p_dms} {p.sign_name_vi}){retro} \u1edf {house_name}:\n{p_text}"
                     )

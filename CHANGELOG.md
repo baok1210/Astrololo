@@ -5,7 +5,20 @@ Log ngôn ngữ: tiếng Việt (mô tả) + tiếng Anh (commit message).
 
 ---
 
-## 2026-07-14 — Quy trình luận giải vi mô (Micro-Synthesis)
+## 2026-07-20 — Fix retrograde bug (Micro-Synthesis) + ghi rõ định nghĩa Lilith
+
+### Backend
+- `micro_synthesis_rule.py`: sửa bug `getattr(pbody, "retrograde", False)` → `"is_retrograde"`. Trước đây field sai → Micro-Synthesis luôn báo "không retrograde" dù thực tế có R (vd Pluto 1996 = R). Nay báo đúng.
+- `models/chart.py`: thêm field `definition_note` (optional) vào `BodyPosition`.
+- `core/points.py`: `_calc_lilith_from_node` gán `definition_note` = "Black Moon Lilith (Mean Apogee) = North Node + 180°. Khác với True/Mean Lilith của CafeAstrology (tính từ quỹ đạo Mặt Trăng thực tế)."
+- `planet_in_sign_rule.py` + `house_placement_rule.py`: append `definition_note` vào evidence / text khi body có note (Lilith).
+
+### Verification (ad-hoc)
+- Lang Son 1996-03-11 11:23: Pluto `is_retrograde=True` (speed -0.003, khớp pyswisseph + CafeAstrology R). Micro-Synthesis Pluto giờ báo "đang đi lùi (retrograde)".
+- Lilith note xuất hiện trong evidence của planet_in_sign.
+- `pytest tests/` → 159 passed. `py_compile` OK.
+
+---
 
 Nối 5 quy trình hạt nhân thành 1 narrative luận giải (khác với dump rời rạc của 3 tool): (1) hành tinh ở cung/nha, (2) tương tác góc chiếu, (3) retrograde/đã chỉnh sửa, (4) năng lượng hoàng đạo của nhà, (5) kết hợp hành tinh×cung×nhà.
 

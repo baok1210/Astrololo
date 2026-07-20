@@ -25,6 +25,7 @@ class BodyPosition(BaseModel):
     minor_dignities: List[str] = Field(default_factory=list)
     declination: float = 0.0
     cusp_proximity: Optional[Dict[str, Any]] = None
+    definition_note: Optional[str] = None  # clarifies non-standard bodies (e.g. Lilith = Node+180)
 
     # Jyotish fields (populated only when zodiac_type="sidereal")
     sidereal_longitude: Optional[float] = None

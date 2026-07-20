@@ -115,6 +115,10 @@ def _calc_lilith_from_node(jd_ut: float, node_type: str = "mean") -> Optional[Bo
         dignity_score=0,
         dignity_label="neutral",
         declination=0.0,
+        definition_note=(
+            "Black Moon Lilith (Mean Apogee) = North Node + 180°. "
+            "Khác với True/Mean Lilith của CafeAstrology (tính từ quỹ đạo Mặt Trăng thực tế)."
+        ),
     )
 
 

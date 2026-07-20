@@ -71,8 +71,8 @@ class MicroSynthesisRule(InterpretationRule):
                        if lang == "vi" else
                        f"{p_en} {key.aspect_name_vi} {o_en} (orb {key.orb:.1f}°)")
 
-        # step 3: retrograde?
-        retro = getattr(pbody, "retrograde", False)
+        # step 3: retrograde? (BodyPosition stores the flag as is_retrograde)
+        retro = getattr(pbody, "is_retrograde", False)
         retro_txt = ("đang đi lùi (retrograde)" if lang == "vi" else "is retrograde") if retro else (
             "không retrograde" if lang == "vi" else "is direct")
 
