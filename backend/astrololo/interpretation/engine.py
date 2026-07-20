@@ -39,7 +39,7 @@ class InterpretationEngine:
             cat = r.category
             if cat not in categorized:
                 categorized[cat] = []
-            limit = 50 if cat == "aspect" else 20 if cat in ("planet_in_sign", "planet_in_house", "house_cusp", "life_area", "fixed_stars") else 12 if cat == "house_placement" else 10 if cat in ("synthesis", "part_of_fortune", "aspect_synthesis") else 5
+            limit = 50 if cat == "aspect" else 20 if cat in ("planet_in_sign", "planet_in_house", "house_cusp", "life_area", "fixed_stars") else 12 if cat == "house_placement" else 10 if cat in ("synthesis", "part_of_fortune", "aspect_synthesis") else 40 if cat == "cross_synthesis" else 5
             if len(categorized[cat]) < limit:
                 categorized[cat].append(r)
 

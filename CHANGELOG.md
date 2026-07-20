@@ -5,7 +5,34 @@ Log ngôn ngữ: tiếng Việt (mô tả) + tiếng Anh (commit message).
 
 ---
 
-## 2026-07-20 — Cross-Cutting Synthesis module (luận giải chéo)
+## 2026-07-20 (2) — House Synthesis nâng cấp lên mô hình ĐA BIẾN SỐ (multi-variable) + mở rộng 12 nhà
+
+Theo feedback user: bản 1-1 (cusp → text) quá đơn giản hóa và không chuẩn hóa. Viết lại thành engine ghép lớp có trọng số:
+
+### Kiến trúc (trọng số)
+- **[Nền] Cusp sign** — base flavor (giữ 12×12 `HOUSE_BASE_VI/EN`, mỗi nhà mỗi cung 1 câu).
+- **[Vì có <hành tinh> ở nhà N] Occupants** — trọng số CAO NHẤT, ảnh hưởng trực tiếp nhất. Nhà trống → ghi rõ "[Nhà trống]".
+- **[Chủ nhà N là <ruler>]** — tính từ `SIGN_NATURAL_RULER` (modern: Scorpio=Pluto), tìm nhà ruler tọa thủ → "năng lượng dẫn dắt qua lĩnh vực X".
+- **[Góc chiếu]** — harmony/dissonance giữa các occupants + ruler (từ `chart.aspects` planet-to-planet).
+
+### Mở rộng
+- Mọi nhà (1–12) giờ là 1 `RuleResult` riêng → 12 card "Nhà N — Tổng Hợp Đa Biến Số", mỗi card có đủ 4 lớp + căn cứ minh bạch ("Vì có Mars...").
+- Mới: `house_synthesis_data.py` — `HOUSE_BASE_VI/EN` (144 entry) + `PLANET_TONE_VI/EN` (16 hành tinh).
+
+### Chuẩn hóa dữ liệu (bắt buộc)
+- XÓA nhãn "18+", chữ in hoa "ĐA DẠNG", từ EN lẫn trong VI ("sensual"). VI/EN tách biệt 100%.
+- Cùng cấu trúc câu cho 12 cung.
+
+### Wiring
+- `engine.py`: `cross_synthesis` limit 5 → 40 (để 12 house card + layers không bị cắt).
+
+### Verification (ad-hoc)
+- Lang Son 1996 (Nhà 8 đỉnh Ma Kết, có Uranus+Neptune tọa thủ, chủ nhà Saturn @ Nhà 10): ra đủ [Nền]+[Occupants x2]+[Chủ nhà]+[Góc chiếu thuận]. PASS.
+- LEAK CHECK: không "18+"/"sensual"/"ĐA DẠNG" trong output VI. PASS.
+- 12 house card sinh đủ, mỗi card có [Nền] + ([Vì có] hoặc [Nhà trống]). PASS.
+- `pytest tests/` chạy (background).
+
+---
 
 Bổ sung lớp "abduction" mà descriptive rules thiếu — ghép các mẩu rời thành narrative có judgment (giống astrologer người thật). Mới: `cross_synthesis_rule.py` (priority 3, sau micro_synthesis).
 

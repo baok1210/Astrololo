@@ -15,7 +15,11 @@ from astrololo.interpretation.keywords import (
     get_house_keywords,
     get_planet_function,
     HOUSE_NAME_VI,
+    SIGN_NATURAL_RULER,
     SIGN_NAME_VI,
+)
+from astrololo.interpretation.rules.house_synthesis_data import (
+    HOUSE_BASE_VI, HOUSE_BASE_EN, PLANET_TONE_VI, PLANET_TONE_EN,
 )
 from astrololo.models.chart import ChartData
 from astrololo.core.constants import PLANETS, SIGNS
@@ -88,86 +92,6 @@ _HOUSE_GOVERN_EN = {
     4: "tied to family/roots — action is shaped by security and the past",
     7: "governed by the partner — action flows through agreement and one-to-one relations",
     10: "filtered through reputation — you hold standards, never act carelessly, weigh impact on status",
-}
-
-# House 8 (intimacy / shared depth / sexuality) — full per-cusp reading (all 12).
-# Each entry: (vi, en). Focuses on the REAL-WORLD flavor of intimacy, not just theory.
-# "diverse" flag = the cusp brings variety/exploration to the intimate life (air + mutable).
-_HOUSE8_VI = {
-    "aries":      ("Nhà 8 có đỉnh Bạch Dương → thân mật mang tính bùng nổ, trực tiếp, nhập cuộc nhanh và "
-                   "cũng có thể lướt qua mau. Bạn thích sự chủ động, nhiệt huyết; nhàm chán là kẻ thù. "
-                   "Dễ say mê bột phát rồi lửa tắt lẹ — cần bạn đời giữ được nhịp điệu mới.",
-                   True),
-    "taurus":     ("Nhà 8 có đỉnh Kim Ngưu → thân mật mang tính chiếm hữu, chậm mà sâu, sensual & gắn kết "
-                   "về xác thịt/vật chất. Bạn không chơi đùa dễ dãi — một khi vào thì giữ chặt, trung thành "
-                   "nhưng hay ghen. Sự gần gũi với bạn = sự an toàn cụ thể, chạm được.",
-                   False),
-    "gemini":     ("Nhà 8 có đỉnh Song Tử → đời sống tình dục/thân mật mang tính ĐA DẠNG: bạn tiếp cận "
-                   "intimacy như một chủ đề để khám phá, thích trò chuyện 18+, và mỗi mối quan hệ mang một "
-                   "'flavor' khác nhau — không cố định một kiểu.",
-                   True),
-    "cancer":     ("Nhà 8 có đỉnh Cự Giải → thân mật cực kỳ cảm xúc, bảo vệ, muốn 'tan vào nhau'. Bạn gắn "
-                   "kết qua sự chăm sóc & tổn thương; né trùng nếm thử. Đòi hỏi an toàn mới mở cửa — một khi "
-                   "tin thì rất sâu và lâu bền.",
-                   False),
-    "leo":        ("Nhà 8 có đỉnh Sư Tử → thân mật mang tính sân khấu, nồng nhiệt, muốn được ngưỡng mộ & "
-                   "cho đi hào phóng. Bạn coi intimacy là cách tỏa sáng cùng người kia; thích sự tán thưởng, "
-                   "chung thủy nhưng cần được 'trung tâm'. Nhàm chán = chết.",
-                   False),
-    "virgo":      ("Nhà 8 có đỉnh Xử Nữ → thân mật e dè, tỉ mỉ, để ý từng chi tiết & nhu cầu đối phương. "
-                   "Bạn thể hiện qua phục vụ hơn là lời; hay tự kiểm duyệt/'soi' bản thân. Cần tin cậy mới "
-                   "buông, một khi buông thì rất tận tâm.",
-                   True),
-    "libra":      ("Nhà 8 có đỉnh Thiên Bình → thân mật mang tính hòa hợp, thẩm mỹ, cần sự cân bằng & "
-                   "đối tác 'đẹp'. Bạn tiếp cận intimacy như một nghệ thuật giao hưởng hai người; thích làm "
-                   "hài lòng, đôi khi do dự chưa biết mình muốn gì. Đa dạng qua nhiều kiểu quan hệ.",
-                   True),
-    "scorpio":     ("Nhà 8 có đỉnh Bọ Cạp → thân mật cực độ sâu, chiếm hữu, biến đổi. Bạn coi intimacy là "
-                    "sự hợp nhất linh hồn, không lên gân bề mặt; đòi hỏi tuyệt đối tin cậy, dễ ghen nhưng "
-                    "trung thành đến cùng. Đây là 'chủ nhà' thật sự của Nhà 8.",
-                    False),
-    "sagittarius": ("Nhà 8 có đỉnh Nhân Mã → thân mật mang tính phiêu lưu, tò mò, thích 'mở rộng chân trời' "
-                    "cùng người kia. Bạn ghét sự bó buộc, dễ chán nếu nhàm; coi intimacy như trò chơi khám "
-                    "phá. Đa dạng & hay đổi gu.",
-                    True),
-    "capricorn":  ("Nhà 8 có đỉnh Ma Kết → thân mật kiềm chế, sâu kín, xây dựng lâu dài qua cam kết. Bạn "
-                   "không bộc lộ dễ dãi; cần thời gian & uy tín mới mở. Một khi vào thì rất trách nhiệm, "
-                   "ổn định, 'gieo gì gặt nấy'.",
-                   False),
-    "aquarius":   ("Nhà 8 có đỉnh Bảo Bình → thân mật mang tính thử nghiệm, khác biệt, không theo khuôn "
-                   "mẫu. Bạn coi intimacy như sự kết nối trí tuệ/tự do, ghét sở hữu; tò mò & cởi mở với nhiều "
-                   "hình thức. Đa dạng, khó đoán.",
-                   True),
-    "pisces":     ("Nhà 8 có đỉnh Song Ngư → thân mật mơ màng, tan biến, thẩm thấu cảm xúc. Bạn hòa vào "
-                   "người kia đến mức mất边界; lãng mạn, nhạy cảm, dễ bị cuốn. Cần người đủ đất để neo bạn "
-                   "lại.",
-                   False),
-}
-_HOUSE8_EN = {
-    "aries":      ("House 8 cusp Aries → intimacy is explosive, direct, quick to ignite and quick to cool. "
-                   "You crave initiative and passion; boredom is the enemy.", True),
-    "taurus":     ("House 8 cusp Taurus → intimacy is possessive, slow but deep, sensual and materially "
-                   "bonded. You don't play loosely — once in, you hold tight and loyal (and jealous).", False),
-    "gemini":     ("House 8 cusp Gemini → intimate life is DIVERSE: you approach intimacy as something to "
-                   "explore, may enjoy 18+ talk, each connection a different flavour.", True),
-    "cancer":     ("House 8 cusp Cancer → intimacy is deeply emotional, protective, merging. You bond "
-                   "through care and vulnerability; needs safety to open.", False),
-    "leo":        ("House 8 cusp Leo → intimacy is theatrical, ardent, wanting to be admired and to give "
-                   "generously. You treat it as shining together.", False),
-    "virgo":      ("House 8 cusp Virgo → intimacy is shy, meticulous, attentive to the partner's needs. "
-                   "You show through service; opens only with trust.", True),
-    "libra":      ("House 8 cusp Libra → intimacy is harmonious, aesthetic, needing balance and a 'beautiful' "
-                   "partner. You approach it as a two-person symphony.", True),
-    "scorpio":     ("House 8 cusp Scorpio → intimacy is extreme depth, possessive, transforming. You treat "
-                    "it as soul-union, not surface; demands total trust.", False),
-    "sagittarius": ("House 8 cusp Sagittarius → intimacy is adventurous, curious, expanding horizons with "
-                    "the partner. You hate constraint; diverse and changeable taste.", True),
-    "capricorn":  ("House 8 cusp Capricorn → intimacy is restrained, private, built long-term via commitment. "
-                   "Opens only with time and trust.", False),
-    "aquarius":   ("House 8 cusp Aquarius → intimacy is experimental, unconventional, freedom-linked. You "
-                   "treat it as intellectual connection, not possession; diverse, unpredictable.", True),
-    "pisces":     ("House 8 cusp Pisces → intimacy is dreamy, dissolving, emotionally absorbing. You merge "
-                   "until boundaries blur; needs grounding.", False),
 }
 
 
@@ -268,49 +192,115 @@ class CrossSynthesisRule(InterpretationRule):
             ))
         return out
 
-    # ─── 2. House cusp worldly mapping ─────────────────────────────────────
+    # ─── 2. House synthesis: multi-variable (base + occupants + ruler + asp) ──
     def _house_worldly(self, chart, lang) -> List[RuleResult]:
-        notes = []
-        notable = []
+        out = []
+        base = HOUSE_BASE_VI if lang == "vi" else HOUSE_BASE_EN
+        tone = PLANET_TONE_VI if lang == "vi" else PLANET_TONE_EN
         for h in chart.houses:
+            n = h.house_number
             sign = h.sign
             sname = self._sname(sign, lang)
-            kw = get_sign_keywords(sign)
-            flavor = "; ".join((kw.get("core") or [])[:2]) or (kw.get("positive", [])[:1] or [""])[0]
+            hname = self._hname(n, lang)
+            parts: List[str] = []
+
+            # LAYER 1 — BASE (cusp sign flavor)
+            btext = base.get(n, {}).get(sign, "")
             if lang == "vi":
-                line = f"{self._hname(h.house_number, 'vi')}: đỉnh {sname} → {flavor}."
+                parts.append(f"[Nền] Đỉnh {hname} là {sname}: {btext}")
             else:
-                line = f"{self._hname(h.house_number, 'en')}: cusp {sname} → {flavor}."
-            notes.append(line)
-            # 8th house = intimacy / shared depth → full per-cusp reading (all 12)
-            if h.house_number == 8:
-                table = _HOUSE8_VI if lang == "vi" else _HOUSE8_EN
-                entry = table.get(sign)
-                if entry:
-                    notable.append(entry[0])
+                parts.append(f"[Base] Cusp of {hname} is {sname}: {btext}")
+
+            # LAYER 2 — OCCUPANTS (planets actually in the house; highest weight)
+            occ = [b for b in chart.planets if getattr(b, "house", None) == n]
+            if occ:
+                for b in occ:
+                    pname = self._pname(b.name, lang)
+                    t = tone.get(b.name, "")
+                    if lang == "vi":
+                        parts.append(f"[Vì có {pname} ở nhà {n}] năng lượng {t} được đưa thẳng vào lĩnh vực này — đây là ảnh hưởng mạnh nhất tới cách bạn trải nghiệm {hname.lower()}.")
+                    else:
+                        parts.append(f"[Because {pname} is in house {n}] the {t} energy is brought directly into this area — the strongest influence on how you experience {hname.lower()}.")
+            else:
+                if lang == "vi":
+                    parts.append(f"[Nhà trống] không hành tinh nào tọa thủ — năng lượng {sname} ở đỉnh là chủ đạo, ít bị pha trộn.")
+                else:
+                    parts.append(f"[Empty house] no planet sits here — the cusp {sname} energy leads, little mixed in.")
+
+            # LAYER 3 — RULER (ruler of cusp sign + which house it occupies)
+            ruler = SIGN_NATURAL_RULER.get(sign)
+            if ruler:
+                rbody = next((b for b in chart.planets if b.name == ruler), None)
+                rhouse = rbody.house if rbody else None
+                rname = self._pname(ruler, lang)
+                if rhouse:
+                    rhname = self._hname(rhouse, lang)
+                    if lang == "vi":
+                        parts.append(f"[Chủ nhà {n} là {rname}] nằm ở {rhname} → năng lượng của {hname.lower()} được dẫn dắt qua lĩnh vực {rhname.lower()}.")
+                    else:
+                        parts.append(f"[Ruler of house {n} is {rname}] placed in {rhname} → the house {n} energy is driven through the {rhname.lower()} area.")
+                else:
+                    if lang == "vi":
+                        parts.append(f"[Chủ nhà {n} là {rname}] không nằm trong nhà nào được tính.")
+                    else:
+                        parts.append(f"[Ruler of house {n} is {rname}] not placed in a computed house.")
+
+            # LAYER 4 — ASPECTS (harmony/dissonance among occupants + ruler)
+            asp_note = self._house_aspect_note(chart, occ, ruler, hname, lang)
+            if asp_note:
+                parts.append(asp_note)
+
+            text = "\n".join(parts)
+            if lang == "vi":
+                title = f"Nhà {n} — Tổng Hợp Đa Biến Số"
+            else:
+                title = f"House {n} — Multi-Variable Synthesis"
+            out.append(RuleResult(
+                title_vi=title if lang == "vi" else "",
+                title_en=title if lang == "en" else "",
+                text_vi=text if lang == "vi" else "",
+                text_en=text if lang == "en" else "",
+                score=6.0,
+                priority=self.priority,
+                category="cross_synthesis",
+                tags=["house_worldly", f"house_{n}", sign],
+                metadata={"pattern": "house_worldly", "house": n, "cusp": sign,
+                           "occupants": [b.name for b in occ], "ruler": ruler},
+            ))
+        return out
+
+    def _house_aspect_note(self, chart, occ, ruler, hname, lang) -> Optional[str]:
+        # aspects involving any occupant or the ruler planet
+        watch = {b.name for b in occ}
+        if ruler:
+            watch.add(ruler)
+        if not watch:
+            return None
+        harm = 0
+        dis = 0
+        names = set()
+        for a in chart.aspects:
+            p1, p2 = a.planet1, a.planet2
+            if p1 in watch and p2 in watch:
+                names.add(p1); names.add(p2)
+                if a.nature == "harmonious":
+                    harm += 1
+                elif a.nature == "challenging":
+                    dis += 1
+        if harm == 0 and dis == 0:
+            return None
+        pn = ", ".join(self._pname(x, lang) for x in sorted(names))
         if lang == "vi":
-            text = ("Mỗi nhà có một đỉnh cung — đỉnh cung quyết định 'màu sắc thực tế' của lĩnh vực đó "
-                    "trong đời bạn, không chỉ là lý thuyết:\n\n" + "\n".join(notes))
-            if notable:
-                text += "\n\n📌 Điểm nhấn thực tế:\n" + "\n".join(f"• {n}" for n in notable)
-            title = "Ánh Xạ Thực Tế Của Các Nhà (House Cusps)"
-        else:
-            text = ("Each house has a cusp sign that colors the real-world flavor of that life area:\n\n"
-                    + "\n".join(notes))
-            if notable:
-                text += "\n\n📌 Notable reality:\n" + "\n".join(f"• {n}" for n in notable)
-            title = "Worldly Mapping of House Cusps"
-        return [RuleResult(
-            title_vi=title if lang == "vi" else "",
-            title_en=title if lang == "en" else "",
-            text_vi=text if lang == "vi" else "",
-            text_en=text if lang == "en" else "",
-            score=6.0,
-            priority=self.priority,
-            category="cross_synthesis",
-            tags=["house_worldly"],
-            metadata={"pattern": "house_worldly"},
-        )]
+            if harm and not dis:
+                return f"[Góc chiếu] {pn} tạo góc thuận → các yếu tố trong {hname.lower()} hòa hợp, dễ bộc lộ."
+            if dis and not harm:
+                return f"[Góc chiếu] {pn} tạo góc thử thách → {hname.lower()} có xung đột/nội tâm cần hóa giải."
+            return f"[Góc chiếu] {pn} vừa có góc thuận ({harm}) vừa góc thử thách ({dis}) → {hname.lower()} vừa linh hoạt vừa có mâu thuẫn cần cân bằng."
+        if harm and not dis:
+            return f"[Aspects] {pn} form harmonious aspects → the factors in {hname.lower()} flow easily."
+        if dis and not harm:
+            return f"[Aspects] {pn} form challenging aspects → {hname.lower()} carries tension to resolve."
+        return f"[Aspects] {pn} mix harmonious ({harm}) and challenging ({dis}) → {hname.lower()} is both fluid and conflicted, needing balance."
 
     # ─── 3. Planet governance: planet in angular house filters its action ─
     def _governance(self, chart, lang) -> List[RuleResult]:
