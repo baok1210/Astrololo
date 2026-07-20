@@ -274,6 +274,27 @@ def create_natal_chart(
             "position_in_sign": round(pof_pos_in_sign, 4),
         }
 
+    # Vertex (điểm duyên phận / "không né được") — ascmc_raw[3] from houses_ex
+    if len(ascmc_raw) > 3:
+        vertex_lon = float(ascmc_raw[3]) % 360
+        vertex_sign = SIGN_ORDER[int(vertex_lon // 30) % 12]
+        vertex_house = 1
+        for i, cusp in enumerate(house_cusps_deg):
+            nxt = house_cusps_deg[(i + 1) % 12] if i < 11 else house_cusps_deg[0] + 360
+            this = cusp
+            if vertex_lon < this:
+                vertex_lon += 360
+            if this <= vertex_lon < nxt:
+                vertex_house = i + 1
+                break
+        chart.vertex = {
+            "longitude": round(float(ascmc_raw[3]) % 360, 4),
+            "sign": vertex_sign,
+            "sign_vi": SIGNS[vertex_sign].name_vi,
+            "house": vertex_house,
+            "position_in_sign": round(float(ascmc_raw[3]) % 30, 4),
+        }
+
     from astrololo.interpretation.engine import InterpretationEngine
     from astrololo.core.validation import validate_chart
 

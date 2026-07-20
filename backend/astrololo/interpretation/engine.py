@@ -58,6 +58,7 @@ class InterpretationEngine:
             "dispositor",
             "pattern",
             "pattern_release",
+            "karmic_psych",
             "combination",
             "house_placement",
             "house_distribution",
@@ -147,6 +148,7 @@ class InterpretationEngine:
             "encyclopedia": ("Bách Khoa Chiêm Tinh", "Astrology Encyclopedia"),
             "pattern_release": ("Điểm Giải Phóng Cấu Trúc", "Configuration Release Points"),
             "rulership_axes": ("Logic Chuỗi & Trục Đối Xứng", "Chain Logic & Axes"),
+            "karmic_psych": ("Ma Trận Nghiệp Quả & Tâm Lý", "Karmic & Psychological Matrix"),
         }
         idx = 0 if self.lang == "vi" else 1
         title = category_titles.get(category, ("", ""))

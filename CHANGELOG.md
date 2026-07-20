@@ -5,6 +5,32 @@ Log ngôn ngữ: tiếng Việt (mô tả) + tiếng Anh (commit message).
 
 ---
 
+## 2026-07-20 (6) — P5+P6: Ma Trận Nghiệp Quả & Tâm Lý (Vertex/Node/Script/Axis)
+
+Theo reference user gửi: "Ma trận Logic liên kết: Chủ tinh → Vị trí Nhà → Trục → Điểm nhạy cảm → Từ khóa chức năng". Không trả "bạn là người thế này" mà "cấu trúc này cho thấy bạn dùng kịch bản A giải quyết nỗi đau B ở trục C".
+
+### Tính năng
+- **Vertex** (điểm duyên phận): tính từ `ascmc_raw[3]` (swe.houses_ex) trong `natal.py`, lưu `chart.vertex` (longitude/sign/house). Rule: gặp gỡ "không né được" mở qua nhà chứa Vertex.
+- **Chiron + Vertex đồng vị trí** → "bài học không thể bỏ qua" (nỗi đau cốt lõi + duyên phận giao nhau).
+- **Node grading**: La Hầu (Bắc) = "Thai"/non nớt/cần học; Kế Đô (Nam) = tích lũy/thuần thục/"vốn cũ".
+- **Script vs Core**: ASC sign/ruler (mặt nạ) ≠ Sun/Moon core → "lớp phủ", "bên ngoài X bên trong Y".
+- **Lệch trục**: density theo cặp (1-7/2-8/4-10/5-11), cảnh báo khi 1 đầu quá tải đầu kia trống.
+- **Social outcome**: Chủ Nhà 10 nằm Nhà 7 → "hôn nhân môn đăng hộ đối"/sự nghiệp chịu ảnh hưởng đối tác.
+- **Functional keyword**: Thổ Nhà 7 → "khó khăn/xa cách có giới hạn khi gần gũi" (tái dùng `functional_compose`).
+
+### Files
+- `chart.py`: thêm `vertex` field. `natal.py`: tính Vertex.
+- Mới `karmic_psych_rule.py` (priority 7, category `karmic_psych`).
+- `registry.py`: thêm module. `engine.py`: `section_order` + `category_titles` (KHÔNG quên như lần trước!).
+- Frontend `InterpretationView.tsx`: title + color `karmic_psych`.
+
+### Verification (ad-hoc)
+- Lang Son 1996: Vertex Bọ Cạp@Nhà5, node grading, script (Mọc Song Tử vs Song Ngư/Nhân Mã), lệch trục 2-8 & 4-10. PASS.
+- LEAK CHECK: không "18+"/"sensual". PASS.
+- `pytest` chạy (background).
+
+---
+
 ## 2026-07-20 (5) — WebUI: start + wire mới sections (P1/P2/P3) vào giao diện
 
 ### Backend

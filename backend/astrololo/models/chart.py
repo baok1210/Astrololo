@@ -166,6 +166,7 @@ class ChartData(BaseModel):
     is_daytime: bool = True
     moon_phase: Optional[str] = None
     part_of_fortune: Optional[Dict[str, Any]] = None  # longitude, sign, sign_vi, house
+    vertex: Optional[Dict[str, Any]] = None  # Vertex (duyên phận): longitude, sign, sign_vi, house
     fixed_stars: List[Dict[str, Any]] = Field(default_factory=list)  # name, longitude, sign, magnitude, etc.
     midpoints: List[MidpointData] = Field(default_factory=list)
     interpretation: Optional[Dict[str, Any]] = None

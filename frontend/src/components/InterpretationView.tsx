@@ -33,6 +33,7 @@ const SECTION_TITLES: Record<string, [string, string]> = {
   pattern_release: ['Điểm Giải Phóng Cấu Trúc', 'Configuration Release Points'],
   rulership_axes: ['Logic Chuỗi & Trục Đối Xứng', 'Chain Logic & Axes'],
   cross_synthesis: ['Tổng Hợp Chéo (Đa Biến Số)', 'Cross-Cutting Synthesis'],
+  karmic_psych: ['Ma Trận Nghiệp Quả & Tâm Lý', 'Karmic & Psychological Matrix'],
 }
 
 const SECTION_COLORS: Record<string, string> = {
@@ -44,6 +45,7 @@ const SECTION_COLORS: Record<string, string> = {
   midpoints: '#f0e0c0', transit: '#d0e8f0', sun_moon: '#f0e8d0', dominant_planet: '#f0d8d0',
   fixed_stars: '#d0c0e0',
   pattern_release: '#c4e8d0', rulership_axes: '#e0c4d4', cross_synthesis: '#d8d0e0',
+  karmic_psych: '#d4c4e8',
 }
 
 export default function InterpretationView({
