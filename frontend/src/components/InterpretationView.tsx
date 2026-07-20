@@ -30,6 +30,9 @@ const SECTION_TITLES: Record<string, [string, string]> = {
   life_area: ['14 Khía Cạnh Cuộc Sống', '14 Life Areas'],
   aspect_group: ['Nhóm Góc Chiếu', 'Aspect Groups'],
   encyclopedia: ['Bách Khoa Chiêm Tinh', 'Astrology Encyclopedia'],
+  pattern_release: ['Điểm Giải Phóng Cấu Trúc', 'Configuration Release Points'],
+  rulership_axes: ['Logic Chuỗi & Trục Đối Xứng', 'Chain Logic & Axes'],
+  cross_synthesis: ['Tổng Hợp Chéo (Đa Biến Số)', 'Cross-Cutting Synthesis'],
 }
 
 const SECTION_COLORS: Record<string, string> = {
@@ -40,6 +43,7 @@ const SECTION_COLORS: Record<string, string> = {
   house_distribution: '#d0e0e0', quality: '#e0d8d0', house_cusp: '#d8d0e0',
   midpoints: '#f0e0c0', transit: '#d0e8f0', sun_moon: '#f0e8d0', dominant_planet: '#f0d8d0',
   fixed_stars: '#d0c0e0',
+  pattern_release: '#c4e8d0', rulership_axes: '#e0c4d4', cross_synthesis: '#d8d0e0',
 }
 
 export default function InterpretationView({
@@ -79,6 +83,15 @@ export default function InterpretationView({
             <div style={{ padding: 12 }}>
               {section.category === 'house_placement' ? (
                 <HousePlacementTable items={items as (SectionItem & { metadata: NonNullable<SectionItem['metadata']> })[]} lang={lang} />
+              ) : section.category === 'cross_synthesis' ? (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 10 }}>
+                  {items.map((item, i) => (
+                    <div key={i} style={{ background: '#faf7f2', border: '1px solid #e8e0d4', borderRadius: 8, padding: 10 }}>
+                      {item.title && <strong style={{ fontSize: 13, color: '#5a3a2a', display: 'block', marginBottom: 6 }}>{item.title}</strong>}
+                      {item.text && <p style={{ margin: 0, fontSize: 12.5, color: '#444', lineHeight: 1.55, whiteSpace: 'pre-wrap' }}>{item.text}</p>}
+                    </div>
+                  ))}
+                </div>
               ) : (
                 items.map((item, i) => {
                   const m = item.metadata as any

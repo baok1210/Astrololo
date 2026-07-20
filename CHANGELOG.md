@@ -5,6 +5,25 @@ Log ngôn ngữ: tiếng Việt (mô tả) + tiếng Anh (commit message).
 
 ---
 
+## 2026-07-20 (5) — WebUI: start + wire mới sections (P1/P2/P3) vào giao diện
+
+### Backend
+- `registry.py`: THÊM `release_point_rule` + `rulership_axes_rule` vào `_RULE_MODULES`. **Phát hiện lỗi**: 2 rule này viết xong + test ad-hoc PASS nhưng KHÔNG xuất hiện trên WebUI vì registry là fixed list — chưa import → không register. Đã fix.
+- Backend chạy uvicorn `127.0.0.1:8000` (SE_EPHE_PATH set).
+
+### Frontend
+- `InterpretationView.tsx`:
+  - Thêm `pattern_release`, `rulership_axes`, `cross_synthesis` vào `SECTION_TITLES` (VI/EN) + `SECTION_COLORS`.
+  - Thêm render riêng `cross_synthesis` dạng grid 2 cột (12 house card), phân biệt với list thường.
+- `vite build` (tsc + vite) PASS — không lỗi type.
+- Dev server: `npm run dev` → http://localhost:5173 (bind IPv6 localhost/`::1`, không 127.0.0.1). Proxy `/api` → 8000 OK.
+
+### Verification (live)
+- POST /api/v1/natal qua proxy 5173 → HTTP 200; response có đủ 4 section mới (cross_synthesis, pattern_release, rulership_axes, pattern). PASS.
+- `vite build` PASS.
+
+---
+
 ## 2026-07-20 (4) — P2+P3: Logic Chuỗi Chủ Tinh & Trục Đối Xứng + Xung Đột Nội Tâm
 
 Theo spec user: "kết nối các nhà thành chuỗi logic" thay vì đọc rời rạc.

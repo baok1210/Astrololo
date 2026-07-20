@@ -38,6 +38,8 @@ _RULE_MODULES = [
     "astrololo.interpretation.rules.chart_shape_rule",
     "astrololo.interpretation.rules.micro_synthesis_rule",
     "astrololo.interpretation.rules.cross_synthesis_rule",
+    "astrololo.interpretation.rules.release_point_rule",
+    "astrololo.interpretation.rules.rulership_axes_rule",
     "astrololo.interpretation.rules.encyclopedia_rule",
     "astrololo.interpretation.rules.executive_summary_rule",
 ]
