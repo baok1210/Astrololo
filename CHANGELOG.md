@@ -5,6 +5,27 @@ Log ngôn ngữ: tiếng Việt (mô tả) + tiếng Anh (commit message).
 
 ---
 
+## 2026-07-20 (3) — P1: Điểm Giải Phóng Cấu Trúc (Configuration Release Points)
+
+Theo plan 6 phần. Tái dùng detector có sẵn trong `pattern_rules.py` (Kite/T-Square/Grand Trine/Stellium đã detect được trên chart thật) + THÊM lớp chuyên gia còn thiếu: **apex planet = van xả áp lực**.
+
+### Tính năng
+- **Kite**: đỉnh (hành tinh đối đỉnh Grand Trine) = "van xả" đưa năng lượng êm ái ra thực tế qua nhà nó tọa thủ. Vd Lang Son 1996: Pallas@Nhà 5 → bộc lộ earth GT qua sáng tạo.
+- **T-Square**: apex (hành tinh vuông góc cặp đối đỉnh) = "điểm thắt" → nơi HÀNH ĐỘNG giải tỏa. Vd: Jupiter@Nhà 7 → chuyển áp lực thành kết quả qua hôn nhân.
+- **House Stellium** (mở rộng mới): phát hiện tập trung ≥3 hành tinh CÙNG MỘT NHÀ (không chỉ cùng cung như detector cũ). Vd Lang Son: 4 hành tinh Nhà 10 (sự nghiệp).
+
+### Files
+- Mới `release_point_rule.py` (priority 9, category `pattern_release`), tái dùng `_detect_kite/_detect_tsquare/_detect_grand_trine/_detect_stellium`.
+- Mới `functional_compose.py` — `PLANET_FUNC_VI/EN` + `compose_phrase()` (phục vụ P4 sau).
+- `engine.py`: thêm `pattern_release` vào section_order + category_titles.
+
+### Verification (ad-hoc)
+- Lang Son 1996 & Hanoi 1985: Kite/T-Square/House-stellium đều ra narrative đúng, gắn nhà tọa thủ. PASS.
+- LEAK CHECK: không "18+"/"sensual". PASS.
+- `pytest tests/` chạy (background).
+
+---
+
 ## 2026-07-20 (2) — House Synthesis nâng cấp lên mô hình ĐA BIẾN SỐ (multi-variable) + mở rộng 12 nhà
 
 Theo feedback user: bản 1-1 (cusp → text) quá đơn giản hóa và không chuẩn hóa. Viết lại thành engine ghép lớp có trọng số:

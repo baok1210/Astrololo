@@ -56,6 +56,7 @@ class InterpretationEngine:
             "part_of_fortune",
             "dispositor",
             "pattern",
+            "pattern_release",
             "combination",
             "house_placement",
             "house_distribution",
@@ -143,6 +144,7 @@ class InterpretationEngine:
             "life_area": ("14 Khía Cạnh Cuộc Sống", "14 Life Areas"),
             "aspect_group": ("Nhóm Góc Chiếu", "Aspect Groups"),
             "encyclopedia": ("Bách Khoa Chiêm Tinh", "Astrology Encyclopedia"),
+            "pattern_release": ("Điểm Giải Phóng Cấu Trúc", "Configuration Release Points"),
         }
         idx = 0 if self.lang == "vi" else 1
         title = category_titles.get(category, ("", ""))
