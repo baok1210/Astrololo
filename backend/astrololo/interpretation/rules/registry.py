@@ -33,6 +33,9 @@ _RULE_MODULES = [
     "astrololo.interpretation.rules.life_area_rule",
     "astrololo.interpretation.rules.moon_sign_rule",
     "astrololo.interpretation.rules.aspect_group_rule",
+    "astrololo.interpretation.rules.node_rule",
+    "astrololo.interpretation.rules.mc_ic_axis_rule",
+    "astrololo.interpretation.rules.chart_shape_rule",
     "astrololo.interpretation.rules.encyclopedia_rule",
     "astrololo.interpretation.rules.executive_summary_rule",
 ]

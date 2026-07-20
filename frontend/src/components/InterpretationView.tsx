@@ -2,6 +2,7 @@ import { SectionData, SectionItem } from '../api'
 
 const SECTION_TITLES: Record<string, [string, string]> = {
   executive_summary: ['Tổng Quan Lá Số', 'Chart Overview'],
+  chart_shape: ['Hình Thái Bản Đồ', 'Chart Shape'],
   synthesis: ['Tổng Hợp Đa Yếu Tố', 'Multi-Factor Synthesis'],
   part_of_fortune: ['Phần Tài Lộc', 'Part of Fortune'],
   dispositor: ['Chuỗi Chủ Tinh', 'Dispositor Chain'],
@@ -22,7 +23,9 @@ const SECTION_TITLES: Record<string, [string, string]> = {
   sun_moon: ['Kết Hợp Mặt Trời - Mặt Trăng', 'Sun-Moon Combination'],
   dominant_planet: ['Hành Tinh Nổi Bật', 'Dominant Planet'],
   fixed_stars: ['Sao Cố Định', 'Fixed Stars'],
-  moon_sign: ['Mặt Trăng — Cảm Xúc & Nội Tâm', 'Moon — Emotions & Inner World'],
+  moon_sign: ['Mặt Trăng', 'Moon'],
+  node_axis: ['Trục La Hầu – Kế Hầu', 'Node Axis'],
+  mc_ic_axis: ['Trục MC – IC', 'MC–IC Axis'],
   life_area: ['14 Khía Cạnh Cuộc Sống', '14 Life Areas'],
   aspect_group: ['Nhóm Góc Chiếu', 'Aspect Groups'],
   encyclopedia: ['Bách Khoa Chiêm Tinh', 'Astrology Encyclopedia'],

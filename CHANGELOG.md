@@ -5,6 +5,25 @@ Log ngôn ngữ: tiếng Việt (mô tả) + tiếng Anh (commit message).
 
 ---
 
+## 2026-07-14 — 7-bước luận giải: Chart Shape + Node Axis + MC-IC Axis
+
+Bám sát pipeline 7 bước chuẩn (Chart Overview → Big Three → Personal Planets → Outer → Trục đặc biệt → Aspects → Synthesis). Astrololo đã cover ~90%; bổ sung 3 mảnh thiếu để đủ.
+
+### Backend (rules mới)
+- `chart_shape_rule.py` (priority 3): tổng hợp nguyên tố/tính chất/bán cầu thành "Hình Thái Bản Đồ" (bước 1).
+- `node_rule.py` (priority 9): Trục La Hầu (phát triển) – Kế Hầu (nghiệp quả), từ `node_sign` (merged vào planet_in_sign).
+- `mc_ic_axis_rule.py` (priority 10): Trục MC (sự nghiệp) – IC (cội nguồn), IC = MC+180°.
+- `registry.py`: đăng ký 3 rule.
+- `engine.py`: thêm `chart_shape`, `node_axis`, `mc_ic_axis` vào `category_titles` + `section_order`.
+
+### Frontend
+- `InterpretationView.tsx`: SECTION_TITLES cho 3 category mới.
+
+### Verification (ad-hoc)
+- DVB: chart_shape (Đất 15/16, Thống Lĩnh 14.5/16, Đông 12/Tây 4), node_axis (La Hầu Thiên Bình/Nhà 11), mc_ic_axis (MC Xử Nữ/IC Song Ngư). `npm run build` clean.
+
+---
+
 ## 2026-07-14 — Executive Summary (vượt Astro-Seek/Cafe/Astro.com)
 
 Tính năng luận giải cá nhân hóa: 1 đoạn overview duy nhất nối Sun+Moon+Rising+Dominant+key aspect+top life-area thành narrative như nhà chiêm tinh viết riêng (đối nghịch với text generic rời rạc của 3 tool kia).

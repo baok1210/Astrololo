@@ -45,6 +45,7 @@ class InterpretationEngine:
 
         section_order = [
             "executive_summary",
+            "chart_shape",
             "synthesis",
             "strength_weakness",
             "fixed_stars",
@@ -66,6 +67,8 @@ class InterpretationEngine:
             "aspect_synthesis",
             "midpoints",
             "moon_sign",
+            "node_axis",
+            "mc_ic_axis",
             "life_area",
             "aspect_group",
             "encyclopedia",
@@ -109,6 +112,7 @@ class InterpretationEngine:
             return None
         category_titles = {
             "executive_summary": ("Tổng Quan Lá Số Cá Nhân Hóa", "Personalised Chart Overview"),
+            "chart_shape": ("Hình Thái Bản Đồ", "Chart Shape & Balance"),
             "synthesis": ("Tổng Hợp Đa Yếu Tố", "Multi-Factor Synthesis"),
             "strength_weakness": ("Điểm Mạnh & Điểm Yếu", "Strengths & Weaknesses"),
             "sun_moon": ("Kết Hợp Mặt Trời - Mặt Trăng", "Sun-Moon Combination"),
@@ -130,6 +134,8 @@ class InterpretationEngine:
             "midpoints": ("Trung Điểm", "Midpoints"),
             "fixed_stars": ("Sao Cố Định", "Fixed Stars"),
             "moon_sign": ("Mặt Trăng", "Moon"),
+            "node_axis": ("Trục La Hầu – Kế Hầu", "Node Axis"),
+            "mc_ic_axis": ("Trục MC – IC", "MC–IC Axis"),
             "life_area": ("14 Khía Cạnh Cuộc Sống", "14 Life Areas"),
             "aspect_group": ("Nhóm Góc Chiếu", "Aspect Groups"),
             "encyclopedia": ("Bách Khoa Chiêm Tinh", "Astrology Encyclopedia"),
