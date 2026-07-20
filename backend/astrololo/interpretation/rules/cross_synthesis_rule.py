@@ -90,6 +90,86 @@ _HOUSE_GOVERN_EN = {
     10: "filtered through reputation — you hold standards, never act carelessly, weigh impact on status",
 }
 
+# House 8 (intimacy / shared depth / sexuality) — full per-cusp reading (all 12).
+# Each entry: (vi, en). Focuses on the REAL-WORLD flavor of intimacy, not just theory.
+# "diverse" flag = the cusp brings variety/exploration to the intimate life (air + mutable).
+_HOUSE8_VI = {
+    "aries":      ("Nhà 8 có đỉnh Bạch Dương → thân mật mang tính bùng nổ, trực tiếp, nhập cuộc nhanh và "
+                   "cũng có thể lướt qua mau. Bạn thích sự chủ động, nhiệt huyết; nhàm chán là kẻ thù. "
+                   "Dễ say mê bột phát rồi lửa tắt lẹ — cần bạn đời giữ được nhịp điệu mới.",
+                   True),
+    "taurus":     ("Nhà 8 có đỉnh Kim Ngưu → thân mật mang tính chiếm hữu, chậm mà sâu, sensual & gắn kết "
+                   "về xác thịt/vật chất. Bạn không chơi đùa dễ dãi — một khi vào thì giữ chặt, trung thành "
+                   "nhưng hay ghen. Sự gần gũi với bạn = sự an toàn cụ thể, chạm được.",
+                   False),
+    "gemini":     ("Nhà 8 có đỉnh Song Tử → đời sống tình dục/thân mật mang tính ĐA DẠNG: bạn tiếp cận "
+                   "intimacy như một chủ đề để khám phá, thích trò chuyện 18+, và mỗi mối quan hệ mang một "
+                   "'flavor' khác nhau — không cố định một kiểu.",
+                   True),
+    "cancer":     ("Nhà 8 có đỉnh Cự Giải → thân mật cực kỳ cảm xúc, bảo vệ, muốn 'tan vào nhau'. Bạn gắn "
+                   "kết qua sự chăm sóc & tổn thương; né trùng nếm thử. Đòi hỏi an toàn mới mở cửa — một khi "
+                   "tin thì rất sâu và lâu bền.",
+                   False),
+    "leo":        ("Nhà 8 có đỉnh Sư Tử → thân mật mang tính sân khấu, nồng nhiệt, muốn được ngưỡng mộ & "
+                   "cho đi hào phóng. Bạn coi intimacy là cách tỏa sáng cùng người kia; thích sự tán thưởng, "
+                   "chung thủy nhưng cần được 'trung tâm'. Nhàm chán = chết.",
+                   False),
+    "virgo":      ("Nhà 8 có đỉnh Xử Nữ → thân mật e dè, tỉ mỉ, để ý từng chi tiết & nhu cầu đối phương. "
+                   "Bạn thể hiện qua phục vụ hơn là lời; hay tự kiểm duyệt/'soi' bản thân. Cần tin cậy mới "
+                   "buông, một khi buông thì rất tận tâm.",
+                   True),
+    "libra":      ("Nhà 8 có đỉnh Thiên Bình → thân mật mang tính hòa hợp, thẩm mỹ, cần sự cân bằng & "
+                   "đối tác 'đẹp'. Bạn tiếp cận intimacy như một nghệ thuật giao hưởng hai người; thích làm "
+                   "hài lòng, đôi khi do dự chưa biết mình muốn gì. Đa dạng qua nhiều kiểu quan hệ.",
+                   True),
+    "scorpio":     ("Nhà 8 có đỉnh Bọ Cạp → thân mật cực độ sâu, chiếm hữu, biến đổi. Bạn coi intimacy là "
+                    "sự hợp nhất linh hồn, không lên gân bề mặt; đòi hỏi tuyệt đối tin cậy, dễ ghen nhưng "
+                    "trung thành đến cùng. Đây là 'chủ nhà' thật sự của Nhà 8.",
+                    False),
+    "sagittarius": ("Nhà 8 có đỉnh Nhân Mã → thân mật mang tính phiêu lưu, tò mò, thích 'mở rộng chân trời' "
+                    "cùng người kia. Bạn ghét sự bó buộc, dễ chán nếu nhàm; coi intimacy như trò chơi khám "
+                    "phá. Đa dạng & hay đổi gu.",
+                    True),
+    "capricorn":  ("Nhà 8 có đỉnh Ma Kết → thân mật kiềm chế, sâu kín, xây dựng lâu dài qua cam kết. Bạn "
+                   "không bộc lộ dễ dãi; cần thời gian & uy tín mới mở. Một khi vào thì rất trách nhiệm, "
+                   "ổn định, 'gieo gì gặt nấy'.",
+                   False),
+    "aquarius":   ("Nhà 8 có đỉnh Bảo Bình → thân mật mang tính thử nghiệm, khác biệt, không theo khuôn "
+                   "mẫu. Bạn coi intimacy như sự kết nối trí tuệ/tự do, ghét sở hữu; tò mò & cởi mở với nhiều "
+                   "hình thức. Đa dạng, khó đoán.",
+                   True),
+    "pisces":     ("Nhà 8 có đỉnh Song Ngư → thân mật mơ màng, tan biến, thẩm thấu cảm xúc. Bạn hòa vào "
+                   "người kia đến mức mất边界; lãng mạn, nhạy cảm, dễ bị cuốn. Cần người đủ đất để neo bạn "
+                   "lại.",
+                   False),
+}
+_HOUSE8_EN = {
+    "aries":      ("House 8 cusp Aries → intimacy is explosive, direct, quick to ignite and quick to cool. "
+                   "You crave initiative and passion; boredom is the enemy.", True),
+    "taurus":     ("House 8 cusp Taurus → intimacy is possessive, slow but deep, sensual and materially "
+                   "bonded. You don't play loosely — once in, you hold tight and loyal (and jealous).", False),
+    "gemini":     ("House 8 cusp Gemini → intimate life is DIVERSE: you approach intimacy as something to "
+                   "explore, may enjoy 18+ talk, each connection a different flavour.", True),
+    "cancer":     ("House 8 cusp Cancer → intimacy is deeply emotional, protective, merging. You bond "
+                   "through care and vulnerability; needs safety to open.", False),
+    "leo":        ("House 8 cusp Leo → intimacy is theatrical, ardent, wanting to be admired and to give "
+                   "generously. You treat it as shining together.", False),
+    "virgo":      ("House 8 cusp Virgo → intimacy is shy, meticulous, attentive to the partner's needs. "
+                   "You show through service; opens only with trust.", True),
+    "libra":      ("House 8 cusp Libra → intimacy is harmonious, aesthetic, needing balance and a 'beautiful' "
+                   "partner. You approach it as a two-person symphony.", True),
+    "scorpio":     ("House 8 cusp Scorpio → intimacy is extreme depth, possessive, transforming. You treat "
+                    "it as soul-union, not surface; demands total trust.", False),
+    "sagittarius": ("House 8 cusp Sagittarius → intimacy is adventurous, curious, expanding horizons with "
+                    "the partner. You hate constraint; diverse and changeable taste.", True),
+    "capricorn":  ("House 8 cusp Capricorn → intimacy is restrained, private, built long-term via commitment. "
+                   "Opens only with time and trust.", False),
+    "aquarius":   ("House 8 cusp Aquarius → intimacy is experimental, unconventional, freedom-linked. You "
+                   "treat it as intellectual connection, not possession; diverse, unpredictable.", True),
+    "pisces":     ("House 8 cusp Pisces → intimacy is dreamy, dissolving, emotionally absorbing. You merge "
+                   "until boundaries blur; needs grounding.", False),
+}
+
 
 class CrossSynthesisRule(InterpretationRule):
     def __init__(self):
@@ -202,32 +282,12 @@ class CrossSynthesisRule(InterpretationRule):
             else:
                 line = f"{self._hname(h.house_number, 'en')}: cusp {sname} → {flavor}."
             notes.append(line)
-            # 8th house = intimacy / shared depth → diversity angle
+            # 8th house = intimacy / shared depth → full per-cusp reading (all 12)
             if h.house_number == 8:
-                sig = SIGNS.get(sign)
-                elem = sig.element if sig else ""
-                qual = sig.quality if sig else ""
-                diverse = elem == "air" or qual == "mutable"
-                if diverse:
-                    if lang == "vi":
-                        notable.append(
-                            f"Nhà 8 (thân mật/tài sản chung) có đỉnh {sname} → đời sống tình dục/thân mật "
-                            f"mang tính ĐA DẠNG: bạn tiếp cận intimacy như một chủ đề để khám phá, "
-                            f"thích trò chuyện 18+, và mỗi mối quan hệ mang một 'flavor' khác nhau — "
-                            f"không cố định một kiểu.")
-                    else:
-                        notable.append(
-                            f"House 8 (intimacy/shared depth) cusp {sname} → intimate life is DIVERSE: "
-                            f"you approach intimacy as something to explore, may enjoy 18+ talk, "
-                            f"each connection a different flavour.")
-                else:
-                    if lang == "vi":
-                        notable.append(
-                            f"Nhà 8 (thân mật/tài sản chung) có đỉnh {sname} → chiều sâu cảm xúc và "
-                            f"sự gắn kết bị chi phối bởi năng lượng {sname}.")
-                    else:
-                        notable.append(
-                            f"House 8 (intimacy/shared depth) cusp {sname} → bonding shaped by {sname} energy.")
+                table = _HOUSE8_VI if lang == "vi" else _HOUSE8_EN
+                entry = table.get(sign)
+                if entry:
+                    notable.append(entry[0])
         if lang == "vi":
             text = ("Mỗi nhà có một đỉnh cung — đỉnh cung quyết định 'màu sắc thực tế' của lĩnh vực đó "
                     "trong đời bạn, không chỉ là lý thuyết:\n\n" + "\n".join(notes))
