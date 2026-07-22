@@ -299,6 +299,10 @@ def create_natal_chart(
     from astrololo.scoring.dignity import chart_dignity_scores
     chart.dignity_scores = chart_dignity_scores(chart)
 
+    # Dominant scores
+    from astrololo.scoring.dominant import chart_dominant_scores
+    chart.dominant_scores = chart_dominant_scores(chart)
+
     from astrololo.interpretation.engine import InterpretationEngine
     from astrololo.core.validation import validate_chart
 

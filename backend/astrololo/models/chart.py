@@ -168,6 +168,7 @@ class ChartData(BaseModel):
     part_of_fortune: Optional[Dict[str, Any]] = None  # longitude, sign, sign_vi, house
     vertex: Optional[Dict[str, Any]] = None  # Vertex (duyên phận): longitude, sign, sign_vi, house
     dignity_scores: Optional[Dict[str, int]] = None  # planet_name -> essential+accidental total
+    dominant_scores: Optional[Dict[str, float]] = None  # planet_name -> weighted dominant score
     fixed_stars: List[Dict[str, Any]] = Field(default_factory=list)  # name, longitude, sign, magnitude, etc.
     midpoints: List[MidpointData] = Field(default_factory=list)
     interpretation: Optional[Dict[str, Any]] = None
