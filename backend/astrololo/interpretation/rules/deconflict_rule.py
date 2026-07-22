@@ -85,7 +85,7 @@ class DeconflictRule(InterpretationRule):
             pl = PLANETS.get(p.name)
             if not pl:
                 continue
-            score = getattr(chart, "dignity_scores", {}).get(p.name, 0)
+            score = (getattr(chart, "dignity_scores", {}) or {}).get(p.name, 0)
             if score <= _SUPPRESSION_DIGNITY and p.house in _SUPPRESSION_HOUSES:
                 layers.append({
                     "type": "suppression",

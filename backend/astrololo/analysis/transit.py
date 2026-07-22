@@ -13,6 +13,53 @@ from astrololo.analysis.natal import create_natal_chart
 from astrololo.core.validation import validate_chart
 
 
+# Predictive aspect status helpers
+
+def _aspect_status_summary(aspects, lang):
+    if not aspects:
+        return {}
+    applying = sum(1 for a in aspects if getattr(a, 'applying', False))
+    exact = sum(1 for a in aspects if getattr(a, 'exact', False))
+    separating = sum(1 for a in aspects if getattr(a, 'separating', False))
+    total = len(aspects)
+    return {
+        'applying': applying,
+        'exact': exact,
+        'separating': separating,
+        'total': total,
+    }
+
+
+def _pack_aspects(aspects, lang):
+    out = []
+    for a in aspects:
+        status = 'unknown'
+        if getattr(a, 'exact', False):
+            status = 'exact'
+        elif getattr(a, 'applying', False):
+            status = 'applying'
+        elif getattr(a, 'separating', False):
+            status = 'separating'
+        en_name = a.aspect_type.capitalize()
+        out.append({
+            'planet1': a.planet1,
+            'planet2': a.planet2,
+            'aspect_type': a.aspect_type,
+            'aspect_name_vi': a.aspect_name_vi,
+            'aspect_name_en': en_name,
+            'angle': a.angle,
+            'orb': a.orb,
+            'orb_formatted': a.orb_formatted,
+            'exact': bool(a.exact),
+            'nature': a.nature,
+            'weight': a.weight,
+            'applying': bool(a.applying),
+            'separating': bool(a.separating),
+            'aspect_status': status,
+        })
+    return out
+
+
 def create_transits(natal_subject: AstrologicalSubject,
                     transit_year: int, transit_month: int, transit_day: int,
                     house_system: str = "placidus", node_type: str = "mean", lang: str = "vi",
@@ -112,6 +159,8 @@ def create_transits(natal_subject: AstrologicalSubject,
 
     # Run interpretation on transit chart
     from astrololo.interpretation.engine import InterpretationEngine
+    from astrololo.analysis.distributions import fill_derived
+    fill_derived(transit_chart)
     engine = InterpretationEngine(lang=lang, esoteric=esoteric)
     transit_interp = engine.interpret(transit_chart)
     transit_chart.interpretation = transit_interp.model_dump()
@@ -146,8 +195,9 @@ def create_transits(natal_subject: AstrologicalSubject,
             }
             for p in transit_planets
         ],
-        "transit_aspects": [a.model_dump() for a in transit_to_natal],
+        "transit_aspects": _pack_aspects(transit_to_natal, lang),
         "aspect_count": len(transit_to_natal),
+        "aspect_status_summary": _aspect_status_summary(transit_to_natal, lang),
         "transit_interpretation": transit_specific,
     }
 

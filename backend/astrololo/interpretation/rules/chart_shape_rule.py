@@ -41,6 +41,8 @@ class ChartShapeRule(InterpretationRule):
     def interpret(self, chart: ChartData, lang: str = "vi") -> Optional[List[RuleResult]]:
         ed = chart.element_distribution
         qd = chart.quality_distribution
+        if not ed or not qd:
+            return None
         east, west, north, south = self._hemispheres(chart)
         total = max(east + west, 1)
 

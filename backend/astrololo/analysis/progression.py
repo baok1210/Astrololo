@@ -11,6 +11,7 @@ from astrololo.core.aspects import AspectCalculator
 from astrololo.core.points import build_all_bodies
 from astrololo.analysis.natal import create_natal_chart
 from astrololo.core.validation import validate_chart
+from astrololo.analysis.transit import _aspect_status_summary, _pack_aspects
 
 
 def create_progressions(natal_subject: AstrologicalSubject,
@@ -146,6 +147,7 @@ def create_progressions(natal_subject: AstrologicalSubject,
             }
             for p in prog_planets
         ],
-        "progressed_aspects": [a.model_dump() for a in prog_to_natal],
+        "progressed_aspects": _pack_aspects(prog_to_natal, lang),
         "aspect_count": len(prog_to_natal),
+        "aspect_status_summary": _aspect_status_summary(prog_to_natal, lang),
     }

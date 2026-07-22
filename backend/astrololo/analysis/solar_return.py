@@ -10,6 +10,7 @@ from astrololo.core.aspects import AspectCalculator
 from astrololo.core.points import build_all_bodies
 from astrololo.analysis.natal import create_natal_chart
 from astrololo.core.validation import validate_chart
+from astrololo.analysis.transit import _pack_aspects, _aspect_status_summary
 
 
 def _find_solar_return_jd(natal_sun_lon: float, birth_jd: float) -> float:
@@ -167,6 +168,7 @@ def create_solar_return(natal_subject: AstrologicalSubject,
             }
             for p in sr_planets
         ],
-        "sr_to_natal_aspects": [a.model_dump() for a in sr_to_natal],
+        "sr_to_natal_aspects": _pack_aspects(sr_to_natal, lang),
         "aspect_count": len(sr_to_natal),
+        "aspect_status_summary": _aspect_status_summary(sr_to_natal, lang),
     }
