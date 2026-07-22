@@ -959,3 +959,9 @@ def get_retrograde_text(planet: str, lang: str = "vi", count: int = 1, names: st
 
 def clear_cache():
     _cache.clear()
+
+
+def get_cct_topics_for_section(section: str):
+    """Lightweight CCT taxonomy bundle; avoids hard dependency if unused."""
+    from astrololo.interpretation.knowledge_cct import mapping_for_section
+    return mapping_for_section(section)
