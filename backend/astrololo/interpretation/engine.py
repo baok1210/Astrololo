@@ -51,6 +51,7 @@ class InterpretationEngine:
             "rulership_axes",
             "synthesis",
             "strength_weakness",
+            "deconflict",
             "fixed_stars",
             "sun_moon",
             "dominant_planet",

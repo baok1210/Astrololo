@@ -43,6 +43,7 @@ _RULE_MODULES = [
     "astrololo.interpretation.rules.karmic_psych_rule",
     "astrololo.interpretation.rules.encyclopedia_rule",
     "astrololo.interpretation.rules.executive_summary_rule",
+    "astrololo.interpretation.rules.deconflict_rule",
 ]
 
 
