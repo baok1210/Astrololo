@@ -295,6 +295,10 @@ def create_natal_chart(
             "position_in_sign": round(float(ascmc_raw[3]) % 30, 4),
         }
 
+    # Dignity scores (essential + accidental)
+    from astrololo.scoring.dignity import chart_dignity_scores
+    chart.dignity_scores = chart_dignity_scores(chart)
+
     from astrololo.interpretation.engine import InterpretationEngine
     from astrololo.core.validation import validate_chart
 
